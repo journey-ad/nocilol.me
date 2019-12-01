@@ -134,7 +134,8 @@ feed:
 prism_plugin:
   mode: 'preprocess'
   theme: 'default'
-  line_number: false
+  line_number: true
+  custom_css: ''
 
 live2d:
   enable: true
