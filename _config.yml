@@ -135,7 +135,7 @@ prism_plugin:
   mode: 'preprocess'
   theme: 'default'
   line_number: true
-  custom_css: ''
+  custom_css: 'css/prism-theme.css'
 
 live2d:
   enable: true
