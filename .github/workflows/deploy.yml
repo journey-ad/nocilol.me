@@ -19,6 +19,11 @@ jobs:
         uses: actions/checkout@master
         with:
           submodules: true
+          
+      - name: Installation Environment
+        uses: actions/setup-node@master
+        with:
+          node-version: 12.x  
 
       - name: Installation
         run: |
