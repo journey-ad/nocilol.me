@@ -1,3 +1,7 @@
 [submodule "themes/typography"]
 	path = themes/typography
 	url = https://github.com/journey-ad/hexo-theme-typography.git
+
+[submodule "themes/geek"]
+	path = themes/geek
+	url = https://github.com/journey-ad/hexo-theme-geek.git
