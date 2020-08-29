@@ -25,6 +25,14 @@ jobs:
         with:
           node-version: 12.x  
 
+      - name: replace cdn url
+      id: replace
+      run: |
+        tagname=$(openssl rand -hex 4)
+        sed -i "s/nocilol.me/nocilol.me@$tagname/g" _config.yml
+        sed -i "s/nocilol.me/nocilol.me@$tagname/g" themes/geek/_config.yml
+        echo "::set-output name=tagname::$tagname"
+
       - name: Installation
         run: |
           npm install
@@ -39,3 +47,14 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./public
           cname: nocilol.me
+
+      - name: Create Release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          tag_name: ${{ steps.replace.outputs.tagname }}
+          release_name: ${{ steps.replace.outputs.tagname }}
+          body: Automatic generated
+          draft: false
+          prerelease: true
