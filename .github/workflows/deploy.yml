@@ -1,0 +1,36 @@
+name: Hexo CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [12.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          submodules: true
+
+      - name: Installation
+        run: |
+          npm install
+          npm install -g hexo-cli
+          
+      - name: Generate
+        run: hexo clean && hexo g
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./public
+          cname: getloli.com
