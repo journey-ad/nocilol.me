@@ -26,12 +26,12 @@ jobs:
           node-version: 12.x  
 
       - name: replace cdn url
-      id: replace
-      run: |
-        tagname=$(openssl rand -hex 4)
-        sed -i "s/nocilol.me/nocilol.me@$tagname/g" _config.yml
-        sed -i "s/nocilol.me/nocilol.me@$tagname/g" themes/geek/_config.yml
-        echo "::set-output name=tagname::$tagname"
+        id: replace
+        run: |
+          tagname=$(openssl rand -hex 4)
+          sed -i "s/nocilol.me/nocilol.me@$tagname/g" _config.yml
+          sed -i "s/nocilol.me/nocilol.me@$tagname/g" themes/geek/_config.yml
+          echo "::set-output name=tagname::$tagname"
 
       - name: Installation
         run: |
