@@ -19,6 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <title>
         猫与向日葵
     </title>
@@ -62,8 +63,8 @@
 <p>附上最近一直循环的一首歌，萝莉音与少女音自然转换，歌词也很棒</p>
 
     <div class="cplayer-template"
-      id="cplayer-01207685"
-      data-id="cplayer-01207685"
+      id="cplayer-35507415"
+      data-id="cplayer-35507415"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[444706077]
       data-autoplay="false"
@@ -95,7 +96,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-01207685"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-35507415"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -115,8 +116,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-01207685"] = new cplayer({
-            element: document.getElementById("cplayer-01207685"),
+          window.cplayerList["cplayer-35507415"] = new cplayer({
+            element: document.getElementById("cplayer-35507415"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -193,9 +194,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-01207685"].add163(444706077)
+          window.cplayerList["cplayer-35507415"].add163(444706077)
 
-          let player = window.cplayerList["cplayer-01207685"]
+          let player = window.cplayerList["cplayer-35507415"]
           player.to(1)
           player.remove(player.playlist[0])
         }

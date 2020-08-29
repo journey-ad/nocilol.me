@@ -19,6 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <title>
         猫与向日葵
     </title>
@@ -64,8 +65,8 @@
 </blockquote>
 
     <div class="cplayer-template"
-      id="cplayer-66105502"
-      data-id="cplayer-66105502"
+      id="cplayer-30716977"
+      data-id="cplayer-30716977"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[28138547]
       data-autoplay="false"
@@ -97,7 +98,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-66105502"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-30716977"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -117,8 +118,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-66105502"] = new cplayer({
-            element: document.getElementById("cplayer-66105502"),
+          window.cplayerList["cplayer-30716977"] = new cplayer({
+            element: document.getElementById("cplayer-30716977"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -195,9 +196,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-66105502"].add163(28138547)
+          window.cplayerList["cplayer-30716977"].add163(28138547)
 
-          let player = window.cplayerList["cplayer-66105502"]
+          let player = window.cplayerList["cplayer-30716977"]
           player.to(1)
           player.remove(player.playlist[0])
         }

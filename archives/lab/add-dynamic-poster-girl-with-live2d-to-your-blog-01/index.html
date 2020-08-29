@@ -19,6 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <title>
         猫与向日葵
     </title>
@@ -61,8 +62,8 @@
 <h2>前言</h2><p>在两年前差不多这个时候，我写了<a href="https://imjad.cn/archives/code/add-a-floating-villain-to-the-blog">一篇文章</a>，记载了关于在博客里添加浮动小人的过程。后来因为换了新主题，之前的浮动小人与新主题风格不搭，就去掉了。<br>而两年后，我注意到<a href="http://www.live2d.com/en/" target="_blank" rel="noopener">Live2D</a>这个技术，很适合用来展示看板娘（或者叫做浮动小人、网页宠物、网页挂件之类的），折腾两天后，终于达到了一个基本可用的状态，而具体效果，在看这篇文章的你肯定已经发现了。话不多说，下面讲一下我的折腾过程：</p>
 
     <div class="cplayer-template"
-      id="cplayer-11697816"
-      data-id="cplayer-11697816"
+      id="cplayer-97188290"
+      data-id="cplayer-97188290"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[29764417]
       data-autoplay="false"
@@ -94,7 +95,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-11697816"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-97188290"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -114,8 +115,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-11697816"] = new cplayer({
-            element: document.getElementById("cplayer-11697816"),
+          window.cplayerList["cplayer-97188290"] = new cplayer({
+            element: document.getElementById("cplayer-97188290"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -192,9 +193,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-11697816"].add163(29764417)
+          window.cplayerList["cplayer-97188290"].add163(29764417)
 
-          let player = window.cplayerList["cplayer-11697816"]
+          let player = window.cplayerList["cplayer-97188290"]
           player.to(1)
           player.remove(player.playlist[0])
         }

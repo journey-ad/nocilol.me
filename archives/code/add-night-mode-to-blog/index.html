@@ -19,6 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <title>
         猫与向日葵
     </title>
@@ -61,8 +62,8 @@
 <p>你可以点击文章标题下方和左下角看板娘菜单的眼睛按钮来切换夜间模式，或者点击这里<a href="javascript:switchNightMode()" target="_self">查看效果</a></p>
 
     <div class="cplayer-template"
-      id="cplayer-68129274"
-      data-id="cplayer-68129274"
+      id="cplayer-75521274"
+      data-id="cplayer-75521274"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[27594402]
       data-autoplay="false"
@@ -94,7 +95,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-68129274"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-75521274"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -114,8 +115,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-68129274"] = new cplayer({
-            element: document.getElementById("cplayer-68129274"),
+          window.cplayerList["cplayer-75521274"] = new cplayer({
+            element: document.getElementById("cplayer-75521274"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -192,9 +193,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-68129274"].add163(27594402)
+          window.cplayerList["cplayer-75521274"].add163(27594402)
 
-          let player = window.cplayerList["cplayer-68129274"]
+          let player = window.cplayerList["cplayer-75521274"]
           player.to(1)
           player.remove(player.playlist[0])
         }
