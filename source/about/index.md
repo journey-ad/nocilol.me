@@ -19,7 +19,7 @@ type: about
 
 博客从[**2014.08.11**](https://imjad.cn/archives/none/hello-world)至今已经运行<span id="htmer_time" style="color: #90CAF9; font-weight: bold;"></span>
 
-本站使用开源静态网页生成工具[Hexo](https://hexo.io/)，主题使用[Makito](https://www.keep.moe/)提供的 Typography
+本站使用开源静态网页生成工具[Hexo](https://hexo.io/)，主题使用[三斤](https://geek.lc/)提供的 Geek
 
 托管于 [GitHub Pages](https://pages.github.com/)
 
@@ -30,6 +30,7 @@ type: about
 - 2015.12.12，迁移至腾讯云
 - 2017.11.03，迁移至Azure新加坡
 - 2019.12.01，迁移至Hexo，托管于GitHub Pages
+- 2020.08.29，更换主题为 [Geek](https://github.com/journey-ad/hexo-theme-geek)
 
 
 ### **关于我**
@@ -51,6 +52,7 @@ INT~~P~~J，-0.7 0.6 -0.8
 > **QQ：** [&#99;&#110;&#64;&#108;i&#110;&#117;&#120;&#46;&#99;&#111;m](http://sighttp.qq.com/authd?IDKEY=5ceb947ee4f6c45cacbadb41d4eeacc06466a1c469a71d94)　　*//请备注目的*
 > **GitHub：** [journey-ad](https://github.com/journey-ad)　　*//欢迎Star，有Follow就更好了(☆ω☆)*
 > **Steam：** [journey_ad](https://steamcommunity.com/id/journey_ad)　　*//喜+1*
+> **Nintendo Switch Online：** SW-0794-3990-8205　　*//任天堂TMD就是世界的主宰！*
 > **PSN(HK)：** [journey-ad](https://psnine.com/psnid/journey-ad)　　*//姨夫的微笑，就由我来守护！*
 > …和其他同名ID
 
