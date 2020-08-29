@@ -49,12 +49,13 @@ jobs:
           cname: nocilol.me
 
       - name: Create Release
-        uses: actions/create-release@latest
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           tag_name: ${{ steps.replace.outputs.tagname }}
           release_name: ${{ steps.replace.outputs.tagname }}
+          commitish: gh-pages
           body: Automatic generated
           draft: false
           prerelease: true
