@@ -299,6 +299,7 @@ hr {
   visibility: visible;
 }
 .post-content {
+  position: relative;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   font-family: 'Zpix', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
@@ -1346,16 +1347,17 @@ label.el-checkbox {
 .about-avatar {
   position: absolute;
   z-index: 2;
-  right: 10%;
-  width: 200px;
+  right: 6%;
+  width: 170px;
   height: 200px;
-  background: url("/img/shinobux3.png?v=1") no-repeat 0 0;
+  background: url("/img/shinobu@v2.1.png?v=1") no-repeat 0 0;
+  background-size: 509px 200px;
 }
 .about-avatar:hover {
-  background-position: -200px 0;
+  background-position: -170px 0;
 }
 .about-avatar:active {
-  background-position: -400px 0;
+  background-position: -340px 0;
 }
 #Snow {
   position: fixed;
