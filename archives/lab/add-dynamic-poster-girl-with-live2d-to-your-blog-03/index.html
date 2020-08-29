@@ -60,8 +60,8 @@
         <p><img src="https://img.imjad.cn/images/2018/09/13/70257184_p0.jpg" alt="ころんびょん血小板ちゃん @ 白木栞"></p>
 
     <div class="cplayer-template"
-      id="cplayer-54164268"
-      data-id="cplayer-54164268"
+      id="cplayer-71489908"
+      data-id="cplayer-71489908"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[1297743786]
       data-autoplay="false"
@@ -93,7 +93,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-54164268"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-71489908"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -113,8 +113,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-54164268"] = new cplayer({
-            element: document.getElementById("cplayer-54164268"),
+          window.cplayerList["cplayer-71489908"] = new cplayer({
+            element: document.getElementById("cplayer-71489908"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-54164268"].add163(1297743786)
+          window.cplayerList["cplayer-71489908"].add163(1297743786)
 
-          let player = window.cplayerList["cplayer-54164268"]
+          let player = window.cplayerList["cplayer-71489908"]
           player.to(1)
           player.remove(player.playlist[0])
         }
