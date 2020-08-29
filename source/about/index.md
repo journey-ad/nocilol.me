@@ -67,7 +67,7 @@ INT~~P~~J，-0.7 0.6 -0.8
 
 本博客为个人站点，无任何商业广告，若您想对我进行经济上的支持，请在下方选择付款方式，捐助所得资金将用于服务器/域名续费，我将对您表示感谢：)
 <p class="donate-qrcode">
-<img style="width: 25%;left: 25%;margin-right: 5px;display: inline;position: relative;" src="https://cdn.imjad.cn/usr/themes/Moricolor/img/alipay.jpg" alt="支付宝" title="支付宝"><img style="width: 25%;left: 25%;display: inline;position: relative;"src="https://cdn.imjad.cn/usr/themes/Moricolor/img/wechatpay.jpg" alt="微信支付" title="微信支付">
+<img style="width: 25%;left: 25%;margin-right: 5px;display: inline;position: relative;" src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/about/alipay.jpg" alt="支付宝" title="支付宝"><img style="width: 25%;left: 25%;display: inline;position: relative;"src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/about/wechatpay.jpg" alt="微信支付" title="微信支付">
 </p>
 
 <script>
