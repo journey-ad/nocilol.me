@@ -24,11 +24,11 @@
         猫与向日葵
     </title>
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/highlight/styles/monokai-sublime.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/font-awesome/css/font-awesome.min.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/zpix/zpix.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/css/style.css">
-      <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/js/theme.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/highlight/styles/monokai-sublime.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/font-awesome/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/zpix/zpix.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/css/style.css">
+      <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/js/theme.js"></script>
     
 <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
 </head>
@@ -51,14 +51,14 @@
 
     <div class="post-content">
         <p><img src="https://img.imjad.cn/images/2017/11/20/PotionMaker2.png" alt="药水制作师"></p>
-<h2>前言</h2><p>在<a href="https://imjad.cn/archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-01">上一篇文章</a>里，我介绍了Live2D的一些技术背景和从手游「<a href="https://play.google.com/store/apps/details?id=com.sinsiroad.potionmaker" target="_blank" rel="noopener">药水制作师</a>」中提取模型的方法步骤。在这篇文章里，我将接着讲述如何利用WebGL SDK将其添加到网页上 ——就像本站一样。</p>
+<h2>前言</h2><p>在<a href="https://imjad.cn/archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-01" target="_blank" rel="noopener">上一篇文章</a>里，我介绍了Live2D的一些技术背景和从手游「<a href="https://play.google.com/store/apps/details?id=com.sinsiroad.potionmaker" target="_blank" rel="noopener">药水制作师</a>」中提取模型的方法步骤。在这篇文章里，我将接着讲述如何利用WebGL SDK将其添加到网页上 ——就像本站一样。</p>
 <blockquote>
 <p>更新：<br><a href="https://paugram.com" target="_blank" rel="noopener">@保罗</a>写了一个typecho适用的插件，想要开箱即用的同学可以试试看啦~ <a href="https://paugram.com/coding/add-poster-girl-with-plugin.html" target="_blank" rel="noopener">项目介绍</a> !<a href="https://github.com/Dreamer-Paul/Pio" target="_blank" rel="noopener">https://github.com/Dreamer-Paul/Pio</a><br>另外还有<a href="https://daidr.me" target="_blank" rel="noopener">@DaiDR</a>写的wordpress版 <a href="https://daidr.me/archives/code-176.html" target="_blank" rel="noopener">项目介绍</a><br><s style="font-size:10px;">房产证办理</s><a href="https://www.fczbl.vip/" target="_blank" rel="noopener">@小白-白</a>写的wordpress版，模型是2233 <a href="https://www.fczbl.vip/946.html" target="_blank" rel="noopener">项目介绍</a></p>
 </blockquote>
 
     <div class="cplayer-template"
-      id="cplayer-27196817"
-      data-id="cplayer-27196817"
+      id="cplayer-25075673"
+      data-id="cplayer-25075673"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[28138547]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-27196817"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-25075673"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-27196817"] = new cplayer({
-            element: document.getElementById("cplayer-27196817"),
+          window.cplayerList["cplayer-25075673"] = new cplayer({
+            element: document.getElementById("cplayer-25075673"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -188,9 +188,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-27196817"].add163(28138547)
+          window.cplayerList["cplayer-25075673"].add163(28138547)
 
-          let player = window.cplayerList["cplayer-27196817"]
+          let player = window.cplayerList["cplayer-25075673"]
           player.to(1)
           player.remove(player.playlist[0])
         }
@@ -843,9 +843,9 @@ window<span class="token punctuation">.</span><span class="token function">setIn
        value="uWuwGS1xiIwh3zHKENc7ubyL">
 <script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
 
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/highlight/highlight.pack.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/js/js.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/highlight/highlight.pack.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/js/js.js"></script>
 
 <style type="text/css">
     .v * {

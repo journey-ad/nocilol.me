@@ -24,11 +24,11 @@
         猫与向日葵
     </title>
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/highlight/styles/monokai-sublime.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/font-awesome/css/font-awesome.min.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/zpix/zpix.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/css/style.css">
-      <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/js/theme.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/highlight/styles/monokai-sublime.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/font-awesome/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/zpix/zpix.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/css/style.css">
+      <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/js/theme.js"></script>
     
 <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
 </head>
@@ -50,7 +50,7 @@
     
 
     <div class="post-content">
-        <p>昨天介绍了<a href="https://imjad.cn/archives/lab/ami-bios-splash-logo-replacement-notes">更换AMI BIOS Splash LOGO的方法步骤</a>，今天接着介绍更换手机Splash LOGO的方法。对于不同型号的手机所需的工具可能不太一样，在这里以我的红米Note4X高通版(mido)为例。其它型号请参考<a href="https://forum.xda-developers.com/android/software-hacking/guide-how-to-create-custom-boot-logo-t3470473" target="_blank" rel="noopener">这个帖子</a></p>
+        <p>昨天介绍了<a href="https://imjad.cn/archives/lab/ami-bios-splash-logo-replacement-notes" target="_blank" rel="noopener">更换AMI BIOS Splash LOGO的方法步骤</a>，今天接着介绍更换手机Splash LOGO的方法。对于不同型号的手机所需的工具可能不太一样，在这里以我的红米Note4X高通版(mido)为例。其它型号请参考<a href="https://forum.xda-developers.com/android/software-hacking/guide-how-to-create-custom-boot-logo-t3470473" target="_blank" rel="noopener">这个帖子</a></p>
 <h2>什么是Splash LOGO</h2><p>Splash LOGO不是开机动画，而是手机开机后一段时间内显示的图像，最常见的是手机品牌的商标。对于MIDO（或者说小米设备）来说，这个图标就是常说的“MI”图标</p>
 <h2>备份（可选）</h2><p>虽说备份总是必不可少的，但这次却并不是很有必要，因为可以从官方固件中提取到，但为了以防万一，还是备份一下吧~<br>在手机的终端模拟器中执行<code>dd if=/dev/block/bootdevice/by-name/splash of=/sdcard/splash.img</code>，即可将Splash LOGO备份至SD卡</p>
 <h2>下载制作工具</h2><p>感谢XDA大神<a href="https://forum.xda-developers.com/member.php?u=6319272" target="_blank" rel="noopener">@GokulNC</a>的<a href="https://forum.xda-developers.com/redmi-note-4/how-to/guide-how-to-change-boot-logo-splash-t3572441" target="_blank" rel="noopener">教程和Splash LOGO制作工具</a>。<br>前人栽树后人乘凉，我们不必关心具体的技术细节，只需掌握基本的文件操作就能够实现制作和更换Splash LOGO<br>下载并解压<strong>Redmi_Note_4_Splash_Maker.zip</strong></p>
@@ -112,9 +112,9 @@ dd if=/sdcard/splash.img of=/dev/block/bootdevice/by-name/splash<span aria-hidde
        value="uWuwGS1xiIwh3zHKENc7ubyL">
 <script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
 
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/libs/highlight/highlight.pack.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b418e427/js/js.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/libs/highlight/highlight.pack.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@f3f42bc8/js/js.js"></script>
 
 <style type="text/css">
     .v * {
