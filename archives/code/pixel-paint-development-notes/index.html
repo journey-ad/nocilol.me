@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/code/pixel-paint-development-notes/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            像素绘板开发笔记
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p>!<a href="https://github.com/journey-ad/pixel-paint" target="_blank" rel="noopener">https://github.com/journey-ad/pixel-paint</a></p>
+<p><a href="https://journey-ad.github.io/pixel-paint" target="_blank" rel="noopener">Demo</a></p>
+<p>又是一个练手用的Web App，依然使用Vue进行开发。在此把遇到的一些场景和解决方法一并记录下来</p>
+<h2>移动端弹出框滚动穿透</h2><p>有两个解决方法：</p>
+<ul>
+<li><p>弹窗组件最外层添加<code>touchmove</code>事件监听，并阻止默认行为，但会阻止所有滚动事件，仅当弹框内不需要滚动时使用</p>
+</li>
+<li><p><code>body</code>设置<code>position: fixed</code>，可能影响布局，酌情使用</p>
+</li>
+</ul>
+<h2>移动端滑动选择（模拟:hover）</h2><p>移动端原生不支持滑动触发状态，<code>touchmove</code>回调传入的Touch事件对象<code>target</code>始终为触摸开始时的元素，但Touch事件对象包含<code>pageX</code>、<code>pageY</code>、<code>clientX</code>、<code>clientY</code>等属性，值为滑动坐标偏移值，结合父容器的<code>clientWidth</code>和元素数量可计算出当前滑动元素的索引，进行相应处理</p>
+<p>滑动事件触发频率较高，易产生性能问题，通常使用节流函数限制触发频次</p>
+<h2>元素移动性能</h2><p>使用<code>transform</code>的<code>translate</code>函数移动元素位置，而不是top、left、margin等，后者会触发页面回流，消耗更多性能</p>
+<p>还可使用<code>translate3d</code>开启硬件加速进一步提高性能</p>
+<h2>移动端禁止下拉刷新</h2><h3>方法一</h3><p>对<code>body</code>应用css样式<code>overscroll-behavior: none;</code></p>
+<h3>方法二</h3><p>使<code>body</code>和容器脱离文档流，并设置元素堆叠</p>
+<pre class="line-numbers language-css"><code class="language-css"><span class="token selector"><span class="token class">.body</span>,
+<span class="token class">.wrapper</span> </span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">/* 脱离文档流 */</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span>
+  <span class="token property">top</span><span class="token punctuation">:</span> <span class="token number">0</span>px<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 占满空间 */</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100%</span><span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100%</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 移除边距 */</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* 允许纵向滚动 */</span>
+  <span class="token property">overflow-y</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector"><span class="token class">.body</span> </span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">/* body在底部 */</span>
+  <span class="token property">z-index</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector"><span class="token class">.wrapper</span> </span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">/* 容器在上部 */</span>
+  <span class="token property">z-index</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2>Canvas性能实践</h2><h3>使用<code>requestAnimationFrame</code></h3><p><code>setInterval</code>可能会被阻塞造成的回调执行周期不可控，且无法应对刷新率不同的设备，<code>requestAnimationFrame</code>可以解决这两个问题，回调执行周期严格控制在浏览器发生刷新之前，且随设备刷新率变化而动态发生改变，这个周期在60Hz的屏幕上为<code>1000/60 ≈ 16.67ms</code></p>
+<p>使用<code>cancel​Animation​Frame</code>取消raf</p>
+<h3>Canvas分层</h3><p>对于静态或更新频率较低的画面可以放到另外一层画布上，画布间使用<code>z-index</code>控制堆叠顺序，可以不必与需要频繁更新的画布一同绘制，减少性能开销，这种做法在游戏领域较为常见</p>
+<h3>使用“离屏绘制”</h3><p>Canvas无需插入页面也能绘制，结合<code>document.createElement()</code>与<code>ctx.drawImage()</code>方法，维护一个小尺寸的画布作为原始数据，画板会更容易实现缩放、平移等功能</p>
+<h3>Canvas禁用自动平滑（使用临近缩放）</h3><p>对于像素画风的应用或游戏很有用，绘制前设置<code>ctx.imageSmoothingEnabled = false</code>，由于此属性仍为实验性质，使用时要加上前缀</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript">ctx<span class="token punctuation">.</span>mozImageSmoothingEnabled <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+ctx<span class="token punctuation">.</span>webkitImageSmoothingEnabled <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+ctx<span class="token punctuation">.</span>msImageSmoothingEnabled <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+ctx<span class="token punctuation">.</span>imageSmoothingEnabled <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2>随机数版本uuid生成JS实现</h2><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">let</span> uuid <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> d <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> performance <span class="token operator">!==</span> <span class="token string">'undefined'</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">typeof</span> performance<span class="token punctuation">.</span>now <span class="token operator">===</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    d <span class="token operator">+</span><span class="token operator">=</span> performance<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token string">'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/[xy]/g</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> r <span class="token operator">=</span> <span class="token punctuation">(</span>d <span class="token operator">+</span> Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">16</span> <span class="token operator">|</span> <span class="token number">0</span>
+    d <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>d <span class="token operator">/</span> <span class="token number">16</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>c <span class="token operator">===</span> <span class="token string">'x'</span> <span class="token operator">?</span> r <span class="token punctuation">:</span> <span class="token punctuation">(</span>r <span class="token operator">&amp;</span> <span class="token number">0x3</span> <span class="token operator">|</span> <span class="token number">0x8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2>生成随机十六进制色值</h2><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token function">getRandomColor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">16</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"#"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0xffffff</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2>node.js相关</h2><h3>图片裁剪、缩放</h3><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> sharp <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'sharp'</span><span class="token punctuation">)</span>
+
+<span class="token function">sharp</span><span class="token punctuation">(</span><span class="token string">'path/to/image.png'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">extract</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    left<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    top<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+    width<span class="token punctuation">:</span> <span class="token number">1080</span><span class="token punctuation">,</span>
+    height<span class="token punctuation">:</span> <span class="token number">1080</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span> <span class="token number">128</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    kernel<span class="token punctuation">:</span> <span class="token string">'nearest'</span> <span class="token comment" spellcheck="true">// 临近算法</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">toBuffer</span><span class="token punctuation">(</span><span class="token punctuation">(</span>_err<span class="token punctuation">,</span> data<span class="token punctuation">,</span> info<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>info<span class="token punctuation">,</span> data<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3>简单命令行参数获取</h3><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> argv <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'optimist'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>argv
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>argv<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3>获取图片像素信息</h3><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">const</span> getPixels <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'get-pixels'</span><span class="token punctuation">)</span>
+
+<span class="token function">getPixels</span><span class="token punctuation">(</span><span class="token string">'path/to/image.png'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>_err<span class="token punctuation">,</span> pixels<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> pixels <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> y <span class="token operator">&lt;</span> pixels<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span> y<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> pixels<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> r <span class="token operator">=</span> pixels<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span>
+      <span class="token keyword">const</span> g <span class="token operator">=</span> pixels<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span>
+      <span class="token keyword">const</span> b <span class="token operator">=</span> pixels<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span>
+      <span class="token keyword">const</span> hex <span class="token operator">=</span> <span class="token template-string"><span class="token string">`#</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>r<span class="token interpolation-punctuation punctuation">}</span></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>g<span class="token interpolation-punctuation punctuation">}</span></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>b<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span>
+      pixels<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>hex<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2>Vue-Cli 3.x使用<code>moment.js</code>、<code>lodash</code>打包精简</h2><p>安装<code>webpack-bundle-analyzer</code>和<code>lodash-webpack-plugin</code>，配置<code>vue.config.js</code>文件</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">let</span> webpack <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'webpack'</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> BundleAnalyzerPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'webpack-bundle-analyzer'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>BundleAnalyzerPlugin
+<span class="token keyword">let</span> LodashModuleReplacementPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'lodash-webpack-plugin'</span><span class="token punctuation">)</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  chainWebpack<span class="token punctuation">:</span> config <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    config<span class="token punctuation">.</span><span class="token function">plugin</span><span class="token punctuation">(</span><span class="token string">'ignore'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>IgnorePlugin</span><span class="token punctuation">(</span><span class="token regex">/^\.\/locale$/</span><span class="token punctuation">,</span> <span class="token regex">/moment$/</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    config<span class="token punctuation">.</span><span class="token function">plugin</span><span class="token punctuation">(</span><span class="token string">'analyzer'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">BundleAnalyzerPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    config<span class="token punctuation">.</span><span class="token function">plugin</span><span class="token punctuation">(</span><span class="token string">'loadshReplace'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LodashModuleReplacementPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2>Vue-Router按需加载页面，JS分包</h2><p>组件定义为promise并import实现按需加载</p>
+<p>使用魔术注释<code>/* webpackChunkName: &quot;chunkName&quot; */</code>实现JS分包</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Router <span class="token keyword">from</span> <span class="token string">'vue-router'</span>
+
+<span class="token keyword">const</span> Artwork <span class="token operator">=</span> <span class="token punctuation">(</span>resolve<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token comment" spellcheck="true">/* webpackChunkName: "artwork" */</span> <span class="token string">'./views/artwork.vue'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span>module<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token function">resolve</span><span class="token punctuation">(</span>module<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Router<span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Router</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  routes<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      path<span class="token punctuation">:</span> <span class="token string">'/artwork'</span><span class="token punctuation">,</span>
+      name<span class="token punctuation">:</span> <span class="token string">'artwork'</span><span class="token punctuation">,</span>
+      component<span class="token punctuation">:</span> Artwork
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1560143100000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

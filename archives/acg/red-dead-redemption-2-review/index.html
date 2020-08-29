@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/acg/red-dead-redemption-2-review/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            会呼吸的西部：《荒野大镖客：救赎2》评测
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/11/04/header.jpg" alt="亡命终生"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-74709958"
+      data-id="cplayer-74709958"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[5040239]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-74709958"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-74709958"] = new cplayer({
+            element: document.getElementById("cplayer-74709958"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-74709958"].add163(5040239)
+
+          let player = window.cplayerList["cplayer-74709958"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>前言</h2><p>10月26日，Rockstar所有团队作为整体参与，经过8年之久的漫长开发，无数粉丝翘首以盼的《荒野大镖客：救赎2》（坊间称呼「大表哥」），终于在跳票数次后与我们见面了</p>
+<p>Rockstar可谓整个游戏业中最具神秘色彩的公司，而这种低调的气质也伴随着大表哥。大表哥最初公布于2016年10月，从公布到发售的两年时间里一直保持着神秘的面纱，直到发售前夕也没有一支像样的实机预告。但R星还是那个R星，从不让我们失望，97分的MC评分已经足够证明这款游戏的实力</p>
+<h3>实力源于加班？</h3><p>根据此前媒体Vulture对Dan Houser——Rockstar的联合创始人，大表哥创意主管的专访，大表哥主线故事剧本有2000页之巨，如果把所有的分支任务和NPC间对话加到一起，剧本堆起来大约有2.4米高，动作捕捉耗时2200天，动用了超过1200名演员，超过700名演员参与了配音工作。而在采访中Dan Houser曾提到「每周工作100小时」来完成游戏，这句话引发了业界广泛的关于加班的讨论，具体可参见由游戏时光VGtime翻译的<a href="https://www.vgtime.com/topic/1040054.jhtml" target="_blank" rel="noopener">此篇文章</a></p>
+<p>那么就带着对资本家的怒火，批判性的游玩此作品吧</p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181031154023.jpg" alt="游戏标题"></p>
+<h3>开箱</h3><p>我购入的是PS4平台实体标准版，在发售三天后发货，一周内到手。本作游戏容量达到了惊人的90G，包装盒为双盘设计，安装所需容量为105G，安装过程历时一个半小时🌝</p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/IMG_20181031_133757.jpg" alt="封面"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/IMG_20181031_133948.jpg" alt="双盘"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/IMG_20181031_150341.jpg" alt="安装完毕"></p>
+<h2>那个一去不返的时代</h2><p>游戏背景设定于1899年的美国，彼时正值世纪之交，美国正在由一个农业国转变为工业国。在工业文明的历史洪流中，曾经横行蛮荒西部的亡命帮派，不可避免的走向凋零。处于变革时期，每一个人都要决定自己的命运，但是昔日的罪行又岂能轻易洗刷，侥幸金盆洗手的，也失去了一些相应的东西</p>
+<p>就这样，故事在一场暴风雪中开场了。主角亚瑟所在的范德林德帮在黑水镇抢劫失利伤亡惨重，被迫开始逃亡，途中遭遇了晚春时节罕见的暴风雪。21:9的电影镜头、出色的画面氛围、简单的平铺直叙，直接把玩家们推进了游戏世界</p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/114551033334.jpg" alt="初见"></p>
+<p>本作虽是续作，但在时间线上为第一部的前传，因此故事虽刚刚开始，结局却早已注定</p>
+<h2>自洽的生态系统</h2><p>本作在地图面积上相对于前作得到了极大的提升，这使得游戏内地图可以跨越高山雪原到森林平原，再到南国沼泽，乃至荒芜沙漠的多种气候地貌，并在地貌环境之上，构建出了一套完善的生态系统</p>
+<p>因为冬日食物不足导致熊更具攻击性；狼群会围猎食草动物；草原上的野马群和绵羊，马车在泥泞的道路轧出车辙；不同身份的NPC会从事自身所属的工作；酒馆里的食客与赌徒，玩家能与游戏世界的每一个人打招呼，距离过近时会被提醒或讥讽…种种这些，可能有一部分之前在其他的游戏中出现过，但集大成，并做至极致者，唯有R星</p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181031172133.jpg" alt="麻匪下山"></p>
+<p>这些要素为游戏的代入感提供了非常大的帮助，玩家与NPC之间的关系不再是冷冰冰的任务，而是如同自然发生一般，NPC之间也会谈话、争吵，乃至决斗。如同一个鲜活的世界，没有玩家的参与也能运转流传下去</p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181101210831.jpg" alt="对酒当歌"></p>
+<h2>视觉享受与氛围</h2><p>大表哥目前是一款主机限定游戏，登陆了PS4、Xbox One双平台。受平台机能限制，画质比不上PC上的大作（更不毕提PC有画质MOD加成），但托极其优秀的光影效果和氛围表现所赐，整体的画面观感已经可用「震撼」来形容</p>
+<p>煤油灯闪烁着火焰，散发出温暖的光芒，推开门前往户外的冰天雪地，色调陡然从温暖的黄色转为冰冷的蓝灰，狂风卷集着乌云，仿佛真的身临其境，能体会到刺骨的寒冷</p>
+<p>清晨在营地中醒来，第一缕阳光越过树丛照耀进来，散发着柔和的光辉，鸟儿在头顶划过，林间有薄雾升起，走在路上突然下起雨来，狂风吹散了雨雾，坐在酒馆打牌时能听到窗外轰隆的雷声</p>
+<p>悠哉地在湖畔钓鱼，水天一色，舟中人静静划过，仿佛时间都慢了下来，鱼儿咬钩，为长久的等待带来收获的喜悦，连对湖边在头顶萦绕不散的蚊虫也不那么在意了</p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181031222552.jpg" alt="冬日捕猎"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181102220343.jpg" alt="等待黎明"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181102212547.jpg" alt="湖畔钓鱼"></p>
+<h2>细节，还是细节</h2><p>对细节的执着是大表哥极具魅力的原因之一，在雪地和泥泞的地面会留下足迹、马车会轧出车辙；马蹄在不同材质的路面声音会不同；衣服在雨雪天气里会湿透、落满雪花，进入室内后雪花会融化，湿透的衣服会逐渐变干 ；在泥泞的路面摔倒后衣服会沾满污泥，污泥会干结脱落，留下尘土的痕迹；指甲缝隙会嵌入污垢，鞋底会沾上泥巴；动物尸体会随时间变化而腐烂乃至化为白骨；寒冷的天气可以看到呼出的水汽凝结；奔跑的马匹臀部肌肉会随之运动；湖边钓鱼时会有蚊虫在头顶聚集；被炸弹炸过的沼泽会炸出一个坑；屋子着火后窗户玻璃会受热破裂；可以在剧场观看演出，演员还会与玩家互动；从室内走到明亮的户外光线会动态而真实的变化…种种细节不胜枚举，这些都是我在这几天的游玩过程中体验到的内容，没体验到的一定还有不少</p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181101211953.jpg" alt="营地早晨的阳光"></p>
+<h2>图赏</h2><p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181101200724.jpg" alt="月夜逃亡"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181101225903.jpg" alt="爱上一匹野马"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181102230956.jpg" alt="清晨的城市街道"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181103030449.jpg" alt="清早起来打开窗心情美美哒"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181103012458.jpg" alt="雨夜电车"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181103013838.jpg" alt="美国炸金花"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181101163335.jpg" alt="露宿街头"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181102221337.jpg" alt="余拏一小舟"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181103024753.jpg" alt="月光映照的沼泽"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181103024803.jpg" alt="炸出浅坑"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181103023257.jpg" alt="圣丹尼斯电车爆炸案"></p>
+<h3>对现实和历史的映射，以及荒诞剧</h3><p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181101155538.jpg" alt="长的像希特勒的种族主义者"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181102223309.jpg" alt="逃跑时溺亡的黑奴"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181031174006.jpg" alt="剧情人物对西进运动时期印第安人遭遇的评说"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181103000306.jpg" alt="游戏内报纸关于《排华法案》的报道"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181102150438.jpg" alt="酗酒牧师的《圣经》"></p>
+<p><img src="https://img.imjad.cn/images/2018/11/04/RedDeadRedemption2_20181102213749.jpg" alt="与一代人物有关的信"></p>
+<h2>结语</h2><p>R星用8年的时间，为我们打磨出了一款高质量的作品，与被业界奉为共识的「讨好玩家」的做法不同，在这款游戏中，玩家的爽快感无法简单直接的由「突突突」得到，同时只能携带有限把枪支，换枪要等上一把放置完毕后才能更换；搜刮物品要跟随动作一步一步来，而不是常见的「一键捡取」；开一两枪就要重新装填，伴随着无法跳过的装填动作；城镇场景很小，大部分时间都是在荒野上骑马赶路；游戏内的赏金系统限制了玩家的大开杀戒…种种地方露出一个「慢」字，在快餐文化大行其道的今天，这样的一款游戏就显得那么格格不入，由此难免会导致玩家的评价分化。喜欢在洛圣都飙车火拼的玩家带着「西部版GTA」的期望体验了大表哥后很容易会表示出失望之情，留下「游戏是好游戏，但不好玩」的评价。但如果也慢下自己的心，将自己代入到大表哥的游戏世界，去体会人物间的快意恩仇，感受在大变革时期个人有多么微不足道，体会开发者想要表达的情绪与主题，或许会有别样的感受与体验</p>
+<p>话虽如此，大表哥却并不是一款完美无缺的游戏，目前的技术水平和机能仍无法做出完全拟真的游戏世界，要想达到近似拟真的效果难免落到「堆细节」的俗套中。但同样由于容量和机能限制，这种做法不可能无限维持下去，当玩家期望的结果或想做的事情游戏机制没有考虑到时，这种靠细节拼起来的体验会让人瞬间出戏。对细节的执着也导致了繁琐的操作和误触，心中想着某种动作却误操作为其他动作会严重打击沉浸感。对此R星也表示对本世代主机性能并不满意，会在下世代推出重制版，在此期望R星能再次榨干次世代主机的机能吧🌝</p>
+<p>3000人的开发团队，8亿美金的成本，在游戏史上绝无仅有。对细节的打磨，对故事背景的还原，对游戏节奏的克制，电子游戏这门第九艺术，在R星手中又一次绽放出了光芒</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1541307480000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

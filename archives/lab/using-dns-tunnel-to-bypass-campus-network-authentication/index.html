@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/using-dns-tunnel-to-bypass-campus-network-authentication/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            使用DNS隧道绕过校园网认证
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/09/04/66192197_p0.jpg" alt="あたいが・・・来たぁぁぁぁ！ @ 玄月ちひろ"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-41374871"
+      data-id="cplayer-41374871"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[751472]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-41374871"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-41374871"] = new cplayer({
+            element: document.getElementById("cplayer-41374871"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-41374871"].add163(751472)
+
+          let player = window.cplayerList["cplayer-41374871"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>一点<del>大胆的</del>想法</h2><p><a href="https://imjad.cn/archives/lab/giwifi-auth-process-analysis-and-simulation-login">前几日分析完校园网的登录认证过程</a>之后已经过了几天，近日突发奇想，想试着能不能绕过校园网的这个网页认证，实现诸如免费上网、在上网区间外上网等的操作</p>
+<p>由于本人对web安全方面所知甚少，遂又是一番搜寻，发现在此之前已经有许多先辈完成了这方面的目标。自己也试着折腾了一通</p>
+<p>于是便拾人牙慧，凑成这篇文章</p>
+<h2>技术原理</h2><p>经过一番搜寻，我找到了一些方法。而这些方法，虽说用的软件工具各不相同，但总体看下来，利用的都是一个原理：</p>
+<p>为了实现网页认证，网关设备必须要给终端分配IP，同时劫持80、443端口的数据包并跳转至认证页(这也是http页才能跳转至认证页的原因，https将会无法跳转或报证书错误)。在认证通过后放行这两个端口，其他的端口也是如此，但一般情况下有一些端口却并非如此，比如本文的主角——UDP 53端口</p>
+<blockquote>
+<p>类似这样的端口还有一些，比如UDP 67，用于DHCP</p>
+</blockquote>
+<p>学过计算机网络基础知识的同学应该知道，在UDP 53上运行的是DNS协议，域名解析的数据包就通过这个端口进行传输，一般情况下网关都会放行这个端口的UDP通信，甚至是整个端口(注意是一般情况，这点之后会详细说明)。对于此类网关，要绕过认证就很简单了，只需一台使用53端口通信的代理服务器即可。这种情况过于简单，没有单独写一篇文章的必要，下面我们就来谈一谈那些「非一般」的情况(我校正是这种情况🌝)</p>
+<p>部分网关虽然放行了53端口，却在网关处劫持了53端口的通信，这使得终端的数据根本到达不了远端，DNS解析请求会被网关抢答，而其他数据则是直接丢弃。表现就是使用<code>nslookup</code>等命令能查询到正确的解析结果，使用<code>tcping</code>等TCP数据包测试工具也能看到端口开放，延迟却是神奇的1ms(即本机到网关的延迟)</p>
+<p>那么就没有办法了吗？非也，要知道劳动人民的智慧是无穷的，为了能够免费上网，这些极客们发明了许多神奇的，堪称黑科技的，甚至细细品味一番会发现有些搞笑的方法。</p>
+<p><em>这段是在调侃，「免费上网」只是表面，背后的思想及技术验证才是最可贵的</em></p>
+<p>比如给我个人印象颇深的利用ICMP报文(即<code>ping</code>命令的数据包)和本文介绍的利用DNS查询请求报文来进行数据通信，这两种通信方式被形象的称为「PING隧道」和「DNS隧道」</p>
+<p>但需要说明的是，这两种方法虽然实践证明可行，但由于对应的协议设计不是用来传输数据的，强行使其支持数据传输后，速度也是慢的离谱，并且大量频繁的Ping请求或DNS查询也很容易被甄别为异常流量从而遭到封锁。因此本文的意义更在于「折腾」的过程，而不是结果。<del>买一张无限流量卡开热点，相比这些体验要强多了，毕竟能用钱解决的事都不算事嘛</del></p>
+<h2>DNS隧道</h2><p>实现DNS隧道有许多种方法，这里使用工具<strong>dns2tcp</strong>来实现</p>
+<p>这种方法需要一台Linux系统的外部VPS来作为代理服务器、一个可配置NS解析的域名作为传输中介</p>
+<p><strong>另请注意，本文出现的配置文件及命令的参数值不可直接套用，需根据实际情况进行修改</strong></p>
+<h3>在域名解析面板的操作</h3><p>国内支持NS记录解析的DNS解析服务据我所知有DNSPod和CloudXNS，这里使用CloudXNS</p>
+<p>如图所示，需要添加两条记录：</p>
+<p>一条A记录，主机名任意，这里使用<code>temp1</code>，值为VPS的IP</p>
+<p>一条NS记录，主机名任意但需牢记，这里使用<code>dns2tcp</code>，值为A记录的主机名对应的完整域名，这里是<code>temp1.nocilol.me</code></p>
+<p><img src="https://img.imjad.cn/images/2018/09/04/sp180903_230655.png" alt="域名解析"></p>
+<h3>在服务端的操作</h3><h4>防火墙配置</h4><p>首先需要在安全组和防火墙规则中放行53端口的UDP连接，安全组参考各IDC的配置教程，防火墙若使用iptables的话，添加如下规则：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">-A INPUT -p udp -m udp --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 53 -j ACCEPT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4>安装dns2tcp</h4><p>一般Linux发行版的软件仓库里都带了dns2tcp，直接安装即可，若无的话可以自行编译，项目地址为<a href="https://github.com/alex-sector/dns2tcp" target="_blank" rel="noopener">alex-sector/dns2tcp</a></p>
+<p><em>Windows系统不支持dns2tcp的服务端dns2tcpd，这点需要注意</em></p>
+<p>在Debian系的发行版中使用下列命令安装：</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># apt install dns2tcp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>工具不大，很快就会安装完毕</p>
+<h4>配置dns2tcpd</h4><p>配置文件默认目录为<code>~/.dns2tcpdrc</code>，也可在随后启动<code>dns2tcpd</code>时以<code>-f</code>参数指定配置文件路径</p>
+<p>配置文件内容为：</p>
+<pre><code>listen = 0.0.0.0
+port = 53
+user = nobody
+key = your_own_password
+chroot = /tmp
+domain = dns2tcp.nocilol.me
+resources = ssh:127.0.0.1:22 , smtp:127.0.0.1:25</code></pre><p>其中的<code>key</code>字段值为口令，可以防止不知道口令的人连接到本机的dns2tcp服务</p>
+<h4>运行dns2tcpd</h4><p>调用说明</p>
+<pre><code>Usage : dns2tcpd [ -i IP ] [ -F ] [ -d debug_level ] [ -f config-file ] [ -p pidfile ]
+         -F : dns2tcpd will run in foreground</code></pre><p>执行下列命令测试启动服务端进程：</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># dns2tcpd -F -d 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果配置文件无误，应当会输出类似如下的内容：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">15:45:14 : Debug options.c:97   Add resource ssh:127.0.0.1 port 22
+15:45:14 : Debug options.c:97   Add resource smtp:127.0.0.1 port 25
+15:45:14 : Debug socket.c:55    Listening on 0.0.0.0:53 for domain dns2tcp.nocilol.me
+Starting Server v0.5.2...
+15:45:14 : Debug main.c:132     Chroot to /tmp
+15:45:14 : Debug main.c:142     Change to user nobody<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实际使用时执行下列命令以守护进程的方式在后台运行：</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># dns2tcpd -d 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3>在客户端的操作</h3><p>从这一步开始就可以断网操作了，断网指的是连接热点或插上网线，但不进行认证的状态</p>
+<p>dns2tcp的安装过程不再赘述，Windows系统用户可以自行从源代码编译或在<a href="http://azertyfab.free.fr/dns2tcp/" target="_blank" rel="noopener">这个页面</a>直接下载到编译好的dns2tcpc.exe</p>
+<h4>配置dns2tcpc</h4><p>配置文件默认目录为<code>~/.dns2tcpdrc</code>，也可在随后启动<code>dns2tcp</code>时以<code>-f</code>参数指定配置文件路径</p>
+<p>配置文件内容为：</p>
+<pre><code>domain = dns2tcp.nocilol.me
+resource = ssh
+local_port = 2222
+debug_level = 2
+key = your_own_password
+# server = your_vps_ip</code></pre><h4>运行dns2tcpc</h4><p>调用说明</p>
+<pre><code>dns2tcp v0.5.2 ( http://www.hsc.fr/ )
+Usage : dns2tcpc [options] [server] 
+    -c             : enable compression
+    -z &lt;domain&gt;    : domain to use (mandatory)
+    -d &lt;1|2|3&gt;    : debug_level (1, 2 or 3)
+    -r &lt;resource&gt;    : resource to access
+    -k &lt;key&gt;    : pre-shared key
+    -f &lt;filename&gt;    : configuration file
+    -l &lt;port|-&gt;    : local port to bind, &#39;-&#39; is for stdin (mandatory if resource defined without program )
+    -e &lt;program&gt;    : program to execute
+    -t &lt;delay&gt;    : max DNS server&#39;s answer delay in seconds (default is 3)
+    -T &lt;TXT|KEY&gt;    : DNS request type (default is TXT)
+    server    : DNS server to use
+    If no resources are specified, available resources will be printed</code></pre><p>执行下列命令测试与服务端的连接是否通畅：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ dns2tcpc -z dns2tcp.nocilol.me -d 3 -k your_own_password<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果一切正常，将输出类似下面的内容：</p>
+<pre><code>Available connection(s) : 
+    ssh
+    smtp
+
+Note : Compression SEEMS available !
+No DNS given, using 223.5.5.5 (first system preferred DNS server)
+debug level 3
+Debug socket.c:233    Create socket for dns : &#39;223.5.5.5&#39; 
+Debug session.c:46    Request challenge
+Debug requests.c:146    Sending dns id = 0x3f0b
+Debug requests.c:97    Query is AAAAABV/AA.=auth.dns2tcp.nocilol.me len 35
+Debug rr.c:106    rr_decode_next_reply_encode base64 data was = AQUAABV/AFkxN0pEMEpZT0dUR1lJUUI (reply len = 34)
+Debug session.c:53    Challenge = &#39;Y17JD0JYOGTGYIQB&#39;
+Debug session.c:54    Session created (0x501)
+Debug session.c:77    Sending response : &#39;11F5Ab37A7DE310AC28F396B75E45B186D24AB39&#39; (key = your_own_password) 
+Debug requests.c:146    Sending dns id = 0xd21f
+Debug requests.c:97    Query is AQWBgAABADExRjVBQzE3QTdERTMzMEFDMjlGNzM2Qjc1RTQzNzE1NkIyNEFCNjk.=auth.dns2tcp.nocilol.me len 88
+Debug rr.c:106    rr_decode_next_reply_encode base64 data was = AQWBgAABAA (reply len = 13)
+Debug auth.c:58    Requesting resource
+Debug requests.c:146    Sending dns id = 0x2e29
+Debug requests.c:97    Query is AQWPJOMjAA.=resource.dns2tcp.nocilol.me len 39
+Debug rr.c:106    rr_decode_next_reply_encode base64 data was = 1FwCb/x/AHNzaA (reply len = 17)
+Debug rr.c:106    rr_decode_next_reply_encode base64 data was = 1FwCb/x/AHNtdHA (reply len = 18)</code></pre><p>如果输出类似下面的内容，请检查操作是否有误，若操作无误，请等待一段时间，DNS解析缓存需要一定时间来刷新和传递：</p>
+<pre><code>No DNS given, using 223.5.5.5 (first system preferred DNS server)
+debug level 3
+Debug socket.c:233    Create socket for dns : &#39;223.5.5.5&#39; 
+Debug session.c:46    Request challenge
+Debug requests.c:146    Sending dns id = 0xbc7b
+Debug requests.c:97    Query is AAAAAOt7AA.=auth.dns2tcp.nocilol.me len 35
+No response from DNS 223.5.5.5</code></pre><p>测试成功之后，执行下列命令启动客户端进程：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ dns2tcpc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>将会输出类似下面的内容：</p>
+<pre><code>debug level 2
+Debug socket.c:233    Create socket for dns : &#39;223.5.5.5&#39; 
+Listening on port : 2222
+When connected press enter at any time to dump the queue</code></pre><p>保持这个终端窗口打开，不要关闭</p>
+<h4>转换为SOCKS v5通用代理</h4><h5>Linux</h5><p>新打开一个终端窗口并执行下列命令<del>是不是有点似曾相识</del>：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ ssh user@127.0.0.1 -p 2222 -D 2333<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5>Windows</h5><p>使用SSH连接工具的隧道功能，这里给一个Xshell的配置示例：</p>
+<p><img src="https://img.imjad.cn/images/2018/09/04/sp180904_095832.png" alt="连接至dns2tcpc转发的ssh端口"></p>
+<p><img src="https://img.imjad.cn/images/2018/09/04/sp180904_095617.png" alt="SSH隧道配置"></p>
+<p>如果一切正常，SSH隧道将连接成功，同时可以观察到dns2tcpc的终端打印出大量日志信息</p>
+<h4>配置系统代理或软件代理</h4><p>在系统或软件的代理设置中配置为SOCKS v5，地址<code>127.0.0.1</code>，端口<code>2333</code></p>
+<p>具体配置方法不再详述，完成后即可正常上网</p>
+<h2>体验如何</h2><p>首先泼一盆凉水，体验可以用「糟糕」来形容:(</p>
+<p>本文开头曾提到：「…虽然实践证明可行，但由于对应的协议设计不是用来传输数据的，强行使其支持数据传输后，速度也是慢的离谱，并且大量频繁的Ping请求或DNS查询也很容易被甄别为异常流量从而遭到封锁。」</p>
+<p>而具体体验如何，我就贴两张图吧，一切尽在不言中🌝</p>
+<p><img src="https://img.imjad.cn/images/2018/09/04/TIM20180904101615.png" alt="浏览器的下载速度"></p>
+<p><img src="https://img.imjad.cn/images/2018/09/04/TIM20180904101626.png" alt="百度首页首次加载时间"></p>
+<p>虽然体验不尽如人意，但是生命在于折腾嘛。在折腾的过程中，能够了解到在小小的Web认证的背后还有如此多的、有趣的知识，比起最初的目的而言，要重要的多了。</p>
+<p>人生也应大抵如此吧</p>
+<h2>参考</h2><p><a href="https://qiuri.org/posts/2152501839/" target="_blank" rel="noopener">透过DNS Tunnel绕过校园网认证系统实现免费上网</a></p>
+<p><a href="https://www.cnblogs.com/nkqlhqc/p/7805837.html" target="_blank" rel="noopener">绕过校园网WEB认证_dns2tcp实现</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1535999820000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

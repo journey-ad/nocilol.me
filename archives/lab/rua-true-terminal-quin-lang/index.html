@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/rua-true-terminal-quin-lang/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            RUA！真实终端大秦话
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2017/10/23/Screenshot-20171023145754-984x592.png" alt="rua screenshot"></p>
+<p><a href="https://github.com/journey-ad/quin" target="_blank" rel="noopener">项目地址</a><br><gb>journey-ad/quin</gb></p>
+<p><strong>quin</strong> 是一个简单的 motd 脚本，内容基于一种由大秦后人，“现在在斗鱼TV<del>微博</del>上班，每天都会摸鱼” 的主播 <a href="https://zh.moegirl.org/Mr.Quin" target="_blank" rel="noopener">Mr.Quin</a> 所建立的大秦话。它会输出一些随机的大秦话，其中有时会穿插基于你计算机上的东西。</p>
+<p>截图中使用的 shell 为 <a href="https://github.com/fish-shell/fish-shell" target="_blank" rel="noopener">FISH</a></p>
+<h2>特性</h2><ul>
+<li>随机放置和着色的随机字符串，组成一段大秦话</li>
+<li>帮助各位 new ass 时刻学习大秦话</li>
+<li>获取系统数据，如主机名、正在运行的进程、当前用户和 <code>$EDITOR</code></li>
+<li>如果你有 <a href="https://github.com/busyloop/lolcat" target="_blank" rel="noopener">lolcat</a>，你可以这样做：<br><code>while true; do quin | lolcat -a -d 100 -s 100 -p 1; done</code><br>(感谢 <a href="https://github.com/hom3chuk" target="_blank" rel="noopener">hom3chuk</a>)</li>
+<li>支持管道连接： <code>ls /usr/bin | quin</code> 将打印在 /usr/bin 中找到的一些可执行文件</li>
+<li>还有一些其他的参数开关，详情请看 <code>quin -h</code></li>
+<li>RUA！</li>
+</ul>
+<h2>安装</h2><p><code>pip install quin</code></p>
+<p>如果你因为某种原因不想这么干, 执行 <code>python setup.py install</code> 也是可以的</p>
+<p>请注意，如果你是不具有 argparse (&lt;=Python2.6) 环境的 new ass， 你必须从 pypi 手动安装 argparse</p>
+<p>然后只需把 <code>quin</code> 添加到你所用 shell 的 rc 文件底部即可</p>
+<h2>提示</h2><p>你需要在支持 unicode 的系统上运行支持256色的终端</p>
+<p>秦先生的头像是用 Gimp 和 <a href="https://github.com/rossy2401/img2xterm" target="_blank" rel="noopener">img2xterm</a> 创建的</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1508731380000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

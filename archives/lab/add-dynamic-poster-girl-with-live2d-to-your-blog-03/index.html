@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-03/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            给博客添加能动的看板娘(Live2D)-模型格式v3转v2
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/09/13/70257184_p0.jpg" alt="ころんびょん血小板ちゃん @ 白木栞"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-45983520"
+      data-id="cplayer-45983520"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[1297743786]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-45983520"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-45983520"] = new cplayer({
+            element: document.getElementById("cplayer-45983520"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-45983520"].add163(1297743786)
+
+          let player = window.cplayerList["cplayer-45983520"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>发现血小板</h2><p>最近在网上冲浪时，发现了一位大佬发布了『工作细胞』中血小板的模型 <a href="https://twitter.com/DenchiSoft/status/1036017773011525632" target="_blank" rel="noopener">原推地址</a>。作为萝莉控的绅士，我不由得春心萌动起来，更令人惊喜的是作者数天后在评论区放出了模型的源文件，实在是太令人感动了。于是事情很快就明朗了：陪伴了玩水半年之久的Pio，被无情的打入了冷宫</p>
+<p><em>这位大佬看资料是德国人</em></p>
+<p><a href="https://www.dropbox.com/s/4lbkvip48k3q83o/kesshouban.zip" target="_blank" rel="noopener">模型源文件</a></p>
+<h2>二选其一</h2><p>由于之前的轮子仅支持Cubism 2版（下文简称为v2）格式的模型，而这次发现的模型为Cubism 3版（下文简称为v3）。所以摆在我们面前的有两个选择：一是升级SDK到v3，二是将v3格式的模型转为v2格式</p>
+<p>而升级SDK不是个轻松的工作，既然已经有大佬<a href="https://github.com/xiazeyu/live2d-widget.js" target="_blank" rel="noopener">开了坑</a>，我这半吊子水平就不班门弄斧了。但问题又来了，live2d-widget.js的作者<a href="https://github.com/xiazeyu" target="_blank" rel="noopener">@xiazeyu</a>目前要准备高考，短时间内无法更新（画外音：果然是大佬）。</p>
+<p>而血小板模型的作者在发布时说了「ご自由に使ってどうぞ～！」，所以我们可以丢掉擅自修改模型的包袱。综合考虑一下，那么就选择第二条路吧</p>
+<h2>准备工作</h2><p>工欲善其事，必先利其器，首先我们需要下载需要用到的软件和工具</p>
+<h3>Cubism 3 Editor</h3><p>访问<a href="http://www.live2d.com" target="_blank" rel="noopener">Live2D官网</a>然后找到Cubism 3 Editor的发布页并进入<a href="http://cubism3.live2d.com.s3-website-ap-northeast-1.amazonaws.com/download_en.html" target="_blank" rel="noopener">下载页</a>，勾选同意使用协议并输入邮箱后就可以下载了，最新版的就可以，然后正常安装</p>
+<h3>可选</h3><p>必要的软件其实就Cubism 3 Editor一个，但为了方便考虑，可以选择安装下列软件工具</p>
+<h4>Cubism 3 Viewer</h4><p><a href="http://cubism3.live2d.com.s3.amazonaws.com/tools/cubism3viewer/download.html" target="_blank" rel="noopener">下载页</a></p>
+<h2>开始行动</h2><h3>(可选)查看模型</h3><p>打开Cubism 3 Viewer，映入眼帘的是经典的Unity游戏启动界面，简单设置分辨率等后进入主界面。</p>
+<p>按钮功能都很简单明了，点击<strong>Load Json</strong>加载模型JSON</p>
+<p><img src="https://img.imjad.cn/images/2018/09/13/sp180912_234533.png" alt="Cubism 3 Viewer"></p>
+<p>打开Cubism 3 Editor，因为这个模型材质图的分辨率高达4096 px，且部件数量远超出免费版的限制，因此我们只能使用专业版来操作。好在专业版有42天的试用时间，试用期间功能与正常版本无异</p>
+<p>将<code>kesshouban/model/kesshouban_v1.1.cmo3</code>拖入编辑器，即可进入编辑状态：</p>
+<p><em>这里不得不吐槽一句，都8102年了竟然还不支持高分屏，显示效果真的辣眼睛</em></p>
+<p><img src="https://img.imjad.cn/images/2018/09/13/sp180912_234817.png" alt="Cubism 3 Editor"></p>
+<p>可以看到密密麻麻的网格与活动部件，这些都是一个优秀的模型的基础，背后是大量时间与精力的付出，大家可以以此模型为参考学习制作Live2D模型</p>
+<p>出于多种原因，绝大部分制作师发布时只会发布导出后的模型文件。肯将作品的源文件分享出来的大佬，真的是太令人感动了</p>
+<p>闲话少叙，让我们继续下一步</p>
+<h3>修改材质图</h3><p>这块的操作与个人喜好有关。比如我觉得血小板背后的路障标志和脚下的地面不适合在网页上显示，帽子的字体也不是很喜欢，那么就来修改材质图吧</p>
+<p>首先进行分析分析，上面说的要修改的三点实际上可分为两种情况：</p>
+<ol>
+<li>对显示结果中的部分区域做修改</li>
+<li>隐藏或删去最终显示结果的一部分</li>
+</ol>
+<p>对于第一种情况，只能对材质图本身作修改了，先从导出材质图开始吧</p>
+<h4>导出材质图</h4><p>依次点击<strong>Modeling</strong> - <strong>Texture</strong> - <strong>Edit Texture Atlas</strong>打开材质图编辑窗口</p>
+<p>然后点击<strong>File</strong> - <strong>Export Texture Image</strong>，或点击<kbd>Ctrl+S</kbd>，然后选择材质图保存目录即可导出，导出后即可用一般的图像处理软件进行修改，注意不要对材质图进行任何的移动或裁剪</p>
+<h4>替换材质图</h4><p>在材质图编辑窗口内点击<strong>File</strong> - <strong>Replace Texture Image</strong>，或点击<kbd>Ctrl+O</kbd>，然后选择材质图即可导入，导入后无需更多操作，直接点击<strong>OK</strong>关闭窗口，软件会刷新数据，稍等片刻即可</p>
+<p>第二种情况可以用两种方法，一是将目标区域的材质图修改为透明，那么在显示时自然就会「消失」，二是删除目标区域部分的模型。为了减少模型文件大小和减轻运算量，推荐使用第二种方法。当然第一种方法并不是不可以，在无法接触到模型的源文件时，这也是唯一的方法。</p>
+<p>在主界面内点击想要删除的部件，出现红框即代表此部件被选中，然后点击<kbd>Del</kbd>键删除</p>
+<p><img src="https://img.imjad.cn/images/2018/09/13/sp180913_002734.png" alt="删除部件"></p>
+<h3>转换部位ID</h3><p>由于v3格式与v2的部位ID不同，直接导出的话会出现不跟随鼠标动作等问题，需要把v3格式的部位ID转为v2格式，编辑器已经包含了这个功能：</p>
+<p>在主窗口中依次点击<strong>Modeling</strong> - <strong>Convert Model ID</strong>打开ID转换窗口</p>
+<p><img src="https://img.imjad.cn/images/2018/09/21/sp180921_131428.png" alt="ID转换窗口"></p>
+<p>保持默认，点击<strong>OK</strong>就可以了</p>
+<h3>导出模型</h3><p>材质图和模型修改完成后，就可以开始模型的导出工作了</p>
+<p>在主窗口中依次点击<strong>File</strong> - <strong>Export For Runtime</strong> - <strong>Export as moc file (for 2.1)</strong>打开导出窗口</p>
+<p><img src="https://img.imjad.cn/images/2018/09/13/sp180913_005103.png" alt="导出窗口"></p>
+<p>值得注意的是最下面的材质图分辨率设定。由于本次的最终目标是在网页上展示，所以综合加载速度与分辨率，2048 px是一个较为推荐的选择</p>
+<p>点击<strong>OK</strong>，选择目录完成导出</p>
+<p>此时v2格式的模型已经初步可用，可以放到页面上试试啦</p>
+<p><em>不知为何v2的Live2D Viewer无法正常显示导出的模型，会显示为白屏，但在页面上能正常显示出来，期望得到高人解答</em></p>
+<h3>转换动作数据</h3><p>但此时会发现虽然血小板能正常显示了，却只是呆呆的站着，点击也没有任何反应，这是缺失[动作]^(Motion)数据的缘故。</p>
+<p>观察后我们发现作者已经给出了四个动作数据，分别为[阿诺内阿诺内]^(Anone_Synced)、[跳舞]^(Dance)、[闲置]^(Idle)和[睡觉]^(Nemui)，但是却是v3格式的，那么就来把它们转为v2格式的吧</p>
+<p>回到主界面，将<code>kesshouban/model/kesshouban_v1.1.can3</code>拖入编辑器，这个文件便是v3的动作数据源文件</p>
+<p>打开时可能会提示找不到cmo3文件，点击<strong>Replace</strong>然后找到对应的模型文件即可</p>
+<p><img src="https://img.imjad.cn/images/2018/09/13/sp180913_013856.png" alt="动作数据编辑"></p>
+<p>在左侧中部的Scene列表中即可看到录制好的四个动作数据，可以通过中下部时间轴的播放控制条来播放动作数据</p>
+<p>依次点击<strong>File</strong> - <strong>Export For Runtime</strong> - <strong>Export motion file</strong>打开导出窗口，勾选<strong>Output All Scenes</strong>将导出所有动作数据，勾选<strong>Output Selected Scenes</strong>则导出Scene列表里选中的动作数据</p>
+<p>注意勾选最下方的<strong>Export as 2.1-format file</strong>，然后点击<strong>OK</strong>完成导出</p>
+<p><img src="https://img.imjad.cn/images/2018/09/13/sp180913_014250.png" alt="动作数据导出"></p>
+<h2>大功告成</h2><p>那么差不多就是这样了，<del>虽说转换后的模型仍有一些问题，比如不跟随鼠标指针，但总体来说仍算成功。</del>此外编辑器还提供了一些其他的有意思的功能，可以自己试试看</p>
+<p>关于不跟随鼠标指针，是v3格式与v2的部位ID不同导致的，转换方法已在文中补充，具体请参考<a href="http://docs.live2d.com/cubism-editor-manual/convert-id/" target="_blank" rel="noopener">转换ID</a></p>
+<p>接着就是配置到网页上了，配置方法和普通v2格式的模型配置方法差不多，有需要的话请参考<a href="https://imjad.cn/archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-01">此前的文章</a></p>
+<p>按照惯例放出未经修改的的v2格式模型：<a href="https://cdn.imjad.cn/usr/uploads/kesshouban_v2.7z" target="_blank" rel="noopener">下载地址</a></p>
+<p>那么在最后祝@xiazeyu大佬能顺利完成学业，继续为我们带来好用的工具</p>
+<p>感谢@DenchiSoft带来的作品，血小板，她真的棒极了！</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1536747480000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

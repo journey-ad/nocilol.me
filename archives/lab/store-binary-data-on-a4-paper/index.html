@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/store-binary-data-on-a4-paper/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            PaperBack：在一张A4纸上保存二进制数据
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://cdn.imjad.cn/usr/uploads/output.bmp" alt="0与1，黑与白"></p>
+<p><em>本文题图存储了一个文件，猜猜看是什么</em></p>
+<h2>前言</h2><p>把二进制数据保存在纸上真是一个伟大的创意，这个创意来源于一位父亲与其儿子的对话：</p>
+<blockquote>
+<p>一天，一位程序员的儿子问爸爸：“光盘是怎么存下那么多数据的呢？”他想了一下，拿出一支铅笔在纸上画了一些点和线，来解释数据的密度有多么大。他儿子又问：“那这一张纸最多可以存多少数据呢？”他大概估计了一下，说：“100K吧。”“我们能试试吗？”他儿子说。于是这位程序员就花了四五天的时间来证明这个结论，后来又花了两周的时间编写了<a href="http://ollydbg.de/Paperbak/" target="_blank" rel="noopener">PaperBack</a>，这位程序员叫<a href="http://www.ollydbg.de/" target="_blank" rel="noopener">Olly</a></p>
+</blockquote>
+<p>随着科技发展，存储数据的方式也在不断改进，数据密度也在进一步加大<del>虽然近年来数据密度的提升已经进入瓶颈期，大容量也只是简单的“堆料”</del>。但是这些现代科技的结晶，却终究敌不过环境的侵害，震动、冲撞、温度、湿度，宇宙射线，无一不是存储介质的大敌</p>
+<p>即使排除上述的所有干扰，这些现代存储设备在面对时间这一杀手时，也显得如此无能为力。如今存储设备的存储方式不外乎磁和电，但是磁矩会乱、电荷会跑，数十年的时间就足以破坏数据甚至存储载体本身了。而人类的祖先们在粘土、陶片、龟甲、骨片、巨石上刻下的文字符号，历经数千年的风雨飘摇，至今仍清晰可辨。越复杂的东西越脆弱，这句话果真不假</p>
+<p>结合现实来看，陶片龟甲巨石这些东西一方面难以获取，另一方面存储效率与数据密度也令人难以接受。纸在这个时候就成为了一种可行的选择，将有着古老历史的纸和计算机技术结合起来，颇有一种传统与现代结合的感觉</p>
+<p>另一方面，这种将二进制数据转为黑白的像素点打印的方式也十分直观，每一帧、每一个像素、每一个音符，平时看不见摸不着的数据直接呈现在眼前。这种别样的视角既新奇又有趣</p>
+<p><em>这种方式让我想起了小说《三体》，面对着整个太阳系要被毁灭的现实，唯一可保存人类历史和文明的方式，是在巨石上刻字</em></p>
+<h2>中文说明书</h2><p><em>翻译自PaperBack的发布页，译者 journey.ad，<a href="http://ollydbg.de/Paperbak/" target="_blank" rel="noopener">via</a></em></p>
+<p><a href="http://www.ollydbg.de/" target="_blank" rel="noopener">OllyDbg</a>的作者Olly，为我们介绍了新的开源笑话：</p>
+<p><a href="https://cdn.imjad.cn/usr/uploads/PaperBak_zh.7z" target="_blank" rel="noopener">下载PaperBack v1.10汉化版</a></p>
+<p><a href="http://ollydbg.de/Paperbak/paperbak-1.10.exe.zip" target="_blank" rel="noopener">下载PaperBack v1.10</a></p>
+<p><a href="http://ollydbg.de/Paperbak/paperbak-1.10.src.zip" target="_blank" rel="noopener">下载v1.10的源代码</a></p>
+<hr>
+<h3>什么是PaperBack</h3><p>PaperBack是一款基于GPL的自由软件，允许你以超大位图的形式或是在普通的打印纸上备份你珍贵的文件。如果你有一台600 dpi的激光打印机，那么你就可以在一张A4/Letter纸上保存多达500000字节的未压缩数据。内置的压缩模块可以使得数据密度更高——高达3000000+字节 (3 MiB)的代码。</p>
+<p>你可能会问——为什么？看在上帝的份上，为什么我需要用纸来备份，我已经有了如此多的替代选择，比如CD-R、DVD±R、记忆棒、存储卡、硬盘、磁带、极碟、云盘、磁光盘，甚至是格式化为DEC PDP-11的8英寸双面软盘？（我还有一些）答案很简单：你不需要。然而所有这类介质都有一个缺陷，你无法通过光盘或磁带的外观来判断数据是否可读。除非你将这些介质插入对应的驱动器(如果你还保存着的话！)并试着读取看看。</p>
+<p>而纸就不同了。你还记得穿孔卡片吗？EBCDIC和所有这些东西。在很久以前，卡片就用来做源代码的主要存储介质了。我想有超过10万个项目这样做过…<strong>真不幸</strong>，但是嘿，只有真正的程序员敢在<strong>这玩意</strong>上“写”代码。用过的卡片当作记事本也不赖。穿孔纸带也是一样的。在这时期，就连最奇怪的编码，比如CDC或EBCDIC，也是人类（我的意思是，真正的程序员）可读的。</p>
+<p>当然，PaperBack产生的位图也是人类可读的（借助任何像样的显微镜）。开玩笑的。你需要的是一台连接到电脑上的扫描仪。我只发布了适用于Windows的版本，但它是自由软件，没有什么能阻止你把PaperBack移植到Linux或Mac上，而且很有可能在Windows XP或Me下也能正常使用。当然，你也可以将你的数据打印出来邮寄到世界上任何地方，即使他们不能访问到互联网。</p>
+<p>噢，对了，扫描仪。对于600 dpi的打印机来说，扫描仪至少需要900 dpi物理分辨率（让我强调一下，是物理分辨率而不是插值出来的）。</p>
+<p>我已经提过PaperBack是自由软件了吗？我是在GNU通用公共许可证第3版下发布的。这意味着你不用为程序付费，源代码是免费的，并且你被允许——事实上，被鼓励——修改和改进这个应用程序。</p>
+<h3>安装</h3><p>你不需要安装PaperBack。把它复制到任何目录就行，如果可能的话，给予写权限（这将允许PaperBack把设置保存到初始化文件中），或者在桌面上创建快捷方式——仅此而已。</p>
+<h3>设置</h3><p>选项对话框如图所示:</p>
+<p><img src="https://img.imjad.cn/images/2018/09/07/sp180906_224703.png" alt="选项对话框"></p>
+<p>最重要的选项是<strong>点密度</strong>。它决定纸张上的数据位大小，并且必须至少比打印机的物理分辨率低两倍。例如，如果你是一位拥有着有600 dpi分辨率的HP LaserJet V的壕，请将密度设置为300 dpi。这允许你在每平方英寸的纸上画出300x300=90000个点，或者直观一点，略少于6K字节的有用数据。</p>
+<p>喷墨打印机表现差于激光打印机。最大有用分辨率一般不会超过200 dpi。打印时请在打印选项里选择最佳质量，另外不要忘记对齐打印喷嘴，这样从左到右打印的点和从右到左打印的点会保持一致。</p>
+<p>数据点之间必须清晰可辨。通常情况下这意味着它们之间必须留一些空白，这些空白由<strong>点大小</strong>决定。70%通常是最好的选择。</p>
+<p><strong>压缩</strong>是最好的选择，因为它减少了最终输出的位图文件的大小，除非你的文件已经压缩过了。如果你的电脑真的非常慢，就使用快速压缩吧，在所有其他情况下使用最大化压缩。</p>
+<p><strong>冗余</strong>可以帮助恢复部分损坏的数据。冗余度1:5意味着，对于每5个连续的数据块，如果其中一个块完全不可读，PaperBack就能够恢复它。为了减少咖啡壶和其他常见危险造成的损坏，数据块在页面上是分布排列的。更高的冗余降低了页面容量，但提高了可靠性。</p>
+<p><strong>页眉和页脚</strong>可以让PaperBack在打印时输出文件的相关信息，如文件名、大小、上次修改日期、页面和推荐的扫描仪设置。此参数仅影响打印，对数据的读取没有影响。<strong>在页面周围描边</strong>有助于改进不太智能的TWAIN驱动程序的自动裁切。</p>
+<p>如果文件比较大，图像将会分为几页打印。扫描最后一页时（顺序不重要），并且<strong>自动保存</strong>选项激活时，PaperBack将要求选择还原文件的存储位置。如果未选中此选项，则在识别完成时必须按下保存按钮——当扫描仪装有自动进纸器，并且一次扫描多个备份（最多5个）时会很方便。</p>
+<p>PaperBack使用了先进的纠错技术（<a href="https://zh.wikipedia.org/wiki/%E9%87%8C%E5%BE%B7-%E6%89%80%E7%BD%97%E9%97%A8%E7%A0%81" target="_blank" rel="noopener">里德-所罗门码</a>）来恢复不可读的像素。因此即使数据已经损坏了一部分，识别参数远非最佳情况时，程序也会接受。这加快了处理速度，但会导致程序报告大量坏块。当你备份重要数据并在随后进行验证时，这可能会使人得出备份的数据不可靠的错误印象。勾选<strong>确定最佳质量</strong>后，PaperBack将会报告真实的数据质量。但是会需要一些时间。</p>
+<p>最后两个选项设置了<strong>数据加密</strong>（FIPS-97兼容的AES不是那么容易被破解的），和输入密码时显示为明文还是星号。当然，这个选项不意味着密码会被打印在纸上！</p>
+<h3>将数据打印到纸上</h3><p>首先需要设置页面大小和打印机选项。不同的打印机驱动可能会有所区别，所以这里不会详细说明。注意应始终选择最佳质量。关闭半色调、抖动和图像优化等选项。不要忘记对准喷墨打印机的喷嘴；如果可能的话，关闭双向打印。请注意打印机选项只会保存一些基础设置，在重启软件后你可能需要重新配置。</p>
+<p>设置选项后，就可以打印数据了。目前的PaperBack版本是1.00，它不能备份文件夹——只能保存单个文件，且每页最多一个文件（译注：目前是1.10，但仍不能备份文件夹）。这是本程序一个非常大的缺点。如果你要保存许多小文件，最好先用WinZip、tar或类似程序将它们打包到单个归档中。</p>
+<p>PaperBack支持拖放。如果拖入的文件扩展名不是<em>.bmp</em>，它将被打印出来。位图文件的默认操作则是尝试识别。若要备份位图文件，请使用打印按钮。你可以一次删除几个文件；内部队列限制为128个条目。同样，每个文件都将打印在单独的纸张上。</p>
+<p>出于测试目的，你可以将位图文件保存到磁盘。该选项可从主菜单中选择。</p>
+<h3>数据恢复</h3><p>PaperBack应该支持所有TWAIN接口的扫描仪。它还可以接受8或24位的未压缩灰度和RGB位图。你可以把扩展名为<em>.bmp</em>的文件直接拖放进来。</p>
+<p>如果使用扫描仪，从主菜单中选择<strong>连接扫描仪</strong>，然后点击扫描按钮。扫描仪的最佳分辨率大约是点密度的3倍。b/W扫描通常不能识别，一般选择灰度图像。彩色扫描也是可行的，但是除了内存使用量大3倍以外没有任何优势。（另一个笑话）。扫描时内存需求相对较高。分辨率为900 dpi的a4大小的灰度位图需要大约80 MiB。</p>
+<p>关闭所有的图像优化，比如锐化。PaperBack自带的优化技术更适合这种特殊情况。</p>
+<p>网格应该尽量平行于扫描仪的边（最大偏转角度不得超过7°），但方向如何并不重要：纵向、横向、倒置，如果使用透明胶片的话甚至可以翻转。方向可能会从一张纸变成另一张纸。</p>
+<p>最多可以同时扫描5个备份。每个文件将被放入单独的标签页中。对于由几页组成的备份来说，扫描顺序并不重要。选项卡中底部的线会显示未扫描或不完整页面的列表。如果某些页面不可读，请更改它的位置、分辨率和/或亮度和对比度。</p>
+<p>右边的质量图显示了最后一个被扫描的页面的误差分布，以颜色渐变的形式显示。完好的块是绿色的。错误字节数越多颜色越淡。超过16个无效字节的无法解码的块是黑色的。如果block是白色的，则说明PaperBack无法识别出网格。双击贴图可以将块显示为灰度图像（可选标记错误）。</p>
+<p>扫描完所有页面后，按“保存”将恢复的文件写入磁盘。如果是加密备份，则会要求输入密码。</p>
+<h3>历史</h3><p>有一天，我的大儿子（那时他15岁）问我：“爸爸，这么小的光盘是怎么装下那么多数据的？”我做了一个简短的解释，同时拿着一支非常锋利的铅笔，试图在纸上画出尽可能小的点和线，以强调数据有多么密集。然后我儿子问：“你能这样在一张纸上放置多少数据？”我的估计大约是100 K。“我们可以试试吗？”儿子说道。</p>
+<p>我花了四五天时间来证明这个结论，另外花了两周时间编写程序核心、加密模块和用户界面。后来我失去了兴趣，就把整个项目放在硬盘上最深目录的最暗角落里。（另一个笑话）</p>
+<p>但是为什么要只为自己保留可能会有用的代码呢？所以现在我在GPL 3下发布了它的原始代码。</p>
+<h3>专利和知识产权</h3><p>PaperBack的实现方式被称作“无尘室”。我保证属于我那部分的代码是我自己编写的，不基于任何第三方的工作。</p>
+<p>然而，我不能保证这个项目不会侵犯任何专利、商标或其他让律师富有的东西。如果你要使用PaperBack，所有的举证责任都是你的。</p>
+<p>让律师们（不）开心：</p>
+<blockquote>
+<p>PaperBack是免费软件；你可以根据自由软件基金会发布的GNU通用公共许可证条款重新发布和/或修改它；许可证的第3版，或（根据你的选择）任何更高版本。</p>
+<p>PaperBack的发行是希望它会有用，但是<strong>没有任何保证</strong>；甚至没有对<strong>适销性</strong>或<strong>适合特定用途的暗示</strong>担保。访问<a href="http://ollydbg.de/Paperbak/gpl.txt" target="_blank" rel="noopener">GNU通用公共许可证</a>查看更多细节。</p>
+<p>你应该收到一份GNU通用公共许可证的副本以及这个程序。如果没有，请参见<a href="http://www.gnu.org/licenses/" target="_blank" rel="noopener">http://www.gnu.org/licenses/</a></p>
+</blockquote>
+<h3>致谢</h3><p>没有里德-所罗门码就不会有PaperBack。该算法由Phil Karn (C)在2002年编写。Phil允许在GPL条款下使用他的代码。</p>
+<p>AES加密代码是Christophe Devine (C) 在2001-2004年间开发的。该代码也在GPL下发布。</p>
+<p>bzip2压缩引擎是Julian R. Seward (C) 在1996-2005年间开发的。参见来源以查看详细信息。据我所知（IANAL），他的许可证与GPL兼容。</p>
+<h3>源代码描述</h3><p>目前没有，但是一些发布源里有评论。如果你需要帮助，请先阅读评论。如果你仍然需要帮助，问问你的朋友。如需更多帮助，请访问一些论坛。如果你完全绝望，就自己搭一个论坛。如果你准备自杀，那么，给我一封邮件（<strong>ollydbg</strong> at <strong>t-online de</strong>）。主题请注明<strong>PaperBack</strong>，否则邮件将被视为垃圾邮件并被过滤掉。4到6周内回复。</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1536260940000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

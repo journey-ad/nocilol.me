@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/giwifi-auth-process-analysis-and-simulation-login/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            GiWiFI校园网认证过程分析与模拟登录
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/08/29/67802201_p0.jpg" alt="マシュマロを食べさせあう、なでりん @ 相川りょう"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-35716255"
+      data-id="cplayer-35716255"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[34003631]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-35716255"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-35716255"] = new cplayer({
+            element: document.getElementById("cplayer-35716255"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-35716255"].add163(34003631)
+
+          let player = window.cplayerList["cplayer-35716255"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>闲话</h2><p>新学期开学之后，发现学校又不知从哪里引进了一套新的校园网络认证系统，叫做GiWiFi，有时候又被叫做GWiFi <del>GayWiFi</del></p>
+<p>新的认证系统不同于之前的宽带拨号的形式，而是直接连接至网关设备，然后通过网页/客户端认证。但不知由于什么<del>不可告人的</del>原因，网页认证仅开放了半天，随后便只能下载客户端认证了</p>
+<p>客户端引导下载页对于不同的设备和系统使用了UA进行区分，经过测试，提供的客户端有Windows、macOS、iOS以及Android版本（果然Linux又被忽视了，显示的是Android版的下载按钮🌝）</p>
+<p>由于对此类认证客户端的排斥和心理洁癖，我便开始寻找使用网页认证，甚至是使用脚本模拟认证的方法，果不其然，经过一番分析与搜寻，我找到了一些东西</p>
+<h2>你藏得好深啊，登录框</h2><p>上面说到网页认证开放半天后就被无情关闭，那么就先来找回消失的登录框吧~</p>
+<p>此前的认证过程为</p>
+<ol>
+<li>打开任意http页面后被劫持至<code>172.17.1.1:8062/redirect</code></li>
+<li>返回307跳转至认证页</li>
+<li>在认证页里输入账号密码登录认证</li>
+<li>关闭认证页，一段时间内即可正常上网</li>
+</ol>
+<p>而现在跳转后仅显示客户端的下载按钮，直觉意识到这是一个专用于客户端引导下载的页面，真正的认证页仍另藏他处</p>
+<p>事实正是如此，对比历史记录，现在的跳转页面的域名是<code>172.17.1.1</code>(校园网网关IP)，此前的认证页则是<code>http://login.gwifi.com.cn/cmps/admin.php/api/login/</code></p>
+<p>将客户端引导下载页的URL参数粘贴到认证页的URL后并打开，就能看到之前的认证页了（单纯打开首页会显示It works! ，不加任何参数打开的话则是跳转至新浪首页，这是哪位鬼才写的页面🌚）</p>
+<p>认证页打开之后仍是一个大大的客户端下载按钮，但不要慌。打开审查元素就会发现，所有的登录框、重设密码框、注册框等都在，只是被隐藏掉了</p>
+<p>去掉隐藏样式，正常输入账号密码登录即可，和之前的操作一模一样（登录后会跳转至百度首页，看来这两个页面是同一位鬼才写的🌝）</p>
+<h2>登录接口及参数分析</h2><p>找到了登录框之后，就可以开始分析接口和参数了</p>
+<p>直接看页面代码吧，写的挺乱的，好在未经过混淆，关键部分：</p>
+<h3>登录接口</h3><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">var</span> loginAction  <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>params<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">var</span> btn <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#first_button"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> round <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> form <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#frmLogin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    $<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        url<span class="token punctuation">:</span> <span class="token string">"/cmps/admin.php/api/loginaction?round="</span><span class="token operator">+</span>round<span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span> form<span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        type<span class="token punctuation">:</span> <span class="token string">"post"</span><span class="token punctuation">,</span>
+        <span class="token keyword">async</span><span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        dataType<span class="token punctuation">:</span> <span class="token string">"json"</span><span class="token punctuation">,</span>
+        success<span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>data<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>data<span class="token punctuation">.</span>reasoncode <span class="token operator">==</span> <span class="token string">"44"</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    params <span class="token operator">=</span> <span class="token function">getWechatParams</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">//showSelectMessage(params);</span>
+                    <span class="token function">wechatAuth</span><span class="token punctuation">(</span>params<span class="token punctuation">.</span>okParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+                    window<span class="token punctuation">.</span>location<span class="token punctuation">.</span>href <span class="token operator">=</span> data<span class="token punctuation">.</span>info<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                btn<span class="token punctuation">.</span><span class="token function">removeAttr</span><span class="token punctuation">(</span><span class="token string">'disabled'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">doFailedLogin</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span><span class="token string">"frmLogin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看到接口为<code>/cmps/admin.php/api/loginaction</code>，参数都在登录表单里：</p>
+<p><em>关键部分已手动打码</em></p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>access_type</td>
+<td>2</td>
+<td>作用未知</td>
+</tr>
+<tr>
+<td>acsign</td>
+<td>***</td>
+<td>登录状态接口中的sign字段</td>
+</tr>
+<tr>
+<td>btype</td>
+<td>pc</td>
+<td>猜测为平台类型</td>
+</tr>
+<tr>
+<td>client_mac</td>
+<td>***</td>
+<td>客户端MAC</td>
+</tr>
+<tr>
+<td>contact_phone</td>
+<td>400-038-5858</td>
+<td>服务电话</td>
+</tr>
+<tr>
+<td>devicemode</td>
+<td></td>
+<td>默认空值，作用未知</td>
+</tr>
+<tr>
+<td>gw_address</td>
+<td>172.17.1.1</td>
+<td>网关地址</td>
+</tr>
+<tr>
+<td>gw_id</td>
+<td>***</td>
+<td>AP的SSID</td>
+</tr>
+<tr>
+<td>gw_port</td>
+<td>8060</td>
+<td>网关端口</td>
+</tr>
+<tr>
+<td>lastaccessurl</td>
+<td></td>
+<td>默认空值，作用未知</td>
+</tr>
+<tr>
+<td>logout_reason</td>
+<td>0</td>
+<td>作用未知</td>
+</tr>
+<tr>
+<td>mac</td>
+<td>***</td>
+<td>同client_mac</td>
+</tr>
+<tr>
+<td>name</td>
+<td>***</td>
+<td>账号</td>
+</tr>
+<tr>
+<td>online_time</td>
+<td>0</td>
+<td>猜测为在线时间，作用未知</td>
+</tr>
+<tr>
+<td>page_time</td>
+<td>1535509645</td>
+<td>登录页时间戳</td>
+</tr>
+<tr>
+<td>password</td>
+<td>***</td>
+<td>密码</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>***</td>
+<td>签名，可从登录表单中获取</td>
+</tr>
+<tr>
+<td>station_cloud</td>
+<td>login.gwifi.com.cn</td>
+<td>作用未知</td>
+</tr>
+<tr>
+<td>station_sn</td>
+<td>***</td>
+<td>猜测为基站ID</td>
+</tr>
+<tr>
+<td>suggest_phone</td>
+<td>400-038-5858</td>
+<td>同contact_phone</td>
+</tr>
+<tr>
+<td>url</td>
+<td><a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a></td>
+<td>登录成功后跳转的网站</td>
+</tr>
+<tr>
+<td>user_agent</td>
+<td></td>
+<td>默认空值，作用未知</td>
+</tr>
+</tbody></table>
+<p>观察后发现登录所需的大部分参数在认证页的URL参数里已经有了，剩下的有一部分已经在登录表单里填好了，另一部分需要从下文的登录状态接口中取到，将其组合起来后发送POST请求</p>
+<p>登录成功后返回JSON数据：</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"status"</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"info"</span><span class="token operator">:</span><span class="token string">"http://172.17.1.1:8060/wifidog/auth?token=***&amp;info=***"</span><span class="token punctuation">,</span>
+    <span class="token property">"data"</span><span class="token operator">:</span><span class="token punctuation">{</span>
+        <span class="token property">"auth_verify"</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"reasoncode"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token property">"remain_time"</span><span class="token operator">:</span><span class="token number">1053640</span><span class="token punctuation">,</span>
+        <span class="token property">"limit_time"</span><span class="token operator">:</span><span class="token null">null</span><span class="token punctuation">,</span>
+        <span class="token property">"cost_type"</span><span class="token operator">:</span><span class="token number">4</span><span class="token punctuation">,</span>
+        <span class="token property">"serviceplan_id"</span><span class="token operator">:</span><span class="token string">"1357"</span><span class="token punctuation">,</span>
+        <span class="token property">"is_share"</span><span class="token operator">:</span><span class="token string">"2"</span><span class="token punctuation">,</span>
+        <span class="token property">"wechat_enable"</span><span class="token operator">:</span><span class="token string">"1"</span><span class="token punctuation">,</span>
+        <span class="token property">"bw_up"</span><span class="token operator">:</span><span class="token string">"2048"</span><span class="token punctuation">,</span>
+        <span class="token property">"bw_down"</span><span class="token operator">:</span><span class="token string">"10240"</span><span class="token punctuation">,</span>
+        <span class="token property">"ontrial"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token property">"need_complete_data"</span><span class="token operator">:</span><span class="token null">null</span><span class="token punctuation">,</span>
+        <span class="token property">"complete_data_url"</span><span class="token operator">:</span><span class="token null">null</span><span class="token punctuation">,</span>
+        <span class="token property">"permit_intranet"</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span>
+        <span class="token property">"permit_internet"</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span>
+        <span class="token property">"carrier_operator"</span><span class="token operator">:</span><span class="token string">"3"</span><span class="token punctuation">,</span>
+        <span class="token property">"network_type"</span><span class="token operator">:</span><span class="token string">"2"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中的<code>info</code>字段的URL用作登录验证，使用GET请求就可以完成整个认证登录的流程了</p>
+<p>登录失败的话<code>info</code>字段则会返回百度首页的URL，再次吐槽一下🌝</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"status"</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"info"</span><span class="token operator">:</span><span class="token string">"http:\/\/www.baidu.com"</span><span class="token punctuation">,</span>
+    <span class="token property">"data"</span><span class="token operator">:</span><span class="token number">1</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3>登录状态接口</h3><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">initData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//获取终端信息</span>
+    $<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        url<span class="token punctuation">:</span> <span class="token string">"http://172.17.1.1:8060/wifidog/get_auth_state?ip=***&amp;mac=***&amp;sign=***&amp;callback=***"</span><span class="token punctuation">,</span>
+        dataType<span class="token punctuation">:</span><span class="token string">'jsonp'</span><span class="token punctuation">,</span>
+        success<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            c <span class="token operator">=</span> <span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">'('</span> <span class="token operator">+</span> data<span class="token punctuation">.</span>data <span class="token operator">+</span> <span class="token string">')'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>resultCode <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">fixData</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+                window<span class="token punctuation">.</span>top<span class="token punctuation">.</span>location<span class="token punctuation">.</span>href <span class="token operator">=</span> <span class="token string">"http://www.baidu.com"</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        error<span class="token punctuation">:</span><span class="token keyword">function</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        cache<span class="token punctuation">:</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>同样可以看到接口为<code>/wifidog/get_auth_state</code>，参数为IP、MAC、签名和回调函数名，其中的签名可以直接在页面表单里取到</p>
+<p>返回结果为JSONP数据，提取为：</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"resultCode"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"data"</span><span class="token operator">:</span>"<span class="token punctuation">{</span><span class="token property">"auth_state"</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token property">"gw_id"</span><span class="token operator">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token property">"access_type"</span><span class="token operator">:</span><span class="token string">"2"</span><span class="token punctuation">,</span><span class="token property">"authStaType"</span><span class="token operator">:</span><span class="token string">"0"</span><span class="token punctuation">,</span><span class="token property">"station_sn"</span><span class="token operator">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token property">"client_mac"</span><span class="token operator">:</span><span class="token string">"***"</span><span class="token punctuation">,</span><span class="token property">"online_time"</span><span class="token operator">:</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token property">"logout_reason"</span><span class="token operator">:</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token property">"contact_phone"</span><span class="token operator">:</span><span class="token string">"400-038-5858"</span><span class="token punctuation">,</span><span class="token property">"suggest_phone"</span><span class="token operator">:</span><span class="token string">"400-038-5858"</span><span class="token punctuation">,</span><span class="token property">"station_cloud"</span><span class="token operator">:</span><span class="token string">"login.gwifi.com.cn"</span><span class="token punctuation">,</span><span class="token property">"orgId"</span><span class="token operator">:</span><span class="token string">"899"</span><span class="token punctuation">,</span><span class="token property">"sign"</span><span class="token operator">:</span><span class="token string">"***"</span><span class="token punctuation">}</span>"
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中的<code>auth_state</code>字段值为<code>2</code>时为正常登录状态</p>
+<p>观察登录成功后执行的操作，是替换了部分表单数据：</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">fixData</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".gw_id"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>gw_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".access_type"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>access_type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".station_sn"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>station_sn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".client_mac"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>client_mac<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".online_time"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>online_time<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".logout_reason"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>logout_reason<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".contact_phone"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>contact_phone<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".suggest_phone"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>suggest_phone<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".station_cloud"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>station_cloud<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".acsign"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>sign<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>进行模拟登录时也应一一替换</p>
+<p><em>需要注意的是参数<code>callback</code>是必需的，不然将不会返回<code>sign</code>字段值</em></p>
+<h3>登出接口</h3><p>登出功能在客户端引导下载页上，接口及参数为<code>http://172.17.1.1/getApp.htm?action=logout</code></p>
+<p>返回数据为：</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"resultCode"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"data"</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中<code>resultCode</code>字段值为<code>0</code>时登出成功</p>
+<h2>模拟登录脚本</h2><p>现在登录相关接口和所需参数已经了解，可以开始写模拟登录了</p>
+<p>这里使用Python来实现，理论上对所有GiWiFi系统通用</p>
+<script src="https://gist.github.com/journey-ad/73d900a675b090b9f2c94a1945e6ec19.js"></script>
+
+
+<h2>参考</h2><p><a href="https://www.bzqll.com/default/20171122-%E6%A0%A1%E5%9B%AD%E7%BD%91GiWiFi%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86.htm" target="_blank" rel="noopener">校园网GiWiFi模拟登陆</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1535482200000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

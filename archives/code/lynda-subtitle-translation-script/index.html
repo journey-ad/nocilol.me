@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/code/lynda-subtitle-translation-script/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            lynda.com 字幕翻译油猴脚本(内附高级版账号薅羊毛方法)
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2019/02/20/Xnip2019-02-20_15-01-53.jpg" alt="翻译效果"></p>
+<h2>前言</h2><p>lynda.com是一家美国的在线教育平台，课程内容涵盖多个方面</p>
+<p>具体特色不作介绍，想要了解可以参考<a href="https://zhuanlan.zhihu.com/p/32590586" target="_blank" rel="noopener">亲身使用体验，白领的“职业技校”——Lynda.com</a>这篇文章</p>
+<h2>字幕翻译</h2><p>greasyfork 地址：<a href="https://greasyfork.org/zh-CN/scripts/377991-lynda-com-%E5%AD%97%E5%B9%95%E7%BF%BB%E8%AF%91" target="_blank" rel="noopener">lynda.com 字幕翻译</a></p>
+<p>Lynda的字幕都是英文，对于英语能力不强的人来说，同步跟上视频进度有些压力</p>
+<p>于是看了一下 lynda 的字幕实现，发现 hack 起来还挺容易的，就花了半天写了个脚本，调用翻译接口翻译字幕</p>
+<p>翻译接口经过比较选择了搜狗，搜狗相对于其他翻译来说，翻译结果语法更通顺，且对于脏数据，如拼写错误、未加空格等情况适应性更好</p>
+<p>因为是用户脚本，所以没有用公开的 API，而是扒了一下搜狗网页翻译的接口，签名算法简单分析一下 JS 就能找到</p>
+<p>由于接口限制 5000 个字符，脚本中按 5000 字符分块异步请求翻译，然后在回调中拼合翻译结果，最后替换字幕文本</p>
+<p><strong>第一次使用时会弹出跨域请求警告，这是搜狗网页翻译接口的限制，允许即可</strong></p>
+<p><img src="https://img.imjad.cn/images/2019/02/20/Xnip2019-02-20_09-21-15.png" alt="跨域请求警告"></p>
+<p>需要注意的是，目前版本的 Tampermonkey(4.8) 在 Chrome 最新版(72.0.3626.109) 下工作异常，可选择降级 Chrome 为旧版本或暂时使用 <a href="https://chrome.google.com/webstore/detail/gcalenpjmijncebpfijmoaglllgpjagf" target="_blank" rel="noopener">Tampermonkey BETA</a></p>
+<h2>薅羊毛</h2><p>Lynda为订阅制，订阅价格不算便宜，对于个人用户来说：</p>
+<table>
+<thead>
+<tr>
+<th>月付</th>
+<th>年付</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>免费试用1个月，<br/>每月29.99美元*</td>
+<td>免费试用1个月，<br/>每月24.99美元*</td>
+</tr>
+</tbody></table>
+<p>下面介绍一个薅羊毛的方法，可以免费获取到Lynda的高级账户</p>
+<h3>步骤</h3><ol>
+<li>首先生成一个伪造的位于休斯顿的美国身份信息，使用<a href="https://www.fakeaddressgenerator.com/World_Address/get_us_address/city/Houston" target="_blank" rel="noopener">这个网站</a>生成，并建议保存下来</li>
+<li>在<a href="https://halan.sdp.sirsi.net/client/en_US/hou/search/registration/$N?pc=SYMWS_HOUSTON" target="_blank" rel="noopener">休斯顿图书馆</a>注册一张图书卡，以便获得休斯顿图书馆卡号</li>
+<li>使用步骤1中生成的身份信息填写注册表单</li>
+<li>注册完成后会获得一个临时ID，将其保存好，这就是Lynda的登录ID</li>
+<li>通过<a href="http://www.lynda.com/signin/organization" target="_blank" rel="noopener">这个链接</a>前往Lynda的组织登录</li>
+<li>组织信息填写「houstonlibrary.org」，然后新建一个配置文件，输入第4步得到的ID</li>
+<li>Lynda会要求设置一个新密码，自行填写</li>
+<li>完成后Lynda会询问是否有旧帐户，点击「No i dont have any」</li>
+<li>由于是新帐户，系统会要求邮箱地址(此邮箱不作注册验证用，可以填写假邮箱或第1步里得到的随机邮箱)</li>
+<li>完成，可以无限制观看站内全部课程了</li>
+</ol>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1550605860000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

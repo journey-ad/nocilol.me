@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "Zpix";
+  src: url("zpix.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

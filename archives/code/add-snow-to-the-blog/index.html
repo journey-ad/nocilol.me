@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/code/add-snow-to-the-blog/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            给博客加上下雪特效
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="http://7xoffh.com1.z0.glb.clouddn.com/2015/12/1092011659.jpg" alt="chino&amp;cocoa"><br><audio id="audio" controls="controls" src="http://7xoffh.com1.z0.glb.clouddn.com/single_dog.mp3" autoplay="autoplay" loop="loop"></audio></p>
+<p><font color ="red"><strong>插件作者在更新中已解决触摸操作失效的问题</strong></font></p>
+<p>圣诞节要来辣！<s>情侣们的节日，单身狗的末日</s> 过节了雪花当然必不可少，我也应景的给blog加上了雪花特效，效果你们已经看到了，但网上的方法存在移动设备触摸操作失效的问题，但最终还是被我<s>粗暴的</s>解决了，现在把简单的教程发出来。<br><em>为了方便，我使用了<a href="http://blog.minwenlsm.pw/archives/120/" target="_blank" rel="noopener">@Min’s</a>提供的插件，跟我一样是typecho的可以到<a href="http://blog.minwenlsm.pw/archives/120/" target="_blank" rel="noopener">这里</a>下载，其他博客程序的请参考最下方的方法手动配置</em></p>
+<h2>插件版安装方法：</h2><p>首先安装插件，先不要忙着启用，编辑此插件的Plugin.php，搜索以下代码并删除</p>
+<pre class="line-numbers language-js"><code class="language-js">document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"touchstart"</span><span class="token punctuation">,</span>onDocumentTouchStart<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"touchmove"</span><span class="token punctuation">,</span>onDocumentTouchMove<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><em>以上两句是添加关于触摸移动的事件句柄，在触摸和移动时调用指定的函数</em></p>
+<p>还有以下两个对应函数</p>
+<pre class="line-numbers language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">onDocumentTouchStart</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">if</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>touches<span class="token punctuation">.</span>length<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>mouseX<span class="token operator">=</span>event<span class="token punctuation">.</span>touches<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>pageX<span class="token operator">-</span>windowHalfX<span class="token punctuation">;</span>mouseY<span class="token operator">=</span>event<span class="token punctuation">.</span>touches<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>pageY<span class="token operator">-</span>windowHalfY<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token keyword">function</span> <span class="token function">onDocumentTouchMove</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token keyword">if</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>touches<span class="token punctuation">.</span>length<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>mouseX<span class="token operator">=</span>event<span class="token punctuation">.</span>touches<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>pageX<span class="token operator">-</span>windowHalfX<span class="token punctuation">;</span>mouseY<span class="token operator">=</span>event<span class="token punctuation">.</span>touches<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>pageY<span class="token operator">-</span>windowHalfY<span class="token punctuation">}</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>删除后，保存并启用插件，应该就能看到雪花纷飞的效果了，实测Chrome43.0.2357.132，win10，i54590K cpu占用率10%-30%左右，相对于上次用的那个90%已经算是很不错了。</p>
+<h2>手动安装方法：</h2><ol>
+<li>首先下载<a href="http://7xoffh.com1.z0.glb.clouddn.com/2015/12/2073193120.zip" target="_blank" rel="noopener">snow.zip</a></li>
+</ol>
+<p>解压至任意目录都行，编辑主题的footer.php，在body之间引入three.js，并初始化：</p>
+<pre class="line-numbers language-js"><code class="language-js"><span class="token operator">&lt;</span>script type<span class="token operator">=</span><span class="token string">"text/javascript"</span><span class="token operator">></span>
+<span class="token keyword">function</span> <span class="token function">randomRange</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>i <span class="token operator">-</span> t<span class="token punctuation">)</span> <span class="token operator">+</span> t
+<span class="token punctuation">}</span>
+Particle3D <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    THREE<span class="token punctuation">.</span>Particle<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>velocity <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">THREE<span class="token punctuation">.</span>Vector3</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>velocity<span class="token punctuation">.</span><span class="token function">rotateX</span><span class="token punctuation">(</span><span class="token function">randomRange</span><span class="token punctuation">(</span> <span class="token operator">-</span> <span class="token number">45</span><span class="token punctuation">,</span> <span class="token number">45</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>velocity<span class="token punctuation">.</span><span class="token function">rotateY</span><span class="token punctuation">(</span><span class="token function">randomRange</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">360</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>gravity <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">THREE<span class="token punctuation">.</span>Vector3</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>drag <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+Particle3D<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">THREE<span class="token punctuation">.</span>Particle</span><span class="token punctuation">,</span>
+Particle3D<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> Particle3D<span class="token punctuation">,</span>
+Particle3D<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>updatePhysics <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>velocity<span class="token punctuation">.</span><span class="token function">multiplyScalar</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>drag<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>velocity<span class="token punctuation">.</span><span class="token function">addSelf</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>gravity<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>position<span class="token punctuation">.</span><span class="token function">addSelf</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>velocity<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> TO_RADIANS <span class="token operator">=</span> Math<span class="token punctuation">.</span>PI <span class="token operator">/</span> <span class="token number">180</span><span class="token punctuation">;</span>
+THREE<span class="token punctuation">.</span>Vector3<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>rotateY <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    cosRY <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">cos</span><span class="token punctuation">(</span>t <span class="token operator">*</span> TO_RADIANS<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    sinRY <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">sin</span><span class="token punctuation">(</span>t <span class="token operator">*</span> TO_RADIANS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>z<span class="token punctuation">,</span>
+    o <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>x <span class="token operator">=</span> o <span class="token operator">*</span> cosRY <span class="token operator">+</span> i <span class="token operator">*</span> sinRY<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>z <span class="token operator">=</span> o <span class="token operator">*</span> <span class="token operator">-</span>sinRY <span class="token operator">+</span> i <span class="token operator">*</span> cosRY
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+THREE<span class="token punctuation">.</span>Vector3<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>rotateX <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    cosRY <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">cos</span><span class="token punctuation">(</span>t <span class="token operator">*</span> TO_RADIANS<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    sinRY <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">sin</span><span class="token punctuation">(</span>t <span class="token operator">*</span> TO_RADIANS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>z<span class="token punctuation">,</span>
+    o <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>y <span class="token operator">=</span> o <span class="token operator">*</span> cosRY <span class="token operator">+</span> i <span class="token operator">*</span> sinRY<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>z <span class="token operator">=</span> o <span class="token operator">*</span> <span class="token operator">-</span>sinRY <span class="token operator">+</span> i <span class="token operator">*</span> cosRY
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+THREE<span class="token punctuation">.</span>Vector3<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>rotateZ <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    cosRY <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">cos</span><span class="token punctuation">(</span>t <span class="token operator">*</span> TO_RADIANS<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    sinRY <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">sin</span><span class="token punctuation">(</span>t <span class="token operator">*</span> TO_RADIANS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>x<span class="token punctuation">,</span>
+    o <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>y <span class="token operator">=</span> o <span class="token operator">*</span> cosRY <span class="token operator">+</span> i <span class="token operator">*</span> sinRY<span class="token punctuation">,</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>x <span class="token operator">=</span> o <span class="token operator">*</span> <span class="token operator">-</span>sinRY <span class="token operator">+</span> i <span class="token operator">*</span> cosRY
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> container <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">".snow-container"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token regex">/MSIE 6|MSIE 7|MSIE 8/</span><span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>navigator<span class="token punctuation">.</span>userAgent<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token regex">/MSIE 9|MSIE 10/</span><span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>navigator<span class="token punctuation">.</span>userAgent<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">$</span><span class="token punctuation">(</span>container<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">,</span> <span class="token function">$</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">height</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">var</span> containerWidth <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span>container<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> containerHeight <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span>container<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">height</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> particle<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> camera<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> scene<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> renderer<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> mouseX <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> mouseY <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> windowHalfX <span class="token operator">=</span> window<span class="token punctuation">.</span>innerWidth <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> windowHalfY <span class="token operator">=</span> window<span class="token punctuation">.</span>innerHeight <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> particles <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> particleImage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    particleImage<span class="token punctuation">.</span>src <span class="token operator">=</span> <span class="token string">"https://imjad.cn/usr/themes/dobyi/images/snow.png"</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//这里改为你自己的snow.png图片位置</span>
+<span class="token keyword">var</span> snowNum<span class="token operator">=</span><span class="token number">500</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  camera<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">THREE<span class="token punctuation">.</span>PerspectiveCamera</span><span class="token punctuation">(</span><span class="token number">75</span><span class="token punctuation">,</span>containerWidth<span class="token operator">/</span>containerHeight<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  camera<span class="token punctuation">.</span>position<span class="token punctuation">.</span>z<span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">;</span>
+  scene<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">THREE<span class="token punctuation">.</span>Scene</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  scene<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>camera<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  renderer<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">THREE<span class="token punctuation">.</span>CanvasRenderer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  renderer<span class="token punctuation">.</span><span class="token function">setSize</span><span class="token punctuation">(</span>containerWidth<span class="token punctuation">,</span>containerHeight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> material<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">THREE<span class="token punctuation">.</span>ParticleBasicMaterial</span><span class="token punctuation">(</span><span class="token punctuation">{</span>map<span class="token punctuation">:</span><span class="token keyword">new</span> <span class="token class-name">THREE<span class="token punctuation">.</span>Texture</span><span class="token punctuation">(</span>particleImage<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">var</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>snowNum<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    particle<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Particle3D</span><span class="token punctuation">(</span>material<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    particle<span class="token punctuation">.</span>position<span class="token punctuation">.</span>x<span class="token operator">=</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2000</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">;</span>
+    particle<span class="token punctuation">.</span>position<span class="token punctuation">.</span>y<span class="token operator">=</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2000</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">;</span>
+    particle<span class="token punctuation">.</span>position<span class="token punctuation">.</span>z<span class="token operator">=</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2000</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">;</span>
+    particle<span class="token punctuation">.</span>scale<span class="token punctuation">.</span>x<span class="token operator">=</span>particle<span class="token punctuation">.</span>scale<span class="token punctuation">.</span>y<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    scene<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>particle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    particles<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>particle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  container<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>renderer<span class="token punctuation">.</span>domElement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"mousemove"</span><span class="token punctuation">,</span>onDocumentMouseMove<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">setInterval</span><span class="token punctuation">(</span>loop<span class="token punctuation">,</span><span class="token number">1000</span><span class="token operator">/</span><span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">onDocumentMouseMove</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  mouseX<span class="token operator">=</span>event<span class="token punctuation">.</span>clientX<span class="token operator">-</span>windowHalfX<span class="token punctuation">;</span>
+  mouseY<span class="token operator">=</span>event<span class="token punctuation">.</span>clientY<span class="token operator">-</span>windowHalfY<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">var</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>particles<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">var</span> particle<span class="token operator">=</span>particles<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>particle<span class="token punctuation">.</span><span class="token function">updatePhysics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">with</span><span class="token punctuation">(</span>particle<span class="token punctuation">.</span>position<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>y<span class="token operator">&lt;</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">{</span>y<span class="token operator">+</span><span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">}</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token operator">></span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">{</span>x<span class="token operator">-</span><span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">}</span>
+      <span class="token keyword">else</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token operator">&lt;</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">{</span>x<span class="token operator">+</span><span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>z<span class="token operator">></span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">{</span>z<span class="token operator">-</span><span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">}</span>
+      <span class="token keyword">else</span><span class="token punctuation">{</span><span class="token keyword">if</span><span class="token punctuation">(</span>z<span class="token operator">&lt;</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      z<span class="token operator">+</span><span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">}</span>
+camera<span class="token punctuation">.</span>position<span class="token punctuation">.</span>x<span class="token operator">+</span><span class="token operator">=</span><span class="token punctuation">(</span>
+  mouseX<span class="token operator">-</span>camera<span class="token punctuation">.</span>position<span class="token punctuation">.</span>x<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">0.005</span><span class="token punctuation">;</span>
+  camera<span class="token punctuation">.</span>position<span class="token punctuation">.</span>y<span class="token operator">+</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token operator">-</span>mouseY<span class="token operator">-</span>camera<span class="token punctuation">.</span>position<span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">0.005</span><span class="token punctuation">;</span>
+  camera<span class="token punctuation">.</span><span class="token function">lookAt</span><span class="token punctuation">(</span>scene<span class="token punctuation">.</span>position<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  renderer<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>scene<span class="token punctuation">,</span>camera<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="2">
+<li>在body中加入一个div</li>
+</ol>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>snow-container<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ol start="3">
+<li>添加css样式</li>
+</ol>
+<p>编辑主题的style.css文件，添加如下代码：</p>
+<pre class="line-numbers language-css"><code class="language-css"><span class="token selector"><span class="token class">.snow-container</span></span><span class="token punctuation">{</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> fixed<span class="token punctuation">;</span>
+  <span class="token property">top</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+  <span class="token property">left</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100%</span><span class="token punctuation">;</span> 
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100%</span><span class="token punctuation">;</span> 
+  <span class="token property">pointer-events</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span> 
+  <span class="token property">z-index</span><span class="token punctuation">:</span> <span class="token number">100001</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>保存，即可看到效果。</p>
+<p>雪花特效来源于<a href="http://www.htmleaf.com/jQuery/Layout-Interface/201512112892.html" target="_blank" rel="noopener">jQuery之家</a><br>插件来源于<a href="http://blog.minwenlsm.pw/archives/120/" target="_blank" rel="noopener">@Min’s</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1450837860000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

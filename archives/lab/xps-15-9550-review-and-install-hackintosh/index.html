@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/xps-15-9550-review-and-install-hackintosh/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            入手XPS 15 9550 &amp; 黑苹果体验
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><a href="https://www.pixiv.net/member_illust.php?mode=medium&illust_id=67814952" target="_blank" rel="noopener"><img src="https://img.imjad.cn/images/2018/12/27/67814952_p0.jpg" alt="しきにゃんと秘密基地 @ 杏仁豆腐"></a></p>
+
+    <div class="cplayer-template"
+      id="cplayer-15432683"
+      data-id="cplayer-15432683"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[503119252]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-15432683"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-15432683"] = new cplayer({
+            element: document.getElementById("cplayer-15432683"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-15432683"].add163(503119252)
+
+          let player = window.cplayerList["cplayer-15432683"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h3>年轻人的第一台笔记本电脑</h3><p>终于，在即将离开校园，成为社畜之际，我<del>从老爸那要钱从而</del>拥有了年轻人的第一台<del>二手</del>笔记本电脑，迫于预算不足，以及四年台式机带来的相对高性能的体验，我的此番购机之路充满了艰辛与取舍</p>
+<p>在如今的笔记本市场上，虽说只有寥寥几种机型值得购买，但买到一台高性价比游戏本是可行的，前提是接受粗犷的外观，以及在屏幕、键盘、音频、散热、预装系统等几个点上做出相应缩水的心理准备。由于要成为社畜，粗犷的外观只能pass了；由于要做切图仔，屏幕就不能太差；由于要水博客，键盘就不能太烂；由于……好了别说了，那么商务本呢？</p>
+<p>到了商务本上，情况又不一样了，「商务」天生与「性价比」绝缘。即使是一些可称为「真香本」的配置与价格，也很难让人二话不说就掏钱买买买，而一些价低的低端本上，配置又实在是差得可怜。在多次比对后，我把目光投向了二手市场</p>
+<p>XPS、苏菲婆、MBP可称为商务本的三大标杆，既然都买二手了，那就来体验一把标杆是什么样子的吧。综合考虑个人需求，经过对比，我选择了XPS 15</p>
+<h3>就决定是你了，XPS！</h3><p>XPS 15如今(2018年)出到了9570款，顶配价格在13K左右，即使是官翻和二手价位也逼近9K，很是令人眼晕。往前几代找找看，又是一番挣扎与取舍，最终看中了一台9550加拿大版顶配。与卖家经过一番亲切友好的交谈，确定不是奸商假扮后，最终下单购入。随后交钱发货一气呵成，由于是较为贵重的电子产品，卖家发了顺丰。经过两天的等待，终于：</p>
+<p><img src="https://img.imjad.cn/images/2018/12/27/IMG_20181226_215146-03.jpg" alt="定妆照"></p>
+<p>UHD舔爆！100%sRGB舔爆！窄边框舔爆！触控板丝般顺滑！16G内存一点不卡！SSD无比流畅！外观沉稳低调适合社畜！总之就是舔爆！！</p>
+<p>美中不足的就是接口实在太少，必须要挂尿袋才能接外设；C面类肤材质，好看摸起来也舒服，但经不得一点尘土和划痕<del>可能戴尔认为买得起全新的高级社畜工作环境没有灰尘吧🌝</del></p>
+<h3>配置</h3><p>主要配置：</p>
+<ul>
+<li>CPU：I7 6700HQ</li>
+<li>显卡：GTX 960M 2GD5, HD 530</li>
+<li>内存：8GD4*2</li>
+<li>屏幕：15″ 触控 UHD 100%sRGB 89%AdobeRGB</li>
+</ul>
+<p><img src="https://img.imjad.cn/images/2018/12/27/xps15-9550.png" alt="配置表"></p>
+<h3>系统</h3><p>话不多说，新机到手，确认没坑，先装系统。目前为Win 10和macOS Mojave双系统。Windows暂且不表，当初选中XPS的原因也有一部分是硬件完美适合黑苹果，不仅屏幕素质接近retina屏幕，而且最关键的无线网卡/蓝牙都是免驱的，体验十分接近MBP，且免去了外接网卡之苦，用一半的开销体验到接近RMPB的效果，想想都令人有点小激动呢</p>
+<p>随后扒了两天远景，悲伤地发现自己两年前在台式机上装黑苹果的经验几乎派不上用场了。于是从头学习，经过无数<del>31</del>次失败和数<del>5</del>次重装后，终于达到了几乎完美的状态</p>
+<p>期间大部分时间是卡在了解决Clover引导时报错<code>Couldn&#39;t allocate runtime area</code>的问题上，随后通过更换Clover配置、替换内存修复驱动、填写合法的SMBIOS值等方法解决了此问题。具体参考了远景的数个帖子、GitHub项目<a href="https://github.com/xxxzc/xps15-9550-macos" target="_blank" rel="noopener">xxxzc/xps15-9550-macos</a>和<a href="https://github.com/darkhandz/XPS-9550-Mojave" target="_blank" rel="noopener">darkhandz / XPS-9550-Mojave</a>以及<a href="https://www.nickwoodhams.com/x99-hackintosh-osxaptiofixdrv-allocaterelocblock-error-update" target="_blank" rel="noopener">一篇文章</a>，文章中分析了这个错误的原因和解决方法</p>
+<h4>应用下载</h4><p>App Store或<a href="https://xclient.info/" target="_blank" rel="noopener">精品MAC应用分享</a></p>
+<h3>图赏</h3><p><img src="https://img.imjad.cn/images/2018/12/27/ScreenShot2018-12-26at11.46.55PM.png" alt="系统概述"></p>
+<p><img src="https://img.imjad.cn/images/2018/12/27/ScreenShot2018-12-27at12.30.14AM.png" alt="丝般顺滑的触控板手势"></p>
+<p><img src="https://img.imjad.cn/images/2018/12/27/ScreenShot2018-12-26at11.57.25PM.png" alt="桌面和团子(我永远喜欢雪之下雪乃)"></p>
+<p><img src="https://img.imjad.cn/images/2018/12/27/ScreenShot2018-12-26at11.55.34PM.png" alt="调教后的iTerm、neofetch，和舰女人"></p>
+<h4>iTerm配置</h4><p>最后附上我的iTerm配置和背景图片</p>
+<p><img src="https://img.imjad.cn/images/2018/12/27/iterm2-bg.png" alt="iterm2-bg"></p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"Guid"</span> <span class="token operator">:</span> <span class="token string">"E13A3924-8987-49A0-BFA8-C5704A418BFB"</span><span class="token punctuation">,</span>
+  <span class="token property">"Tags"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 12 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.51372549019607838</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.58823529411764708</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.58039215686274515</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Custom Directory"</span> <span class="token operator">:</span> <span class="token string">"No"</span><span class="token punctuation">,</span>
+  <span class="token property">"Normal Font"</span> <span class="token operator">:</span> <span class="token string">"Monaco 12"</span><span class="token punctuation">,</span>
+  <span class="token property">"Bold Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.34509803921568627</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.45882352941176469</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.43137254901960786</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Transparency"</span> <span class="token operator">:</span> <span class="token number">0.20230012690355331</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 4 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.14901960784313725</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.82352941176470584</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.54509803921568623</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Right Option Key Sends"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token property">"Rows"</span> <span class="token operator">:</span> <span class="token number">33</span><span class="token punctuation">,</span>
+  <span class="token property">"Default Bookmark"</span> <span class="token operator">:</span> <span class="token string">"No"</span><span class="token punctuation">,</span>
+  <span class="token property">"Blend"</span> <span class="token operator">:</span> <span class="token number">0.71195037059294874</span><span class="token punctuation">,</span>
+  <span class="token property">"Cursor Guide Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.70213186740875244</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"Alpha Component"</span> <span class="token operator">:</span> <span class="token number">0.25</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.9268307089805603</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Non-ASCII Anti Aliased"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Use Bright Bold"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 10 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.34509803921568627</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.45882352941176469</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.43137254901960786</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Ambiguous Double Width"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Jobs to Ignore"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"rlogin"</span><span class="token punctuation">,</span>
+    <span class="token string">"ssh"</span><span class="token punctuation">,</span>
+    <span class="token string">"slogin"</span><span class="token punctuation">,</span>
+    <span class="token string">"telnet"</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 15 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.99215686274509807</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.8901960784313725</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.96470588235294119</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Foreground Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.396078431372549</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.51372549019607838</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.4823529411764706</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Bound Hosts"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"Working Directory"</span> <span class="token operator">:</span> <span class="token string">"\/Users\/jad"</span><span class="token punctuation">,</span>
+  <span class="token property">"Blinking Cursor"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Disable Window Resizing"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Sync Title"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Prompt Before Closing 2"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"BM Growl"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Command"</span> <span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+  <span class="token property">"Description"</span> <span class="token operator">:</span> <span class="token string">"Default"</span><span class="token punctuation">,</span>
+  <span class="token property">"Mouse Reporting"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Screen"</span> <span class="token operator">:</span> -<span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"Selection Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.93333333333333335</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.83529411764705885</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.90980392156862744</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Only The Default BG Color Uses Transparency"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Columns"</span> <span class="token operator">:</span> <span class="token number">135</span><span class="token punctuation">,</span>
+  <span class="token property">"Idle Code"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 13 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.42352941176470588</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.7686274509803922</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.44313725490196076</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Custom Command"</span> <span class="token operator">:</span> <span class="token string">"No"</span><span class="token punctuation">,</span>
+  <span class="token property">"ASCII Anti Aliased"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Non Ascii Font"</span> <span class="token operator">:</span> <span class="token string">"Monaco 12"</span><span class="token punctuation">,</span>
+  <span class="token property">"Vertical Spacing"</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"Use Bold Font"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Option Key Sends"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token property">"Selected Text Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.34509803921568627</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.45882352941176469</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.43137254901960786</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Background Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.99215686274509807</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.8901960784313725</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.96470588235294119</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Character Encoding"</span> <span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 11 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.396078431372549</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.51372549019607838</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.4823529411764706</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Use Italic Font"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Unlimited Scrollback"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Keyboard Map"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"0xf700-0x260000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;6A"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0x37-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1f"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0x32-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x00"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf709-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[17;2~"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf70c-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[20;2~"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf729-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2H"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf72b-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;5F"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf705-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2Q"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf703-0x260000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;6C"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf700-0x220000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2A"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf701-0x280000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1b 0x1b 0x5b 0x42"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0x38-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x7f"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0x33-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1b"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf703-0x220000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2C"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf701-0x240000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;5B"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf70d-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[21;2~"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf702-0x260000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;6D"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf729-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;5H"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf706-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2R"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0x34-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1c"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf700-0x280000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1b 0x1b 0x5b 0x41"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0x2d-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1f"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf70e-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[23;2~"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf702-0x220000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2D"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf703-0x280000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1b 0x1b 0x5b 0x43"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf700-0x240000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;5A"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf707-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2S"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf70a-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[18;2~"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0x35-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1d"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf70f-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[24;2~"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf703-0x240000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;5C"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf701-0x260000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;6B"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf702-0x280000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1b 0x1b 0x5b 0x44"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf72b-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2F"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0x36-0x40000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"0x1e"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf708-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[15;2~"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf701-0x220000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2B"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf70b-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[19;2~"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf702-0x240000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;5D"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"0xf704-0x20000"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"Action"</span> <span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"Text"</span> <span class="token operator">:</span> <span class="token string">"[1;2P"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Window Type"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token property">"Blur Radius"</span> <span class="token operator">:</span> <span class="token number">18.309047826776652</span><span class="token punctuation">,</span>
+  <span class="token property">"Background Image Location"</span> <span class="token operator">:</span> <span class="token string">"\/Users\/jad\/Pictures\/iterm2-bg.png"</span><span class="token punctuation">,</span>
+  <span class="token property">"Blur"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Badge Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"Alpha Component"</span> <span class="token operator">:</span> <span class="token number">0.5</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.1491314172744751</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Scrollback Lines"</span> <span class="token operator">:</span> <span class="token number">1000</span><span class="token punctuation">,</span>
+  <span class="token property">"Send Code When Idle"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Close Sessions On End"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Terminal Type"</span> <span class="token operator">:</span> <span class="token string">"xterm-256color"</span><span class="token punctuation">,</span>
+  <span class="token property">"Visual Bell"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Flashing Bell"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Silence Bell"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 14 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.57647058823529407</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.63137254901960782</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.63137254901960782</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Background Image Is Tiled"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Name"</span> <span class="token operator">:</span> <span class="token string">"毛玻璃和舰女人(135*33 Monaco)"</span><span class="token punctuation">,</span>
+  <span class="token property">"Cursor Text Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.93333333333333335</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.83529411764705885</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.90980392156862744</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"ASCII Ligatures"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"Shortcut"</span> <span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+  <span class="token property">"Cursor Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.396078431372549</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.51372549019607838</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.4823529411764706</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 0 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.027450980392156862</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.25882352941176473</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.21176470588235294</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 1 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.86274509803921573</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.18431372549019609</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.19607843137254902</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Horizontal Spacing"</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 3 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.70980392156862748</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.53725490196078429</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 2 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.52156862745098043</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.59999999999999998</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 5 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.82745098039215681</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.50980392156862742</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.21176470588235294</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Use Non-ASCII Font"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 7 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.93333333333333335</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.83529411764705885</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.90980392156862744</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 8 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.21176470588235294</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.16862745098039217</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 9 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.79607843137254897</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.086274509803921567</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.29411764705882354</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Ansi 6 Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0.16470588235294117</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.59607843137254901</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.63137254901960782</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"Link Color"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Red Component"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"Color Space"</span> <span class="token operator">:</span> <span class="token string">"sRGB"</span><span class="token punctuation">,</span>
+    <span class="token property">"Blue Component"</span> <span class="token operator">:</span> <span class="token number">0.73423302173614502</span><span class="token punctuation">,</span>
+    <span class="token property">"Alpha Component"</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"Green Component"</span> <span class="token operator">:</span> <span class="token number">0.35916060209274292</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1545816240000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

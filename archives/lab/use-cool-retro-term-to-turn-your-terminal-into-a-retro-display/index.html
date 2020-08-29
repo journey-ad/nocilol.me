@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/use-cool-retro-term-to-turn-your-terminal-into-a-retro-display/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            使用Cool Retro Term把你的终端变成复古显示器
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2017/12/02/Screenshot-20171202152208-1284x746.png" alt="Screenshot-20171202152208-1284x746.png"></p>
+<h2>前言</h2><p>CRT(阴极射线管)显示器曾见证了计算机技术发展的黄金时代。但由于笨重、耗电高、较占空间等种种缺点，在轻薄、功耗低的LCD(液晶显示器)发明并得到推广后被迅速取代，如今我们只能在电影和游戏中找到它们的身影。</p>
+<p>Cool Retro Term使我们能够暂时「回到过去」，看看上世纪八十年代流行的显示器是什么样子。</p>
+<blockquote>
+<p><a href="https://github.com/Swordfish90/cool-retro-term" target="_blank" rel="noopener">Cool Retro Term</a>是一个设计上模仿古老的阴极射线管显示器的终端模拟器。它被设计的十分养眼、可定制和相当轻巧。</p>
+</blockquote>
+<blockquote>
+<p>它由<a href="https://github.com/Swordfish90" target="_blank" rel="noopener">Swordfish90</a>使用QML开发</p>
+</blockquote>
+<blockquote>
+<p>这个终端模拟器在Linux和macOS下工作，并且需要Qt 5.2及以上版本支持</p>
+</blockquote>
+
+    <div class="cplayer-template"
+      id="cplayer-45111936"
+      data-id="cplayer-45111936"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[520459951]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-45111936"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-45111936"] = new cplayer({
+            element: document.getElementById("cplayer-45111936"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-45111936"].add163(520459951)
+
+          let player = window.cplayerList["cplayer-45111936"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>安装</h2><p>这里只介绍Linux上的安装方法，macOS请参考<a href="https://github.com/Swordfish90/cool-retro-term/blob/master/README.md#build-instructions-osx" target="_blank" rel="noopener">文档</a>说明或是下载编译好的<a href="https://github.com/Swordfish90/cool-retro-term/releases" target="_blank" rel="noopener">DMG</a></p>
+<h3>使用包管理器</h3><p>如果你是ArchLinux或Ubuntu用户，可以使用包管理器进行安装，避免繁杂的编译安装过程。</p>
+<h4>ArchLinux</h4><p>ArchLinux的官方仓库中已经包含了Cool Retro Term，执行以下命令安装：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># pacman -S cool-retro-term</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或者从AUR安装开发版本：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ yaourt -S cool-retro-term-git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4>Ubuntu</h4><p>从PPA安装</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># add-apt-repository ppa:noobslab/apps</span>
+<span class="token comment" spellcheck="true"># apt-get update</span>
+<span class="token comment" spellcheck="true"># apt-get install cool-retro-term</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3>编译安装</h3><h4>依赖</h4><p>进行编译之前，先要安装一些依赖。不同的发行版所需的依赖不太一样，具体可以参考文档的<a href="https://github.com/Swordfish90/cool-retro-term#dependencies" target="_blank" rel="noopener">Dependencies</a>部分</p>
+<p>对于ArchLinux来说，应安装这些依赖：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># pacman -S qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4>编译</h4><p>依赖装好之后，就可以开始编译了。执行以下命令：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 从Github克隆到本地</span>
+$ <span class="token function">git</span> clone --recursive https://github.com/Swordfish90/cool-retro-term.git
+
+<span class="token comment" spellcheck="true"># 开始编译(Fedora 和 OpenSUSE 用户需要使用 qmake-qt5 替换 qmake)</span>
+$ <span class="token function">cd</span> cool-retro-term
+$ qmake <span class="token operator">&amp;&amp;</span> <span class="token function">make</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>程序编译成功后，就可以使用下面的命令来运行它了：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ ./cool-retro-term<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4>添加至程序菜单</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># cp cool-retro-term.desktop /usr/share/applications</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2>使用</h2><p>程序带有一些命令行参数，执行<code>cool-retro-term -h</code>可以查看这些参数：</p>
+<pre><code>&quot;Usage: cool-retro-term [--default-settings] [--workdir &lt;dir&gt;] [--program &lt;prog&gt;] [-p|--profile &lt;prof&gt;] [--fullscreen] [-h|--help]&quot;
+  --default-settings  Run cool-retro-term with the default settings
+  --workdir &lt;dir&gt;     Change working directory to &#39;dir&#39;
+  -e &lt;cmd&gt;            Command to execute. This option will catch all following arguments, so use it as the last option.
+  --fullscreen        Run cool-retro-term in fullscreen.
+  -p|--profile &lt;prof&gt; Run cool-retro-term with the given profile.
+  -h|--help           Print this help.
+  --verbose           Print additional information such as profiles and settings.</code></pre><p>打开Cool Retro Term后，默认呈现的就是一台古老的CRT显示器的样子。若不喜欢默认样式，点击Edit-Settings可以进行设置。</p>
+<p>Genreal选项卡里的Profile有一些自带的配置文件，点击Load按钮可以加载它们。点击New新建一个配置文件，然后可以进行具体的配置，调整效果实时可见，十分方便。</p>
+<p><img src="https://img.imjad.cn/images/2017/12/02/Screenshot-20171202171146-1346x733.png" alt="Screenshot-20171202171146-1346x733.png"></p>
+<h3>我的配置文件</h3><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token punctuation">{</span>
+  <span class="token string">"ambientLight"</span><span class="token punctuation">:</span> <span class="token number">0.05</span><span class="token punctuation">,</span>
+  <span class="token string">"backgroundColor"</span><span class="token punctuation">:</span> <span class="token string">"#000000"</span><span class="token punctuation">,</span>
+  <span class="token string">"bloom"</span><span class="token punctuation">:</span> <span class="token number">0.55</span><span class="token punctuation">,</span>
+  <span class="token string">"brightness"</span><span class="token punctuation">:</span> <span class="token number">0.5</span><span class="token punctuation">,</span>
+  <span class="token string">"burnIn"</span><span class="token punctuation">:</span> <span class="token number">0.4</span><span class="token punctuation">,</span>
+  <span class="token string">"chromaColor"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token string">"contrast"</span><span class="token punctuation">:</span> <span class="token number">0.85</span><span class="token punctuation">,</span>
+  <span class="token string">"customCommand"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+  <span class="token string">"flickering"</span><span class="token punctuation">:</span> <span class="token number">0.05</span><span class="token punctuation">,</span>
+  <span class="token string">"fontColor"</span><span class="token punctuation">:</span> <span class="token string">"#ff8100"</span><span class="token punctuation">,</span>
+  <span class="token string">"fontName"</span><span class="token punctuation">:</span> <span class="token string">"APPLE_II"</span><span class="token punctuation">,</span>
+  <span class="token string">"fontWidth"</span><span class="token punctuation">:</span> <span class="token number">0.95</span><span class="token punctuation">,</span>
+  <span class="token string">"frameName"</span><span class="token punctuation">:</span> <span class="token string">"SIMPLE_WHITE_FRAME"</span><span class="token punctuation">,</span>
+  <span class="token string">"glowingLine"</span><span class="token punctuation">:</span> <span class="token number">0.25</span><span class="token punctuation">,</span>
+  <span class="token string">"horizontalSync"</span><span class="token punctuation">:</span> <span class="token number">0.15</span><span class="token punctuation">,</span>
+  <span class="token string">"jitter"</span><span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span>
+  <span class="token string">"rasterization"</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token string">"rbgShift"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token string">"saturationColor"</span><span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span>
+  <span class="token string">"screenCurvature"</span><span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span>
+  <span class="token string">"staticNoise"</span><span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span>
+  <span class="token string">"useCustomCommand"</span><span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token string">"windowOpacity"</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"Wasteland"</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2>几张截图</h2><p><img src="https://img.imjad.cn/images/2017/12/02/Screenshot-20171202012048-1920x1080.png" alt="Screenshot-20171202012048-1920x1080.png"></p>
+<p><img src="https://img.imjad.cn/images/2017/12/02/Screenshot-20171202172553-1423x770.png" alt="Screenshot-20171202172553-1423x770.png"></p>
+<p><img src="https://img.imjad.cn/images/2017/12/02/Screenshot-20171202172435-1423x770.png" alt="Screenshot-20171202172435-1423x770.png"></p>
+<p><img src="https://img.imjad.cn/images/2017/12/02/Screenshot-20171202153626-1419x804.png" alt="Screenshot-20171202153626-1419x804.png"></p>
+<p><img src="https://img.imjad.cn/images/2017/12/02/Screenshot-20171202012701-1920x1080.png" alt="Screenshot-20171202012701-1920x1080.png"></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1512178620000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

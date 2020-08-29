@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/ami-bios-splash-logo-replacement-notes/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            AMI BIOS Splash LOGO 更换小记
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p>今日无事心血来潮，决定把电脑的BIOS开机动画更换一下，配电脑时曾换为长门大萌神，看了几年毕竟有些乏味。<br>当初更换时未留下任何记录，所用工具和图片也在后来的一次误格全盘中丢失了。这回查了点资料，参考记忆中的过程步骤成功更换，顺便把过程记录下来，为自己和他人做个参考</p>
+
+    <div class="cplayer-template"
+      id="cplayer-12871454"
+      data-id="cplayer-12871454"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[26220167]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-12871454"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-12871454"] = new cplayer({
+            element: document.getElementById("cplayer-12871454"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-12871454"].add163(26220167)
+
+          let player = window.cplayerList["cplayer-12871454"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>下载相关工具</h2><h3>AFU</h3><p>这台电脑的主板是MSI B85M-E45，当时售价500元左右，看中性价比买的，几年下来还算稳定，没有出现过故障<br>这块主板搭载的是AMI公司的Aptio4 UEFI BIOS，因此到AMI官网下载固件刷新工具<a href="https://ami.com/en/products/bios-uefi-tools-and-utilities/bios-uefi-utilities/" target="_blank" rel="noopener">AMI Firmware Update (AFU)</a>(注意Aptio版本，较早一些的一般为Aptio4，最新的可能是Aptio V)<br>点击对应版本的下载地址，会弹出下载条款，完成reCAPTCHA验证后即可开始下载<br>下载后的压缩包包含了许可协议副本、文档、EFI启动文件、以及我们需要的afuwin，根据系统架构选择对应的版本<br>在这里选择afuwin64.zip，打开之后是一个文件夹，把文件夹整个解压出来</p>
+<h3>ChangeLogo</h3><p>ChangeLogo用于替换提取到的BIOS镜像的Splash LOGO。但我在AMI官网只看到了工具介绍，未找到下载地址，因此在第三方网站上找到了这一工具<a href="http://www.bios.net.cn/down/BIOSxg/AMIBIOSxggj/466.html" target="_blank" rel="noopener">ChangeLogo</a>，下载并解压</p>
+<h2>提取BIOS</h2><p>打开<code>AFUWINGUIx64.EXE</code>并给予管理员权限，会显示一些基本信息<br><img src="https://img.imjad.cn/images/2018/02/15/afuwin64.png" alt="afuwin64.png"></p>
+<p>点击<code>Save</code>按钮，选择保存位置，即可将BIOS提取到以rom结尾的文件里，大小为6291456字节，正好6 MiB<br><img src="https://img.imjad.cn/images/2018/02/15/afuwin64_save.png" alt="afuwin64_save.png"></p>
+<p><em>需要注意的是，在BIOS读写过程中系统会假死一段时间，鼠标和键盘将没有反应，播放的音频会鬼畜。<br>不必惊慌，读写操作完成后就会恢复正常</em></p>
+<h2>制作Splash LOGO</h2><p>规格：1024*768 jpeg 大小不要太大，尽量不要超出原有的图像大小<br>我使用了Photoshop来制作所需的图像，过程不赘述，需要注意的是最终生成的图像分辨率一定要是1024*768，否则会出现意料之外的裁剪、拉伸或变形。<br>但现在很少有4:3的屏幕了，而Splash LOGO在显示时会拉伸至满屏，会出现变形现象。<br>解决方法也很简单，即先做一张符合显示器比例的图片，然后将其缩放至1024*768即可，不必担心变形，显示时会自动拉伸回去<br><img src="https://img.imjad.cn/images/2018/02/15/holo.jpg" alt="holo.jpg" title="我制作的Splash LOGO"></p>
+<h2>替换LOGO图像</h2><p>打开<code>ChangeLogo.exe</code>，点击<code>Load Image</code>按钮，选择之前步骤中提取出的BIOS镜像<br><img src="https://img.imjad.cn/images/2018/02/15/change_logo_load.png" alt="change_logo_load.png"></p>
+<p><em>此时可以点击<code>Save Logo</code>按钮，将当前的Splash LOGO提取出来，制作Splash LOGO时应参考此图像大小和分辨率等信息</em></p>
+<p>点击<code>Browse</code>按钮，选择上一步中制作的图像文件，点击<code>Replace Logo</code>按钮替换Splash LOGO，可能会提示格式未知，不支持等信息，选是即可<br><img src="https://img.imjad.cn/images/2018/02/15/change_logo_replace.png" alt="change_logo_replace.png"></p>
+<p>替换完成后，点击<code>Save Image AS</code>按钮，保存替换后的BIOS镜像文件</p>
+<h2>刷回BIOS</h2><blockquote>
+<p><strong>这一步非常危险，可能导致你的计算机黑屏、死机、工作不稳定，乃至无法启动</strong><br><strong>请确认自己刚才所做的每一步都正确无误后再继续操作</strong><br><strong>即使操作正确，也可能会遇到意料之外的情况，刷写BIOS需要数十秒时间，在此期间不能断电</strong><br><strong>本人不对您计算机的故障承担任何责任</strong></p>
+</blockquote>
+<p>打开<code>AFUWINGUIx64.EXE</code>，点击<code>Open</code>按钮，选择替换后的BIOS镜像文件，不必更改窗体上的选项。点击<code>Flash</code>，将弹出确认框，确认没有其他程序会干扰BIOS更新后，选择OK，开始刷写BIOS，再次提醒：</p>
+<p><strong><center>刷写BIOS需要数十秒时间，在此期间不能断电</center></strong> <strong><center>刷写BIOS需要数十秒时间，在此期间不能断电</center></strong> <strong><center>刷写BIOS需要数十秒时间，在此期间不能断电</center></strong></p>
+<p>刷写完成后如图：<br><img src="https://img.imjad.cn/images/2018/02/15/afuwin64_flash.png" alt="afuwin64_flash.png"></p>
+<p>重启系统，应该就能看到更换后的Splash LOGO了</p>
+<h2>参考</h2><p><a href="https://ami.com/en/products/bios-uefi-tools-and-utilities/bios-uefi-utilities/" target="_blank" rel="noopener">American Megatrends Inc.  - BIOS ⁄ UEFI Utilities</a><br><a href="http://www.bios.net.cn/down/BIOSxg/AMIBIOSxggj/466.html" target="_blank" rel="noopener">AMI Aptio Change Logo</a><br><a href="https://zh.moegirl.org/zh-hans/%E8%B5%AB%E8%90%9D" target="_blank" rel="noopener">赫萝 - 萌娘百科 万物皆可萌的百科全书</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1518639180000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

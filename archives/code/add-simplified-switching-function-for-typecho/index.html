@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/code/add-simplified-switching-function-for-typecho/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            为typecho添加简繁切换功能
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p>其实这个方法是通用的，跟用的什么程序没有太大的关系，之前在WP上我也是用这个方法。</p>
+<p>很久之前我曾想做3种语言的博客，后来一想，还是中文吧，英文的朋友毕竟很少接触，简体、繁体切换就简单的多了，没有采用2个译文的办法，只使用了js，其实简体和繁体在语言上有很大的差异，js只能做到字形的转换，语言的使用，例如语法还是大陆的语法，港澳台的朋友凑合着看吧。各位繁体控也可以切换到繁体。。。（ps.本人喜欢打简体、看繁体）这样数据库中存的都是简体，外界喜欢简体的就简体，喜欢繁体的就繁体。好吧，我就不废话了。<br>首先下载js文件，将下面代码中的网址改成自己的。</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">var</span> defaultEncoding <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//1: Tranditional Chinese, 2: Simplified Chinese</span>
+<span class="token keyword">var</span> translateDelay <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> cookieDomain <span class="token operator">=</span> <span class="token string">"https://imjad.cn/"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//改为你自己的域名</span>
+<span class="token keyword">var</span> msgToTraditionalChinese <span class="token operator">=</span> <span class="token string">"繁體"</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//此处可以更改为你想要显示的文字</span>
+<span class="token keyword">var</span> msgToSimplifiedChinese <span class="token operator">=</span> <span class="token string">"简体"</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//同上</span>
+<span class="token keyword">var</span> translateButtonId <span class="token operator">=</span> <span class="token string">"translateLink"</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>footer.php中添加以下代码</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token markup"><span class="token comment" spellcheck="true">&lt;!--- 简繁转换开始 ---></span></span>
+<span class="token markup">&lt;script type="text/javascript" src="<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>?php</span> <span class="token attr-name">$this-</span><span class="token punctuation">></span></span></span>options<span class="token operator">-</span><span class="token operator">></span><span class="token function">themeUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token delimiter">?></span>js<span class="token operator">/</span>cn_tw<span class="token punctuation">.</span>js"<span class="token operator">></span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></span> <span class="token comment" spellcheck="true">// 此处地址改为你的js文件地址</span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span>
+<span class="token keyword">var</span> defaultEncoding <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//默认是否繁体，0-简体，1-繁体</span>
+<span class="token keyword">var</span> translateDelay <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//延迟时间,若不在</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span>前<span class="token punctuation">,</span> 要设定延迟翻译时间<span class="token punctuation">,</span> 如<span class="token number">100</span>表示100ms<span class="token punctuation">,</span>默认为<span class="token number">0</span>
+<span class="token keyword">var</span> cookieDomain <span class="token operator">=</span> "https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//imjad.cn/";    //Cookie地址, 一定要设定, 通常为你的网址</span>
+<span class="token keyword">var</span> msgToTraditionalChinese <span class="token operator">=</span> <span class="token string">"繁體"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//默认切换为繁体时显示的中文字符</span>
+<span class="token keyword">var</span> msgToSimplifiedChinese <span class="token operator">=</span> <span class="token string">"简体"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//默认切换为简体时显示的中文字符</span>
+<span class="token keyword">var</span> translateButtonId <span class="token operator">=</span> <span class="token string">"translateLink"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//默认互换id</span>
+<span class="token function">translateInitilization</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token comment" spellcheck="true">&lt;!--- 简繁转换结束 ---></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>修改网址为自己的。。。不要老是让我提醒嘛。。。<br>在你想要添加转换按钮的地方添加以下代码</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>translateLink<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span>繁體<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>文字可以按照自己的喜好更改。如果放在格式代码中，请加相应的格式。<br>js下载地址：<a href="https://imjad.cn/cn_tw.js.zip">cn_tw.js.zip</a></p>
+<p>本文来自<a href="http://xiaoliluo.com/63.html" target="_blank" rel="noopener">@萧篱落</a>，有部分删改。</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1437755580000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

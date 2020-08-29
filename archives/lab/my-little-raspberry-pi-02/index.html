@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/my-little-raspberry-pi-02/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            从零开始的树莓派 其之贰 其他的配置
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <blockquote>
+<p>上一篇文章介绍了树莓派和系统的安装，接下来介绍一些其他的配置，更多请参考<a href="https://wiki.archlinux.org/index.php/General_recommendations" target="_blank" rel="noopener" title="wiki">wiki</a></p>
+</blockquote>
+
+    <div class="cplayer-template"
+      id="cplayer-99128951"
+      data-id="cplayer-99128951"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[28563190]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-99128951"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-99128951"] = new cplayer({
+            element: document.getElementById("cplayer-99128951"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-99128951"].add163(28563190)
+
+          let player = window.cplayerList["cplayer-99128951"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>配置无线网络</h2><p>在上一篇文章中，我在写入系统后为了方便直接插入了以太网线，在实际应用中，可能遇到需要使用无线网络的情况。在命令行中连接无线网络有很多种方法，下面介绍其中一种（更多方法可以参考<a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration" target="_blank" rel="noopener" title="无线网络配置">无线网络配置</a>）</p>
+<p>执行命令，该命令将在目录<code>/etc/netctl/</code>中生成一个配置文件</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># wifi-menu -o<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>随后选择热点并输入配置文件的名字，输入密码连接</p>
+<p>接着执行下列命令以启用配置文件，<code>profile</code>是你刚才输入的配置文件名，该命令将创建并启用一个随计算机启动而自动运行的<code>systemd</code>服务</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># netctl enable profile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>修改之后，需用下述命令重新启用该配置。</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># netctl reenable profile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>更多请参考<a href="https://wiki.archlinux.org/index.php/Netctl" target="_blank" rel="noopener" title="wiki">wiki</a></p>
+<h2>音频设置</h2><p>安装 alsa-utils, alsa-firmware, alsa-lib 和 alsa-plugins 包</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># pacman -S alsa-utils alsa-firmware alsa-lib alsa-plugins<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>使用<code>alsamixer</code>调整音量，确保<code>PCM</code>没有被设置为静音(F6选择声卡，上下调整音量，<code>MM</code>为静音，M键切换静音状态)，更多请参考<a href="https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture" target="_blank" rel="noopener" title="wiki">wiki</a></p>
+<h2>SD卡超频</h2><p>编辑<code>/boot/config.txt</code>，加入一行</p>
+<pre class="line-numbers language-shell"><code class="language-shell">dtparam=sd_overclock=100<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>再次启动后执行</p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ dmesg | grep "mmc0"<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>查看是否成功，成功的话会显示<code>mmc0: overclocking to 100000000Hz</code>字样</p>
+<p>该项设置没有危险，默认值低是为了提高兼容性，一般的卡都可以放心调整到100</p>
+<h2>总结</h2><p>写了这几个发现也没有什么好写的，大多都是网络上已有的内容，而且配置这种东西很个性化，不必拘泥于别人的方法，因此这里只写了几个通用且必要的配置，另外附上关于使用Arch Linux的几点提示：</p>
+<ul>
+<li>订阅Arch Linux官方<a href="https://www.archlinux.org/feeds/news/" target="_blank" rel="noopener" title="RSS">RSS</a>，一些重要新闻会在这里发布</li>
+<li>Arch Linux是一个滚动更新的发行版，这意味着所有软件都是最新的，遇到Bug的可能性也更大，追求稳定的用户请使用其它发行版</li>
+<li>请经常通过<code>pacman -Syu</code>更新系统，长久不更新可能使系统在更新时出现故障</li>
+<li><code>pacman</code>和<code>yaourt</code>很强大，一般不用自己编译，更不要轻易使用其它的包管理器</li>
+<li><a href="https://wiki.archlinux.org/" target="_blank" rel="noopener" title="ArchWiki">ArchWiki</a>很丰富，有问题请第一时间到这里看看，其他发行版也是可以参考的，有能力的话你也可以参与Wiki的编写或翻译工作</li>
+<li>搜索引擎很好用，你遇到的错误其中99%都有人曾遇到过，搜索引擎能帮助你找到他们</li>
+</ul>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1501553460000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

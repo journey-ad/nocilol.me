@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/none/make-typecho-support-display-emoji/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            使Typecho支持显示emoji😘
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="http://7xoffh.com1.z0.glb.clouddn.com/2016/05/336690927.png" alt="emoji"><br>原因：typecho默认使用utf-8编码，utf-8使用3个字节进行存储，而emoji有4个字节，因此将utf-8转换为utf8mb4即可解决<br><em>注意：mysql的版本必须为v5.5.3或更高</em><br>在数据库执行以下查询：</p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">alter</span> <span class="token keyword">table</span> typecho_comments <span class="token keyword">convert</span> <span class="token keyword">to</span> <span class="token keyword">character set</span> utf8mb4 <span class="token keyword">collate</span> utf8mb4_unicode_ci<span class="token punctuation">;</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> typecho_contents <span class="token keyword">convert</span> <span class="token keyword">to</span> <span class="token keyword">character set</span> utf8mb4 <span class="token keyword">collate</span> utf8mb4_unicode_ci<span class="token punctuation">;</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> typecho_fields <span class="token keyword">convert</span> <span class="token keyword">to</span> <span class="token keyword">character set</span> utf8mb4 <span class="token keyword">collate</span> utf8mb4_unicode_ci<span class="token punctuation">;</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> typecho_metas <span class="token keyword">convert</span> <span class="token keyword">to</span> <span class="token keyword">character set</span> utf8mb4 <span class="token keyword">collate</span> utf8mb4_unicode_ci<span class="token punctuation">;</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> typecho_options <span class="token keyword">convert</span> <span class="token keyword">to</span> <span class="token keyword">character set</span> utf8mb4 <span class="token keyword">collate</span> utf8mb4_unicode_ci<span class="token punctuation">;</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> typecho_relationships <span class="token keyword">convert</span> <span class="token keyword">to</span> <span class="token keyword">character set</span> utf8mb4 <span class="token keyword">collate</span> utf8mb4_unicode_ci<span class="token punctuation">;</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> typecho_users <span class="token keyword">convert</span> <span class="token keyword">to</span> <span class="token keyword">character set</span> utf8mb4 <span class="token keyword">collate</span> utf8mb4_unicode_ci<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>修改config.inc.php：</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token variable">$db</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">addServer</span><span class="token punctuation">(</span><span class="token keyword">array</span> <span class="token punctuation">(</span>
+  <span class="token string">'host'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'localhost'</span><span class="token punctuation">,</span>
+  <span class="token string">'user'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'username'</span><span class="token punctuation">,</span>
+  <span class="token string">'password'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'password'</span><span class="token punctuation">,</span>
+  <span class="token string">'charset'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'utf8mb4'</span><span class="token punctuation">,</span>   <span class="token comment" spellcheck="true">//修改此行</span>
+  <span class="token string">'port'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'3306'</span><span class="token punctuation">,</span>
+  <span class="token string">'database'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'typecho'</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">,</span> Typecho_Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">READ</span> <span class="token operator">|</span> Typecho_Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">WRITE</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>大功告成?</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1462529040000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

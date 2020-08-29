@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/my-little-raspberry-pi-01/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            从零开始的树莓派 其之壹 安装Archlinux ARM
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2017/07/30/Screenshot-20170730004921-824x478.png" alt="RPi3b_neofetch" title="RPi3b_neofetch"><br>老早就在关注树莓派这个小东西了，但是没有想到合适的用途所以就一直在观望<span style="font-size:10px">其实是因为没有钱</span>刚好前几天Diy的群里一位小伙伴要出一台3b，就借着这个机会入手了</p>
+
+    <div class="cplayer-template"
+      id="cplayer-79770505"
+      data-id="cplayer-79770505"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[28283602]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-79770505"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-79770505"] = new cplayer({
+            element: document.getElementById("cplayer-79770505"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-79770505"].add163(28283602)
+
+          let player = window.cplayerList["cplayer-79770505"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>树莓派3B简介</h2><blockquote>
+<p>The Raspberry Pi 3 is the third-generation Raspberry Pi. It replaced the Raspberry Pi 2 Model B in February 2016.</p>
+<ul>
+<li>Quad Core 1.2GHz Broadcom BCM2837 64bit CPU</li>
+<li>1GB RAM</li>
+<li>BCM43438 wireless LAN and Bluetooth Low Energy (BLE) on board</li>
+<li>40-pin extended GPIO</li>
+<li>4 USB 2 ports</li>
+<li>4 Pole stereo output and composite video port</li>
+<li>Full size HDMI</li>
+<li>CSI camera port for connecting a Raspberry Pi camera</li>
+<li>DSI display port for connecting a Raspberry Pi touchscreen display</li>
+<li>Micro SD port for loading your operating system and storing data</li>
+<li>Upgraded switched Micro USB power source up to 2.5A</li>
+</ul>
+</blockquote>
+<p>可以看到，3b的内存是1GiB，同时自带了无线和蓝牙模块，可以为我们省下两个USB端口</p>
+<h3>所需外设/配件</h3><ul>
+<li>一张Micro SD卡 * //推荐32GiB以上，Class 10级别</li>
+<li>至少5V/2A的电源适配器和Micro USB电源线* //官方推荐的输出电流是2.5A，实际使用中2A即可满足，若你的外设较多请酌情升级</li>
+<li>Micro SD卡读卡器 *</li>
+<li>显示器，HDMI或GPIO均可</li>
+<li>键鼠</li>
+<li>以太网线</li>
+<li>电池</li>
+</ul>
+<h2>写入系统镜像</h2><p>作为Arch Linux用户，我选择的是和<a href="https://archlinux.org/" target="_blank" rel="noopener" title="Arch Linux">Arch Linux</a>体验基本一致的<a href="https://archlinuxarm.org/" target="_blank" rel="noopener" title="Arch Linux ARM">Arch Linux ARM</a>系统，其他用户可以选择使用树莓派基金会官方支持的<a href="https://www.raspberrypi.org/downloads/raspbian/" target="_blank" rel="noopener" title="Raspbian">Raspbian</a>系统。或者使用更适合初学者的<a href="https://www.raspberrypi.org/downloads/noobs/" target="_blank" rel="noopener" title="NOOBS">NOOBS</a></p>
+<p>按照<a href="https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3#installation" target="_blank" rel="noopener" title="官方文档">官方文档</a>进行操作，大概步骤是新建两个分区，一个作为<code>boot</code>分区，一个作为<code>/</code>，将下载好的镜像解压至<code>/</code>，并将<code>/boot</code>下的文件移动至<code>boot</code>分区，过程还是很简单的</p>
+<h2>安装并配置系统</h2><p><strong>接下来的操作将在树莓派上进行</strong></p>
+<p>将Micro SD卡插入树莓派相应位置，插入Micro USB电源线<strong>（树莓派没有设计开关，插入电源即为开机状态）</strong>。我并未使用显示器，为方便后续操作，我同时插入了以太网线</p>
+<h3>联网</h3><p>接入以太网的树莓派应当能自动连接到网络（需要路由器等设备开启<code>dhcp</code>服务），未能连接成功的用户可参考<a href="https://wiki.archlinux.org/index.php/Network_configuration" target="_blank" rel="noopener" title="此文档">此文档</a></p>
+<p>稍等片刻后，即可通过<code>ssh</code>命令登录到路由器</p>
+<h3>SSH登录</h3><blockquote>
+<p>Login as the default user <code>alarm</code> with the password <code>alarm</code>.<br>The default <code>root</code> password is <code>root</code>.</p>
+</blockquote>
+<blockquote>
+<p>可选操作：</p>
+<p>默认的用户名和密码均为<code>alarm</code>，欲更改可参照<a href="https://wiki.archlinux.org/index.php/Users_and_groups" target="_blank" rel="noopener" title="此文档">此文档</a></p>
+<p>默认用户没有<code>sudo</code>权限，按照<a href="https://wiki.archlinux.org/index.php/Sudo" target="_blank" rel="noopener" title="此文档">此文档</a>添加权限</p>
+<p>更换<code>pacman</code>镜像源为<a href="https://mirrors.tuna.tsinghua.edu.cn/help/archlinux/" target="_blank" rel="noopener" title="清华大学tuna源">清华大学tuna源</a><br>添加<code>archlinuxcn</code>仓库的<a href="https://mirrors.tuna.tsinghua.edu.cn/help/archlinuxcn/" target="_blank" rel="noopener" title="tuna源">tuna源</a></p>
+</blockquote>
+<h4>首先更新系统：</h4><pre class="line-numbers language-shell"><code class="language-shell"># pacman -Syyu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>此命令将刷新软件包缓存并更新系统</p>
+<h4>可安装桌面环境，我装的是<code>Xfce</code>：</h4><pre class="line-numbers language-shell"><code class="language-shell"># pacman -S xorg xfce4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我在图形界面的操作均在VNC下进行，因此不需要登录管理器</p>
+<h4>安装<code>yaourt</code>：</h4><p>AUR是Arch Linux的一大特色，在Arch Linux ARM上不能直接安装，使用下列方法</p>
+<p>首先安装<code>base-devel</code>这个包，这个包包含了编译所需的工具</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># pacman -S base-devel<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>安装<code>packge-query</code></p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ wget https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
+$ tar zxvf package-query.tar.gz
+$ cd package-query
+$ makepkg -si<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>安装<code>yaourt</code></p>
+<pre class="line-numbers language-shell"><code class="language-shell"># pacman -S yaourt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2>完成</h2><p>至此系统已基本达到可用状态，更多配置留待下一篇文章再谈</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1501319160000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

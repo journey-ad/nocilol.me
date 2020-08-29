@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/check-browser-devtools-open/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            检测浏览器 DevTools 是否打开的几种方法
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <h2>前言</h2><p>今天关于看板娘的文章收到了一个<a href="https://imjad.cn/archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-03/comment-page-1#comment-11331">评论</a></p>
+<p><img src="https://img.imjad.cn/images/2019/02/13/Xnip2019-02-13_17-11-21.png" alt="Xnip2019-02-13_17-11-21.png"></p>
+<p>在此之前用金丝雀版本时也发现了这个情况，不过当时比较忙，又因为是金丝雀，离正式版还有一段距离，所以也就没放在心上🌝。如今用户提及，便不得不重视了</p>
+<p>遂检查更新，发现Chrome正式版大版本号升级到了72，更新到新版本，果然出现了同样的问题</p>
+<p>这个功能的核心在于「检测控制台是否打开，或打开时执行一段代码」，打开切图仔的好朋友——Stack Overflow搜索一番，发现已经有了一些解决方案。经过测试，问题可得以解决，在此整理下来留作记录</p>
+<h2>解决方案</h2><h3>Chrome 72+可用</h3><h5>利用Chrome开发者工具会自动读取元素id的特性，重写getter实现需求</h5><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">let</span> element <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'checkDevTools'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> <span class="token string">'id'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token keyword">get</span><span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">/* TODO */</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//使用console.debug()使打印出的辅助信息默认隐藏</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5>基本思路同上，使用img元素，结合<code>console.log()</code>的格式化输出，实现自定义打印内容</h5><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">let</span> element <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span> <span class="token string">'id'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token keyword">get</span><span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">/* TODO */</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'%cCheck DevTools'</span><span class="token punctuation">,</span> element<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3>Chrome 65+/Firefox可用</h3><p><em>这种方法只有在打开控制台时有效，即打开控制台后再访问页面无效，但每次打开控制台都会执行方法</em></p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">var</span> re <span class="token operator">=</span> <span class="token regex">/x/</span><span class="token punctuation">;</span>
+re<span class="token punctuation">.</span>toString <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/* TODO */</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>re<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3>其他方法</h3><h5>通过检测窗口尺寸大小间接判断</h5><p>优点是不受浏览器版本影响，同时缺点也很明显：打开控制台后再访问页面无效；控制台为独立窗口时无效；快速更改窗口大小、移动设备横竖屏切换可能会导致误报，需要作更多的兼容性判断</p>
+<p>参考<a href="https://github.com/sindresorhus/devtools-detect" target="_blank" rel="noopener">sindresorhus/devtools-detect</a></p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">/* eslint-disable spaced-comment */</span>
+<span class="token comment" spellcheck="true">/*!
+    devtools-detect
+    Detect if DevTools is open
+    https://github.com/sindresorhus/devtools-detect
+    by Sindre Sorhus
+    MIT License
+*/</span>
+<span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token string">'use strict'</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> devtools <span class="token operator">=</span> <span class="token punctuation">{</span>
+        open<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        orientation<span class="token punctuation">:</span> <span class="token keyword">null</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> threshold <span class="token operator">=</span> <span class="token number">160</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> emitEvent <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>state<span class="token punctuation">,</span> orientation<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        window<span class="token punctuation">.</span><span class="token function">dispatchEvent</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CustomEvent</span><span class="token punctuation">(</span><span class="token string">'devtoolschange'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+            detail<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                open<span class="token punctuation">:</span> state<span class="token punctuation">,</span>
+                orientation<span class="token punctuation">:</span> orientation
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token function">setInterval</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> widthThreshold <span class="token operator">=</span> window<span class="token punctuation">.</span>outerWidth <span class="token operator">-</span> window<span class="token punctuation">.</span>innerWidth <span class="token operator">></span> threshold<span class="token punctuation">;</span>
+        <span class="token keyword">var</span> heightThreshold <span class="token operator">=</span> window<span class="token punctuation">.</span>outerHeight <span class="token operator">-</span> window<span class="token punctuation">.</span>innerHeight <span class="token operator">></span> threshold<span class="token punctuation">;</span>
+        <span class="token keyword">var</span> orientation <span class="token operator">=</span> widthThreshold <span class="token operator">?</span> <span class="token string">'vertical'</span> <span class="token punctuation">:</span> <span class="token string">'horizontal'</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>heightThreshold <span class="token operator">&amp;&amp;</span> widthThreshold<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+      <span class="token punctuation">(</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>Firebug <span class="token operator">&amp;&amp;</span> window<span class="token punctuation">.</span>Firebug<span class="token punctuation">.</span>chrome <span class="token operator">&amp;&amp;</span> window<span class="token punctuation">.</span>Firebug<span class="token punctuation">.</span>chrome<span class="token punctuation">.</span>isInitialized<span class="token punctuation">)</span> <span class="token operator">||</span> widthThreshold <span class="token operator">||</span> heightThreshold<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>devtools<span class="token punctuation">.</span>open <span class="token operator">||</span> devtools<span class="token punctuation">.</span>orientation <span class="token operator">!==</span> orientation<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">emitEvent</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">,</span> orientation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            devtools<span class="token punctuation">.</span>open <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+            devtools<span class="token punctuation">.</span>orientation <span class="token operator">=</span> orientation<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>devtools<span class="token punctuation">.</span>open<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">emitEvent</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            devtools<span class="token punctuation">.</span>open <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            devtools<span class="token punctuation">.</span>orientation <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> module <span class="token operator">!==</span> <span class="token string">'undefined'</span> <span class="token operator">&amp;&amp;</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        module<span class="token punctuation">.</span>exports <span class="token operator">=</span> devtools<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        window<span class="token punctuation">.</span>devtools <span class="token operator">=</span> devtools<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">// check if it's open</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'is DevTools open?'</span><span class="token punctuation">,</span> window<span class="token punctuation">.</span>devtools<span class="token punctuation">.</span>open<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// check it's orientation, null if not open</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'and DevTools orientation?'</span><span class="token punctuation">,</span> window<span class="token punctuation">.</span>devtools<span class="token punctuation">.</span>orientation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// get notified when it's opened/closed or orientation changes</span>
+window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'devtoolschange'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'is DevTools open?'</span><span class="token punctuation">,</span> e<span class="token punctuation">.</span>detail<span class="token punctuation">.</span>open<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'and DevTools orientation?'</span><span class="token punctuation">,</span> e<span class="token punctuation">.</span>detail<span class="token punctuation">.</span>orientation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>此外还有一些旁门左道的方法，如通过控制台开启或关闭时执行基准代码消耗时长的区别来进行判断、使用一些浏览器私有的方法用作判断依据等。但这些方法或因性能问题，或由于失效，将不在此列出，有兴趣可查看Stack Overflow中该问题的历史回答</p>
+<h2>参考</h2><p><a href="https://stackoverflow.com/questions/7798748/find-out-whether-chrome-console-is-open" target="_blank" rel="noopener">Find out whether Chrome console is open - Stack Overflow</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1550021820000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

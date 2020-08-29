@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/apply-different-styles-when-printing-a-web-page/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            在打印网页时应用不同的样式
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/06/28/P3IL9T1.jpg" alt="杂志"></p>
+<h2>前言</h2><p>有时我们有打印保存网页的需求，但对于一份静态的文档来说，原始页面的很多元素都是不必要的，如一些功能按钮和装饰元素，同时正文一般也会使用更适合印刷品的字体。<br>本篇文章将介绍在打印网页时如何应用不同的样式</p>
+<h2>两种方法</h2><p>有两种方法可以满足我们的需求，分别为“使用媒体查询”和“使用JS辅助”</p>
+<h3>使用媒体查询</h3><p><strong>媒体查询</strong>允许针对一个特定范围的输出设备应用不同的样式，而不必改变本身的样式。在这里我们可以用媒体类型中的<strong>print</strong>来为打印机指定样式</p>
+<blockquote>
+<p><em>媒体查询的最常见的用途是实现响应式设计（针对不同屏幕宽度有选择的展现不同的元素或改变页面版式而不必重新加载页面）。</em></p>
+</blockquote>
+<p>媒体查询同样有两种使用方法</p>
+<h4>直接书写</h4><p>在样式表中通过<code>@media</code>规则应用，之后的<code>print</code>即为说明此条@规则适用于<strong>print</strong>类型<br><em>可酌情使用<code>!important</code></em></p>
+<pre class="line-numbers language-css"><code class="language-css"><span class="token atrule"><span class="token rule">@media</span> print</span> <span class="token punctuation">{</span>
+    <span class="token selector"><span class="token class">.waifu</span>, <span class="token class">.cPlayer</span>, <span class="token id">#back-to-top</span>, <span class="token class">.text-bar</span>, <span class="token class">.respond</span>, <span class="token class">.comment_reply</span>, <span class="token id">#postnav</span>, <span class="token id">#footer</span> </span><span class="token punctuation">{</span>
+        <span class="token property">display</span><span class="token punctuation">:</span> none <span class="token important">!important</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token selector">p, li </span><span class="token punctuation">{</span>
+        <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token string">'Source Han Serif SC'</span>,<span class="token string">'Source Han Serif'</span>,<span class="token string">'source-han-serif-sc'</span>,<span class="token string">'PT Serif'</span>,<span class="token string">'SongTi SC'</span>,<span class="token string">'MicroSoft Yahei'</span>,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif <span class="token important">!important</span><span class="token punctuation">;</span>
+        <span class="token property">letter-spacing</span><span class="token punctuation">:</span> normal <span class="token important">!important</span><span class="token punctuation">;</span>
+        <span class="token property">text-shadow</span><span class="token punctuation">:</span> none <span class="token important">!important</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token selector">pre </span><span class="token punctuation">{</span>
+        <span class="token property">max-height</span><span class="token punctuation">:</span> unset <span class="token important">!important</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这段样式隐藏了看板娘、播放器、回到顶部按钮、评论回复按钮、评论输入框和页脚等一些静态文档中不必要的元素或功能区域，并将正文字体更换为开源免费的思源宋体（关于如何在网页中使用思源字体留待下一篇文章再谈），同时覆盖了适合屏幕阅读的装饰用样式（字间距和文字阴影）</p>
+<h4>引入外部样式表</h4><p>除此之外，媒体查询还可以在<code>&lt;link&gt;</code>标签内使用</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">media</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>print<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>print.css<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后在<code>print.css</code>内书写样式即可</p>
+<p>当媒体查询为true时（此处即为媒体类型为<strong>print</strong>），其对应的样式表或样式规则就会遵循正常的级联规则进行应用<br>需要注意的是，即使媒体查询返回false，<code>&lt;link&gt;</code> 标签指向的样式表也将会被下载（但是它们不会被应用）</p>
+<h3>使用JS辅助</h3><p>一般情况下，<strong>媒体查询</strong>已经能够满足“在打印网页时应用不同的样式”的需求<br>但媒体查询应用的样式是给打印机看的，对于用户而言，并不知道页面样式发生了什么变化。同时我们可能希望在打印前执行一些代码，如添加水印或更换字体等<br>对于上述需求，我们可以使用类名应用样式，并使用js控制元素的类名来实现</p>
+<h4>书写样式</h4><p>照常书写样式，只不过此处的选择器被加上了<code>body.print</code>以表示在body的类名中带有<strong>print</strong>时应用</p>
+<pre class="line-numbers language-css"><code class="language-css"><span class="token selector">body<span class="token class">.print</span> <span class="token class">.waifu</span>, body<span class="token class">.print</span> <span class="token class">.cPlayer</span>, body<span class="token class">.print</span> <span class="token id">#back-to-top</span>, body<span class="token class">.print</span> <span class="token class">.text-bar</span>, body<span class="token class">.print</span> <span class="token class">.respond</span>, body<span class="token class">.print</span> <span class="token class">.comment_reply</span>, body<span class="token class">.print</span> <span class="token id">#postnav</span>, body<span class="token class">.print</span> <span class="token id">#footer</span> </span><span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> none <span class="token important">!important</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">body<span class="token class">.print</span> p, body<span class="token class">.print</span> li </span><span class="token punctuation">{</span>
+    <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token string">'Source Han Serif SC'</span>,<span class="token string">'Source Han Serif'</span>,<span class="token string">'source-han-serif-sc'</span>,<span class="token string">'PT Serif'</span>,<span class="token string">'SongTi SC'</span>,<span class="token string">'MicroSoft Yahei'</span>,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif <span class="token important">!important</span><span class="token punctuation">;</span>
+    <span class="token property">letter-spacing</span><span class="token punctuation">:</span> normal <span class="token important">!important</span><span class="token punctuation">;</span>
+    <span class="token property">text-shadow</span><span class="token punctuation">:</span> none <span class="token important">!important</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">body<span class="token class">.print</span> pre </span><span class="token punctuation">{</span>
+    <span class="token property">max-height</span><span class="token punctuation">:</span> unset <span class="token important">!important</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4>使用JS控制元素类名</h4><p><code>beforeprint</code>和<code>afterprint</code>事件可以满足我们的需求，这两个事件是在HTML5中引入的</p>
+<p>兼容性一览：</p>
+<table>
+<thead>
+<tr>
+<th>IE</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Chrome</th>
+<th>Safari</th>
+<th>Opera</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6.0</td>
+<td>12</td>
+<td>6</td>
+<td>63</td>
+<td>no</td>
+<td>50</td>
+</tr>
+</tbody></table>
+<p><em>其中Chrome支持较晚，我们之后将使用<code>matchMedia</code>方法做兼容性处理</em></p>
+<p><code>beforeprint</code>在打印前或打印预览时触发，<code>afterprint</code>在打印完成或取消打印后触发，我们只需监听这两个事件，并在触发时修改body元素的类名即可</p>
+<p>修改元素类名可以使用<code>element.classList</code>的<code>add()</code>和<code>remove()</code>方法，十分方便。该方法支持所有现代浏览器，包括IE10+</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//定义beforePrint方法</span>
+    <span class="token keyword">var</span> beforePrint <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        document<span class="token punctuation">.</span>body<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'print'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//定义afterPrint方法</span>
+    <span class="token keyword">var</span> afterPrint <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        document<span class="token punctuation">.</span>body<span class="token punctuation">.</span>classList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">'print'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//对旧版本Chrome做兼容性处理</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span>matchMedia<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> mediaQueryList <span class="token operator">=</span> window<span class="token punctuation">.</span><span class="token function">matchMedia</span><span class="token punctuation">(</span><span class="token string">'print'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        mediaQueryList<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>mql<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>mql<span class="token punctuation">.</span>matches<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">beforePrint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token function">afterPrint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//分别对beforeprint和afterprint事件添加监听</span>
+    window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"beforeprint"</span><span class="token punctuation">,</span> beforePrint<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"afterprint"</span><span class="token punctuation">,</span> afterPrint<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>此处仅对body元素的类名做了修改，要实现更多功能可在两个方法体中增加代码</p>
+<h2>看看效果吧</h2><p>右键点击页面选择打印，或者按快捷键<strong>Ctrl+P</strong>，并打印出来（可选择输出至PDF文档）<br>如无意外，打印出来的文档将会使用特有的样式，如果上一步使用了js辅助的方法还可直接在浏览器窗口看到页面样式发生了变化</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1530357660000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

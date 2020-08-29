@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/dynamic-super-resolution-explored/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            不花钱也能上4K？浅谈「超采样」技术
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <h2>关于「超采样」</h2><p>超采样的概念最早来自于音频处理。<strong>采样就是把模拟信号数字化的过程</strong>，采样频率越高，记录这一段音频信号所用的数据量就越大，同时音频质量也就越高。<strong>在数字化的过程中，以标准的一倍乃至数倍的采样频率进行采样</strong>，可以将量化噪声推往更高频率、让系统可以选用更高截止频率的低通滤波器，借此帮助避免混叠、改善分辨率以及降低噪声</p>
+<p>对于相机来说，超采样技术也是卖点所在，不过这里的超采样和音频处理中的概念不太一样，图像处理无法提升采样率，因此只能从图像分辨率下手，<strong>说得通俗一点，就是「缩图」</strong>。比如相机的CMOS能做到2000万像素，但在输出时缩小为500万像素，这样就比原生500万像素的CMOS输出的图片要精细得多，在噪点方面表现更好</p>
+<p>场景切换至同样与图像打交道的游戏，也就很容易解释通了：GPU在计算时按照4K分辨率进行渲染，输出时将图像缩小为1080P分辨率，就能得到更为精细的显示效果。而这一技术也在许多游戏内得到了应用，对于一些显示器分辨率跟不上的玩家来说可以略微提升游戏画面观感</p>
+<p>说了这么多超采样的好处，那它有没有弊端呢？答案是肯定的。实现超采样需要额外收集标准的数倍乃至数十倍数据，具有更好的效果的同时，对硬件性能带来了不小的挑战。在摄影领域内由于设备的价格和定位原因，牺牲表面上的参数实现更好的画面效果姑且还算划算（同样具有摄影功能的手机即使有像素余量也大多用来做光学防抖了），而在游戏领域内，超采样并不总是得人心</p>
+<p>原因有三，一是摄影中的超采样技术的采样对象是现实世界，<strong>现实世界的精度是无穷大的，只要提升传感器分辨率就可以尽可能还原</strong>。而游戏世界是由GPU运算得出，分辨率的提升意味着运算量指数级增加，现在的游戏对硬件性能的利用已经到了极致，甚至可谓「榨干」（优化差也算榨干🌝），在这种情况下在使用超采样的同时保证帧数基本没有可能</p>
+<p>二同样是现实与游戏有别，游戏世界的线条锐度和明暗对比要比现实强得多，过于精细的线条对其直接缩放会使得线条模糊，使得画质反而下降。因此超采样也有适宜的游戏类型，并不是普适的技术</p>
+<p>三是多数玩家显示器与显卡性能价位相匹配，能配出一台高配主机的壕玩家想必也不会使用分辨率较低的低端显示器：所以壕玩家<strong>没必要</strong>用超采样。轻度玩家或<del>像我一样的</del>劳苦大众，守着低性能显卡能中低特效玩到都不错了：<strong>用不起</strong>超采样</p>
+<h2>老黄的新技术</h2><p>难道在PC上超采样注定要成为鸡肋吗？其实也不尽然，一次偶然的机会，我发现了超采样最好的使用场景。之前组装电脑时配的22吋1080P觉得有些小了，正好当时搬砖挣到了一点小钱<del>1K</del>，便决定加台大尺寸显示器组双屏，一左一右，看番水群、查文档写代码都方便许多。但迫于1K根本买不到正经的显示器，于是上咸鱼七百块收来了一台27吋AOC刀锋5（I2781FH）。遗憾的是这台27吋显示器分辨率是1080P</p>
+<p>——这是将近一年前的事了，转回正题。买前没有实物做参照，感觉27吋1080P也还行，到手才发现这也太太太太太太TM大了啊！文字图标大小都以厘米计算，整个一老年机的感觉。用了三天后还是感觉不能接受，正准备再出掉时，我发现了老黄的新技术，[动态超级分辨率]（Dynamic Super Resolution），简称DSR。经过一番设置后，我发现这样也挺好的，就一直使用至今</p>
+<h3>Windows</h3><p>设置方法很简单，在控制面板中找到或桌面点击鼠标右键打开NVIDIA控制面板，在左侧菜单中选择<strong>管理3D设置</strong>，然后在<strong>全局设置</strong>选项卡中定位至两个<strong>DSR</strong>开头的配置项，分别为<strong>DSR - Factor（系数）</strong>与<strong>DSR - Smoothness（平滑度）</strong></p>
+<p><img src="https://img.imjad.cn/images/2018/10/26/sp181022_135231.png" alt="NVIDIA控制面板"></p>
+<p>在DSR系数配置项中勾选需要的倍数，1080P用4K就勾选4x，平滑度暂时不去管它。配置完点击<strong>应用</strong>按钮，就可以在系统分辨率选项中看到4K级分辨率了。应用后会发现图标字体变得非常小，只需像配置高分屏一样配置缩放系数即可，可以在高级缩放设置里手动输入100%~500%之间的任意数值</p>
+<p><img src="https://img.imjad.cn/images/2018/10/26/sp181026_181512.png" alt="高级缩放设置"></p>
+<p>缩放系数调整完毕之后再回过头来调整上面提到的平滑度，感觉显示锐利就调高，模糊就调低，一切以实际观感为主</p>
+<h3>Linux</h3><p>Linux的N卡驱动并没有提供DSR相关的技术，但我们可以通过直接设置分辨率来实现。安装N卡闭源驱动，然后执行<code>nvidia-settings</code>进入系统X Server设置，在<strong>X Server Display Configuration</strong>中修改<strong>ViewPortIn</strong>和<strong>Panning</strong>的值为需要的分辨率即可</p>
+<p>通过root用户权限启动可以点击<strong>Save to X Configuration File</strong>按钮将配置文件保存起来<del>不过似乎没有效果，也可能是我姿势不对🌝</del></p>
+<p><img src="https://img.imjad.cn/images/2018/10/26/Screenshot-20181022191426-1508x900.png" alt="X Server设置"></p>
+<p>但最后仍要说明的是，这种做法只是欺骗眼睛的小把戏，体验终究比不上物理分辨率的点对点显示，有钱还是直接一步到位的好🌝</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1540532143000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

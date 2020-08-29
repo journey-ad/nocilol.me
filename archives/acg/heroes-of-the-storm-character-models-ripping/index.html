@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/acg/heroes-of-the-storm-character-models-ripping/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            《风暴英雄》人物模型提取与导出
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <video loop="true" autoplay="autoplay" muted="muted">
+    <source src="https://blz.nosdn.127.net/1/tm/heroes/landing/orphea/video.webm" type="video/webm">
+    <source src="https://blz.nosdn.127.net/1/tm/heroes/landing/orphea/video.mp4" type="video/mp4">
+</video>
+
+<h2>前言</h2><blockquote>
+<p>英雄们，收集彩礼，讨好你们的岳父</p>
+</blockquote>
+<p>终于，<del>过气要火</del>风暴也开始卖女儿了，全新原创人物奥菲娅，设定是乌鸦王的女儿，因无法接受自己的父亲开始接触黑暗力量，毅然离家出走，以远离乌鸦王的影响。但在目睹了乌鸦王因个人野心摧毁了君冠城后，她意识到自己已不能再继续逃避，她必须站出来反抗…个中曲折不做评说，请看暴雪官方发布的预告片：<a href="https://heroes.blizzard.cn/article/news/9549" target="_blank" rel="noopener">乌鸦庭继承人</a></p>
+<p>奥菲娅作为风暴里少有<del>长得好看</del>的女性角色，还是个萝莉，加之首位原创人物的身份，在发布之初就引得一片绅士对乌鸦王大喊岳父。而作为绅士的一员，总得有点行动不是，在更新后立即付款的同时，加之前几天<a href="https://imjad.cn/archives/lab/ripping-sketchfab-models">对于Sketchfab模型提取的研究</a>，便产生了提取风暴人物模型的想法。经过初步搜索资料，我得知风暴英雄是用星际争霸2的引擎做出来的，加之暴雪游戏受众广泛，因此虽然风暴一直处于「要火」的状态，但是人物模型的提取却并不是什么难事</p>
+<p>有现成的工具在手，加之数个教程帖的指路，我就这样开始了折腾之旅。奈何世事无常，虽然有众位前辈铺路，前进的路上依然遍地是坑。踩到坑是痛苦的，从坑里爬出来的过程是枯燥而又绝望的，后头望坑的心情是无语的。好在坑已是过去，记录思路，整理成文才是要紧，快乐自己，方便他人</p>
+<h2>提取流程</h2><h3>工具准备</h3><p>平台</p>
+<ul>
+<li>Windows</li>
+<li>3ds Max 2018</li>
+</ul>
+<p>专用工具</p>
+<ul>
+<li><a href="http://www.zezula.net/en/casc/main.html" target="_blank" rel="noopener">CascView</a> - CASC(NGDP)文件格式查看工具</li>
+<li><a href="https://www.sc2mapster.com/projects/taylor-mouses-stuff/files/945021" target="_blank" rel="noopener">3D Model Viewer</a> - 模型查看工具，用于预览M3格式的模型</li>
+<li><a href="https://www.sc2mapster.com/projects/taylor-mouses-stuff/files/2570382" target="_blank" rel="noopener">M3 Import Script</a> - 适用于3ds Max的M3模型导入脚本</li>
+</ul>
+<p><em>\</em>可选，如果你要导入到魔兽编辑器中的话*</p>
+<ul>
+<li><em><a href="https://www.hiveworkshop.com/threads/neodex-2-7-wc3-modeling-kit-for-3dsmax-gmax.115767/" target="_blank" rel="noopener">NeoDex</a> - 适用于3ds Max的模型导出为mdx/mdl格式的脚本</em></li>
+<li><em>War3 Model Editor - 「绿苹果」，魔兽模型编辑工具</em></li>
+<li><em>BLP LAB - 格式转换工具，可将DDS转为魔兽编辑器支持的TGA等格式</em></li>
+</ul>
+<h3>提取出M3格式的模型文件</h3><ol>
+<li>打开CascView</li>
+<li>点击<strong>Open Storage</strong>按钮</li>
+<li>在弹出的选择框内选中风暴英雄安装目录中的<strong>HerosData</strong>目录</li>
+<li>等待文件列表读取完毕后，点击<strong>Tools</strong>选项卡中的<strong>Search File(s)</strong>按钮</li>
+<li>以<code>*name*.m3</code>的格式进行搜索，name为人物的英文名称，可在官网或通过搜索得到</li>
+<li>贴图与上面类似，以<code>*name*.dds</code>的格式进行搜索</li>
+<li>按Shift键配合点击选中全部搜索结果，右击并选择<strong>Extract</strong>解压</li>
+</ol>
+<p><img src="https://img.imjad.cn/images/2018/12/02/sp20181201011651.png" alt="搜索列表"></p>
+<p>提取完后可以在3D Model Viewer中打开预览模型</p>
+<p><img src="https://img.imjad.cn/images/2018/12/02/sp20181201013238.png" alt="预览M3格式的模型"></p>
+<h3>安装M3导入脚本并导入模型</h3><ol>
+<li>解压M3 Import Script里拓展名为<strong>.ms</strong>的文件至3ds Max安装目录下的<strong>scripts</strong>目录</li>
+<li>打开3ds Max 2018，点击右侧控制面板的扳手图标</li>
+<li>点击实用程序栏中的<strong>MAXScript</strong>按钮，然后点击MAXScript栏中的<strong>运行脚本</strong>按钮</li>
+<li>选择之前解压到script目录中的M3导入脚本并打开</li>
+<li>在MAXScript栏的实用程序下拉列表中选择<strong>M3 Import</strong>，会出现一个新栏</li>
+<li>点击M3 Import栏中的<strong>select file</strong>按钮，选择此前提取出的M3模型文件</li>
+<li>适当调整<strong>UV Correction</strong>的值，勾选需要导入的数据，然后点击<strong>Import…</strong>按钮导入</li>
+</ol>
+<p><img src="https://img.imjad.cn/images/2018/12/02/sp20181201024916.png" alt="sp20181201024916.png"></p>
+<p><img src="https://img.imjad.cn/images/2018/12/02/sp20181201025235.png" alt="sp20181201025235.png"></p>
+<p><img src="https://img.imjad.cn/images/2018/12/02/sp20181202170103.png" alt="sp20181202170103.png"></p>
+<h3>调整贴图</h3><p>导入后自带一个材质球，如果之前贴图路径正确的话就能直接看到效果，或者可以手动调整</p>
+<p><img src="https://img.imjad.cn/images/2018/12/02/sp20181202171110.png" alt="材质球"></p>
+<p>部分模型的材质球有问题，需要手动调整偏移，或者之前的UV Correction调整不对的话，就会这样：<br><img src="https://img.imjad.cn/images/2018/12/02/sp20181202001032.png" alt="SAN check"></p>
+<h3>最终渲染效果</h3><p><img src="https://img.imjad.cn/images/2018/12/02/sp20181202171715.png" alt="渲染效果"></p>
+<h3>(可选)导出为mdx/mdl格式</h3><p>如果是为了在其他方面使用，到这里就可以结束了，若最终目的是为了导出为魔兽编辑器适用的mdx/mdl格式，请接着往下看：</p>
+<p>导出为mdx/mdl格式要用到3ds Max的NeoDex插件，目前最新版本是NeoDex 2.7，安装过程如下：</p>
+<ol>
+<li>将NeoDex安装包内的全部文件覆盖到3ds Max的安装目录<br>在此处的使用过程中我发现了两个坑，在此详细说明：<ol>
+<li>网络教程提到NeoDex 2.7不支持中文版3ds Max，这个问题实际上是因为NeoDex脚本编写上的一个小疏忽。编辑<code>scripts\NeoDexTools\NeoDexAnimationTools.ms</code>，在125行末尾加上一个半角双引号即可</li>
+<li>点击NeoDex的导出功能后报错，这个问题应该是函数命名与3ds Max的保留关键字重复。编辑<code>scripts\NeoDexModules\UtilityFunctions.ms</code>，将315行的函数名<strong>Dictionary</strong>改为其他名字；编辑<code>scripts\NeoDexModules\ErrorReporter.ms</code>，将第7行和第78行的两处函数名做同样的修改</li>
+</ol>
+</li>
+<li>打开3ds Max 2018，点击<strong>脚本</strong> - <strong>运行脚本</strong>，然后选择<strong>NeoDexInstaller.ms</strong>安装</li>
+<li>稍等即可完成安装，完成后3ds Max会多出一个名为NeoDex的菜单项</li>
+<li>全选整个模型，然后依次点击<strong>NeoDex</strong> - <strong>Export Wc3 Model</strong></li>
+<li>将导出窗口内的Export Mode改为Debug Mode，其他按需调整，然后点击<strong>Export</strong>按钮导出</li>
+</ol>
+<p>导出后的模型可以用绿苹果查看，DDS贴图用BLP LAB转换为TGA格式放置于模型相同路径即可，具体请参考文末的参考资料</p>
+<h2>参考</h2><p><a href="http://bbs.islga.org/forum.php?mod=viewthread&tid=2448213" target="_blank" rel="noopener">风暴英雄模型导出教程 - 魔兽争霸III模型区 - GA地精研究院 </a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1543719540000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

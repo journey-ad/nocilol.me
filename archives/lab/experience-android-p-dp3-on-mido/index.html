@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/experience-android-p-dp3-on-mido/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            通过Treble在红米Note 4X上体验Android P
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <h2>更新</h2><blockquote>
+<p>2018-8-8<br>Android Pie正式版镜像已释出</p>
+<p><del>2018-7-20</del></p>
+<p><del>可用的DP4镜像已释出</del></p>
+<p><del>Magisk最新测试版本已支持Treble</del></p>
+<p><del>相机可用改版Google Camera</del></p>
+</blockquote>
+<h2>关于Treble</h2><p>Android系统的碎片化一直是令Google和开发者颇为头疼的一件事。相对于iOS的封闭，Android在开放的同时也意味着更多的风险和不可控性，从软件的碎片化——基于不同版本的系统开发的各式应用或定制系统，其中有一些用的还是Android 4.x甚至2.x这种古老的版本，到硬件的碎片化——不同的处理器架构、不同的性能、不同的交互方式，甚至连屏幕的材质和尺寸都可以千奇百怪。在因开放市占率傲视群雄的同时，也因此深受碎片化带来的混乱之苦。</p>
+<p>Google显然也意识到了这一点，开始逐渐收紧对Android的把控，如收紧权限管理、禁止调用私有API等。但正因为碎片化，设备适配新版本系统困难，这一策略并不理想。</p>
+<p><img src="https://img.imjad.cn/images/2018/07/16/sp180716_230403.png" alt="Android版本碎片化严重"></p>
+<p>但如今事情起了变化，Treble Project的推出，降低了手机厂商适配新版本Android系统的难度。手机厂商可以专注于系统的功能和体验，而不是像以前一样，必须等待硬件厂商的驱动更新后将其整合进系统，同时伴随着大量的底层开发和测试。（这种升级方式又进一步加剧了Android的碎片化）</p>
+<p>对第三方OS开发者而言，Treble无疑也是好事一桩，这意味着能真正意义上做出一款通刷的刷机包了</p>
+<p>部分手机厂商的态度目前仍显得比较暧昧，支持Treble意味着用户可以简单的更换手机系统，不甘心「只卖手机」的厂商对Treble不感兴趣也是可以理解的了</p>
+<p>幸运的是，有民间大神为一些设备制作了第三方的Treble支持，这些支持被戏称为「土制Treble」。虽然只是「土制」，但使用体验上却没什么区别</p>
+<p>我手中的这台红米Note 4X高通版「代号MIDO」，就使用了由Lineage OS的开发团队制作的Treble支持。并由此成功吃上了Android P</p>
+<h2>安装过程</h2><p>在此不探讨解BL锁、刷REC、救砖等问题。这些都是搞机所必需了解的知识，网络上有很多相关文章和教程，可以自行搜索</p>
+<p><em>进行刷机操作时，良好的操作习惯和清醒的头脑是必要的，本人不对您手机的故障承担任何责任</em></p>
+<p>此刷机包基于Android P DP3制作，由Telegram群组<a href="https://t.me/PsemiGSI" target="_blank" rel="noopener">@P semi-GSI</a>提供，本文中提到的系统镜像等资源均可在此群组的固定消息或群组文件中找到，发现Bug亦可向此群组进行报告</p>
+<h3>在REC的操作</h3><p><em>此处REC均使用<strong>TWRP</strong>进行操作</em></p>
+<ol start="0">
+<li>(可选)开启vendor支持<br> 擦除<code>system</code>、<code>data</code>、<code>cache</code>、<code>dalvik-cache</code>、<code>vendor</code>分区，并刷写对应系统以开启vendor支持，若已支持可跳过此步<br> 我刷的是<a href="https://forum.xda-developers.com/redmi-note-4/xiaomi-redmi-note-4-snapdragon-roms-kernels-recoveries--other-development/rom-aospextended-rom-v5-0-t3679746" target="_blank" rel="noopener">AEX5.7</a>，这也是我此前日用的系统，其他可选有LOS/MoKee等，按各系统的发布说明进行刷机操作</li>
+<li>擦除数据<br> 大版本升级，需要擦除<code>system</code>、<code>data</code>、<code>cache</code>、<code>dalvik-cache</code>分区，请提前做好数据备份<br> <em>注意上一步产生的<code>vendor</code>分区在这一步里应予以保留，不要手滑擦掉了</em></li>
+<li>刷写系统<br> 下载<strong>P-DP3-sGSI.img.zip</strong>，解压其中的<code>P-DP3-sGSI.img</code>并刷写至<code>system</code>分区</li>
+<li>刷写semi-GSI<br> 挂载<code>vendor</code>分区，并按1~3的次序依次刷入<strong>POST-sGSI</strong>的ZIP包</li>
+<li>重启至系统</li>
+</ol>
+<h3>一些Bug的修正与规避</h3><p>上一步重启至系统后，一切正常的话就能看到Android P的真容了，但由于这个系统并非为单个型号手机配置，出现一些Bug也是在所难免。比如我就遇到了动画卡顿、程序假死、偶发FC的问题，下面就将对一些常见的问题进行解决：</p>
+<p><em>在上一步中不要偷懒，完整四清，一个干净的环境能减少一些疑难杂症的发生概率</em></p>
+<h4>启动器FC</h4><p>通过<strong>ADB</strong>安装第三方启动器，如Nova</p>
+<h4>Play商店无法使用</h4><p>在Apkmirror下载对应处理器架构的GMS的安装包并安装，对于MIDO，一个典型的名字是<code>com.google.android.gms_12.8.72_(100400-202717283)-12872041_minAPI28(arm64-v8a,armeabi-v7a)(nodpi)_apkmirror.com.apk</code></p>
+<h4>迷之卡顿</h4><p>下载<strong>p-lag-fix.zip</strong>并选择刷入</p>
+<h4>指纹传感器异常</h4><p>下载<strong>Fix_FP_Scanner.zip</strong>并选择刷入</p>
+<h4>mtp不能使用</h4><p>开启「开发者选项」并进入，往下拉找到默认USB配置，选择「文件传输」</p>
+<h4>导航栏的最近任务按钮变成了菜单按钮</h4><p>编辑<code>/system/usr/keylayout/Generic.kl</code>，搜索<code>MENU</code>，可能会有多个结果，将<code>MENU</code>修改为<code>APP_SWITCH</code></p>
+<h4>无法设置mp3格式铃声</h4><p>使用第三方播放器的铃声设置功能</p>
+<h3>一些拓展应用</h3><h4>Magisk</h4><p>下载<strong>Magisk-v16.4-Treble.zip</strong>并选择刷入</p>
+<h3>一些额外操作</h3><h4>安装相机</h4><p>此系统没有自带相机，请安装<a href="https://play.google.com/store/apps/details?id=net.sourceforge.opencamera" target="_blank" rel="noopener">Opencamera</a>来代替，注意不支持C2API</p>
+<h4>禁用导航栏</h4><p>在<code>/vendor/build.prop</code>中加入一行<code>qemu.hw.mainkeys=1</code>并重启</p>
+<h4>更换Captive Portal Server地址</h4><p>连接ADB，执行：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">adb shell "settings put global captive_portal_http_url http://captive.v2ex.co/generate_204"; 
+adb shell "settings put global captive_portal_https_url https://captive.v2ex.co/generate_204";
+adb shell "settings put global captive_portal_fallback_url http://captive.v2ex.co/generate_204";
+adb shell "settings put global captive_portal_other_fallback_urls http://captive.v2ex.co/generate_204"; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2>体验</h2><p><em>待补充</em></p>
+<h2>一些截图</h2><p><img src="https://img.imjad.cn/images/2018/07/17/Screenshot_20180717-082136.png" alt="媒体音量调整"></p>
+<p><img src="https://img.imjad.cn/images/2018/07/16/Screenshot_20180716-211546.png" alt="通知栏"></p>
+<p><img src="https://img.imjad.cn/images/2018/07/17/Screenshot_20180717-082310.png" alt="截图编辑功能"></p>
+<p><img src="https://img.imjad.cn/images/2018/07/16/Screenshot_20180716-211552.png" alt="磁贴"></p>
+<p><img src="https://img.imjad.cn/images/2018/07/17/Screenshot_20180717-082104.png" alt="最近任务列表"></p>
+<p><img src="https://img.imjad.cn/images/2018/07/16/Screenshot_20180716-211627.png" alt="设置界面"></p>
+<p><img src="https://img.imjad.cn/images/2018/07/16/Screenshot_20180716-211713.png" alt="系统界面"></p>
+<p><img src="https://img.imjad.cn/images/2018/07/16/Screenshot_20180716-211736.png" alt="系统版本"></p>
+<p><img src="https://img.imjad.cn/images/2018/07/16/Screenshot_20180716-211755.png" alt="P的彩蛋"></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1531721040000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/old-school/blackberry-classic-review/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            入手Blackberry Classic
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/10/11/IMG_20181011_122541-03.jpg" alt="Blackberry Classic"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-79200269"
+      data-id="cplayer-79200269"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[133998]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-79200269"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-79200269"] = new cplayer({
+            element: document.getElementById("cplayer-79200269"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-79200269"].add163(133998)
+
+          let player = window.cplayerList["cplayer-79200269"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>前言</h2><p>最近被蚊子推荐，又迫于22卡略坑，于是办了上海移动的魔魔哒卡，目前活动预存话费免月租，最高可以预存四百免四年</p>
+<p>魔魔哒卡在上海高校区域每月40 GiB高速流量，其他区域20 GiB，外省市也可用，另外还有一些乱七八糟的定向流量（虽然我只用到了一个网易云🌝），超限之后限速为1 MBps</p>
+<p>打电话给10010要求将22卡转为5元米粉卡保号，这样我手上的SIM卡就有三张了，不得不购入一台备用机</p>
+<p>起初是想买一台经典的诺基亚1280，但上某宝看了一圈，发现要100+以上，且明显是翻新机或组装机，某鱼货源判断也是某宝，于是放弃</p>
+<p>期间还曾想买一台Melrose第一代迷你手机，但同样因价格过高放弃</p>
+<p>这时某宝推荐给我了黑莓，瞬间就回忆起了用过的诺基亚E5，同样也是全键盘。E5搭载的是塞班S60 v3，当时还不知智能机为何的我第一次见到时简直惊了，我第一次知道手机还能装那么多有用或有趣的软件，有那么多「大型」游戏，一切都显得如此欣欣向荣</p>
+<p>眼见他起高楼，眼见他宴宾客，眼见iPhone出世</p>
+<p>如今诺基亚已成历史，黑莓亦风光不再。曾经的王者黯然退场，留下一片唏嘘，倒是成就了一段时间的中学生作文</p>
+<p>最后向赵丽蓉老师致敬</p>
+<h2>伪开箱</h2><p>于是我便决定入手一台黑莓，经过比对，选定了Classic/Q20</p>
+<p>由于已停产数年，某宝几无全新，甚至原装二手也是不多，仅有的几家价格也是奇贵，作为备用机来讲花销有些高了</p>
+<p>便选择了一家看上去还不错的，虽并未标明但价格和销量已经明确表明这是翻新的店家，交钱发货一气呵成。快递两天即至，让我很是惊喜</p>
+<p><img src="https://img.imjad.cn/images/2018/10/11/IMG_20181011_112943.jpg" alt="全家福"><br>因为是二手翻新，也就不在意那么多了，但意外的是挺干净的，估计箱子上贴个序列号当全新都能卖出去</p>
+<p>但粗糙的说明书表明了身份，耳机也是路边摊货色，聊胜于无</p>
+<p><img src="https://img.imjad.cn/images/2018/10/11/IMG_20181011_113817-01.jpg" alt="赵丽蓉、墨镜和摩托"><br>这台是欧版，移动网络仅支持移动和联通，且移动只能用2G。但考虑到匮乏的应用阵容和备用机的定位，就不要自行车了🌝</p>
+<h2>基本参数</h2><ul>
+<li>上市日期  2014年12月</li>
+<li>屏幕<ul>
+<li>触摸屏类型  电容屏，多点触控</li>
+<li>主屏尺寸  3.5英寸</li>
+<li>主屏分辨率  720x720像素</li>
+<li>屏幕像素密度  291ppi</li>
+</ul>
+</li>
+<li>网络<ul>
+<li>WLAN功能  WIFI，IEEE 802.11 n/b/g</li>
+<li>导航  GPS导航，A-GPS技术</li>
+<li>连接与共享  NFC，HDMI，DLNA，WLAN热点</li>
+</ul>
+</li>
+<li>硬件<ul>
+<li>操作系统  BlackBerry OS 10.3 </li>
+<li>核心数  双核</li>
+<li>CPU型号  高通 骁龙Snapdragon MSM8960</li>
+<li>CPU频率  1.5GHz</li>
+<li>RAM容量  2GB</li>
+<li>ROM容量  16GB</li>
+<li>存储卡  MicroSD卡</li>
+<li>扩展容量  128GB</li>
+<li>电池容量  2515mAh</li>
+</ul>
+</li>
+<li>摄像头<ul>
+<li>摄像头类型  双摄像头（前后）</li>
+<li>后置摄像头  800万像素</li>
+<li>前置摄像头  200万像素</li>
+<li>传感器类型  CMOS</li>
+<li>闪光灯  LED补光灯</li>
+<li>视频拍摄  支持</li>
+</ul>
+</li>
+<li>外观<ul>
+<li>造型设计  直板</li>
+<li>操作类型  QWERTY全键盘</li>
+<li>机身接口  3.5mm耳机接口，Micro USB v2.0数据接口</li>
+</ul>
+</li>
+<li>服务与支持<ul>
+<li>音频支持  支持MP3/AAC/eAAC+/WMA等格式</li>
+<li>视频支持  支持3GP/MPEG-4等格式</li>
+<li>图片支持  支持JPEG等格式</li>
+<li>常用功能  秒表，计算器，电子词典，备忘录，记事本，电子书，闹钟，日历，录音机，地图软件</li>
+</ul>
+</li>
+<li>手机附件<ul>
+<li>包装清单  主机 x1  数据线 x1  耳机 x1  充电器 x1  说明书 x1</li>
+</ul>
+</li>
+</ul>
+<h2>一些截图</h2><p><img src="https://img.imjad.cn/images/2018/10/11/IMG_20181011_171501.png" alt="桌面"><br>挺简洁的，正方形屏幕有种独特的美感</p>
+<p><img src="https://img.imjad.cn/images/2018/10/11/IMG_20181011_172004.png" alt="通知中心"><br>黑莓系统中所有的消息类内容都在这里可以找到，包括应用提醒、通话、短信、邮件，以及黑莓的BBM和PIN消息等，这点和如今的智能机有所不同</p>
+<p><img src="https://img.imjad.cn/images/2018/10/11/IMG_20181011_171710.png" alt="系统信息"><br>不久之前释出的最新版本系统，可能是最后一个版本了</p>
+<p><img src="https://img.imjad.cn/images/2018/10/11/IMG_20181011_171808.png" alt="详尽的安全设置"><br>黑莓素以安全性闻名，坊间给人的印象是「美国总统用的手机」，因此详尽的安全设置必不可少</p>
+<p><img src="https://img.imjad.cn/images/2018/10/11/IMG_20181011_173325.png" alt="Android虚拟机版本消息"><br>黑莓通过运行一个Android虚拟机来实现对Android APP的兼容，可以通过安装特殊应用进入虚拟机的设置界面</p>
+<p>可惜的是这一策略效果并不好，虚拟机在占用了大量硬件资源的同时，并没有产生很好的效果。Android应用运行卡顿、闪退、不兼容现象频发，这或许是出于安全性的要求，黑莓对Android做了太多的底层定制和开发吧</p>
+<p>这种兼容想必需要大量精力实现，有限的几次主系统更新里，Android模拟器并没有得到过什么大型更新，版本号也定格在了4.3这个古老而过时的版本</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1539224820000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

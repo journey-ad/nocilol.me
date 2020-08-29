@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/using-gogs-to-build-your-own-git-server-on-centos/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            在CentOS上使用 Gogs 搭建自己的 Git 服务器
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2016/06/21/QQ20160621153827.png" alt="Gogs" title="Gogs"><br>为了同步代码我们通常使用git来对代码进行管理，最常用的就是Github了。但出于某些原因，有些代码我们并不想公开（当然我们可以使用github的私有仓库，但同样有基于安全意义上的考量），作为一个现实意义上的穷人，我并不能支付得起github的付费方案，因此使用免费开源的git server就成为了我的最佳选择。作为折腾的一部分，在这里把安装的过程和一些需要注意的地方记录一下。</p>
+<p>目前比较好的git server有两个，Gitlab和Gogs。Gitlab作为Github的山寨版，功能非常全面，但与此同时也十分臃肿。国人开发的Gogs则十分轻量，据作者说甚至能在一台普通的树莓派上运行，作为个人用的代码托管平台，显然Gogs更适合我。</p>
+<p>##安装步骤<br>1.新建用户<br>2.下载源码进行编译/下载预编译二进制文件<br>3.安装<br>4.调整配置<br>5.配置nginx反向代理<br>6.添加服务及开机启动</p>
+<p><em>注意，这里默认你已经安装并配置好了MySQL和nginx，如果没有，请自行查找如何安装和配置这些依赖。当然你也可以使用SQLite数据库。</em></p>
+<p>##新建用户<br>Gogs默认以git用户运行，因此我们需要建立一个git用户</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> adduser <span class="token function">git</span>   <span class="token comment" spellcheck="true">#建立git用户</span>
+$ <span class="token function">su</span> <span class="token function">git</span>             <span class="token comment" spellcheck="true">#以git用户登录</span>
+$ <span class="token function">mkdir</span> ~/.ssh       <span class="token comment" spellcheck="true">#建立.ssh目录</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>##下载并解压缩<br>为了节省时间，我选择的是编译好的二进制文件，需要从源码编译的话，请参考一般Go语言项目的编译。<br>在<a href="https://gogs.io/docs/installation/install_from_binary.html" target="_blank" rel="noopener" title="这里">这里</a>寻找适用于你系统的二进制包</p>
+<p>下载后解压到你喜欢的地方，例如<code>/usr/share/gogs/</code>或者<code>/home/git/gogs/</code>。目录结构如下：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">ls</span> ~/gogs
+custom  gogs     log     README.md     scripts
+data    LICENSE  public  README_ZH.md  templates<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>##安装<br>首先建立数据库。<code>Gogs</code>目录的<code>scripts/mysql.sql</code>文件是数据库初始化文件。<br>执行<code>mysql -u root -p &lt; scripts/mysql.sql</code>（需要输入密码）即可初始化数据库。</p>
+<p>然后登录MySQL创建一个新用户gogs，并将数据库gogs 的所有权限都赋予该用户。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ mysql -u root -p
+mysql<span class="token operator">></span> <span class="token comment" spellcheck="true"># （输入密码）</span>
+mysql<span class="token operator">></span> create user <span class="token string">'gogs'</span>@<span class="token string">'localhost'</span> identified by <span class="token string">'密码'</span><span class="token punctuation">;</span>
+mysql<span class="token operator">></span> grant all privileges on gogs.* to <span class="token string">'gogs'</span>@<span class="token string">'localhost'</span><span class="token punctuation">;</span>
+mysql<span class="token operator">></span> flush privileges<span class="token punctuation">;</span>
+mysql<span class="token operator">></span> <span class="token keyword">exit</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>执行<code>./gogs web</code>运行Gogs，然后访问http://服务器IP:3000/ 安装，按照页面提示填写信息。</p>
+<p>##调整配置<br>配置文件位于Gogs目录的<code>custom/conf/app.ini</code>，为INI格式的文本文件，关键配置如下。<br><em>详细的配置解释和默认值请参考<a href="https://gogs.io/docs/advanced/configuration_cheat_sheet.html" target="_blank" rel="noopener" title="配置文件手册">配置文件手册</a></em></p>
+<ul>
+<li><code>RUN_USER</code>默认为git，指定Gogs以哪个用户运行</li>
+<li><code>ROOT</code> 所有仓库的存储根路径</li>
+<li><code>PROTOCOL</code>用nginx反代的话使用http</li>
+<li><code>DOMAIN</code>域名，会影响SSH clone地址</li>
+<li><code>ROOT_URL</code>完整的根路径，会影响页面上链接指向，以及HTTP(s) clone的地址</li>
+<li><code>HTTP_ADDR</code>监听地址，使用nginx建议127.0.0.1，否则localhost或0.0.0.0也可以</li>
+<li><code>HTTP_PORT</code>监听端口，默认3000</li>
+<li><code>INSTALL_LOCK</code>锁定安装页面</li>
+<li>Mailer相关的选项</li>
+</ul>
+<p><em>注意邮箱stmp地址要加端口号</em></p>
+<p>##配置nginx反向代理<br>修改nginx的配置文件，添加如下内容：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">server <span class="token punctuation">{</span>
+    server_name 域名或IP<span class="token punctuation">;</span>
+    listen 80<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">#或者443，如果你使用 HTTPS 的话</span>
+    <span class="token comment" spellcheck="true"># ssl on; 是否启用加密连接</span>
+    <span class="token comment" spellcheck="true"># 如果你使用HTTPS，还需要填写ssl_certificate和ssl_certificate_key</span>
+
+    location / <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">#如果你希望通过子路径访问，此处修改为子路径，注意以/开头和结束</span>
+        proxy_pass http://127.0.0.1:3000/<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>执行<code>sudo service nginx reload</code>重新载入nginx配置</p>
+<p>##添加服务及开机启动<br>在Gogs目录的<code>scripts</code>目录中找到对应你所用发行版的版本，文件名为<code>gogs</code>。<br>执行</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">cp</span> ~/gogs/scripts/gogs /etc/init.d/
+$ <span class="token function">sudo</span> <span class="token function">chmod</span> +x /etc/init.d/gogs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>以后就可以使用<code>sudo service gogs {start|stop|status|restart}</code>来对Gogs服务进行管理。</p>
+<p>但是我们还需要为Gogs添加开机启动，执行：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> chkonfig gogs on<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>即可添加开机启动，取消自启可以执行<code>sudo chkonfig gogs off</code></p>
+<p>####参考资料<br><a href="https://mynook.info/blog/post/host-your-own-git-server-using-gogs" target="_blank" rel="noopener" title="使用 Gogs 搭建自己的 Git 服务器">使用Gogs搭建自己的Git服务器</a><br><a href="https://gogs.io/docs/advanced/configuration_cheat_sheet.html" target="_blank" rel="noopener" title="配置文件手册">配置文件手册</a><br><a href="https://github.com/gogits/gogs/" target="_blank" rel="noopener" title="Gogs在github上的项目页">Gogs在github上的项目页</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1466466000000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

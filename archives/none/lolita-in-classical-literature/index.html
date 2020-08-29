@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/none/lolita-in-classical-literature/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            [萝莉控的战斗檄文]经典文学作品中的萝莉们
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/06/30/Memoirs.of.a.Geisha.2005.BluRay.1080p.DD5.1.x265.10bit-CHD.mkv_003903.217.jpg" alt="千代子, 艺伎回忆录"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-03561374"
+      data-id="cplayer-03561374"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[26092806]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-03561374"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-03561374"] = new cplayer({
+            element: document.getElementById("cplayer-03561374"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-03561374"].add163(26092806)
+
+          let player = window.cplayerList["cplayer-03561374"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<blockquote>
+<p>本文全文转自NGA论坛<a href="https://nga.178.com/read.php?tid=4878876" target="_blank" rel="noopener">同名帖子</a>，修正了一些标点与格式，原作者为<a href="http://bbs.nga.cn/nuke.php?func=ucp&uid=1513130" target="_blank" rel="noopener">奥等宅术师</a><br>在此对原作者表示感谢，并对作者的文字功底感到由衷赞叹</p>
+</blockquote>
+<h2>前言</h2><p>很久以前，早在我初一的时候，偶然翻开一本叫做《百年孤独》的小说。这本书对当时的我来说未免有些平淡无奇。直到雷麦黛丝这个皮肤细嫩，有着绿宝石般双眼的小女孩出现。故事的主人公之一奥雷连诺疯狂的爱上了这个可以做他女儿的孩子，教她读书写字，送她亲手做的金鱼挂饰。最后他们举行了婚礼。我看见紧张万分的青年男人和出奇淡定的小女孩儿。新郎给新娘戴婚戒时不慎将它掉在了地上，可是「雷麦黛丝把戴着花边手套的手微微举起，伸出无名指，继续泰然自若地等着。」</p>
+<p>小说中的这一幕穿透了时间。直到现在，我脑中依然有这么一个白肤碧眼的娇小身影，穿着拉丁风格的黑色礼服，戴着蕾丝手套，温柔而又清澈的翘起无名指，静静的等待那枚属于她的戒指。</p>
+<p>也许我对萝莉的爱，就是在那一刻生根发芽的。</p>
+<p>在那之后我看了许多小说，里面出现了许多萝莉。即使现在，当我已经转向了更容易消化些的ACG，一些过往的形象依然会在我脑中一闪而过，和屏幕里的人物相映成趣。我挺喜欢这种往日重现般的感觉。接下来就让我说说，那些经典文学故事里的萝莉们吧。</p>
+<p><span style="font-size: 1.5em;text-align: center;display: block;"><strong>美好的事物，在哪里都美好。</strong></span></p>
+<h2>[多洛蕾丝]（Dolores）·[黑茲]（Haze）</h2><p><em>《洛丽塔》Lolita<br>    ——弗拉基米尔·纳博科夫</em></p>
+<p>她也许是小说这个虚拟次元里最为人知的少女了，11区围绕这个名字甚至成立了一个教派。可惜的是，多洛蕾丝，也就是洛丽塔，并非我们现代语境中的那种典型的「萝莉」。</p>
+<blockquote>
+<p>小说的故事许多人已经耳熟能详了，主人公亨得利·亨得利因为某些原因迷恋上了未成年又具有诱惑性的小女孩，同时又阴差阳错的成为了一位失去父母的十二岁少女(恰好属于很有诱惑性的那一类)的监护人。他们的故事随着美国公路一直延伸开去，直到最后，洛丽塔出于对隔世生活的厌倦和思春期少女特有的妄想，跟一个剧作家逃跑了。而我们的好人大叔亨得利，最终也冷静的决定用两败俱伤的复仇来结束自己的一生。</p>
+</blockquote>
+<p>因为这不是一个探讨人类美好本质的故事，所以洛丽塔身上不太具备我们当今看重的那些「萝莉萌点」，作者在描述她的挑逗性上花费了更多功夫：无意间露出的好似点彩画般的腋窝；暖烘烘的棕色卷发；骨节纤细、脚趾细长的淘气的双脚；趾甲上一点鲜红的指甲油；大腿内侧横贴的一小条胶带(即视感……)；直到某些场景中，亨得利用舌头舔出她眼中的沙粒，用嘴吸出她被蚊虫叮咬后的毒血——整个故事就是这么一个为了荒诞而荒诞，为了悲伤而悲伤的纯粹艺术品。男主的旧日情结让他冲昏头脑，把一个粗俗冷淡的美国小市民当成了自己的little fair lady；而多洛蕾丝虽然得到了一个男人的全部奉献，但是却是以一种十分扭曲和压抑的方式，这种爱意，最后也毁了她的未来。</p>
+<p>故事里面的多洛蕾丝具备了一部分萝莉应该具备的特性，比如毫无防备(「这个蛮横无理的孩子异常天真的把双腿放到我的膝盖上面」)，比如对诱惑力的敏感(只要稍不注意，她就会和车窗边的一个年轻修理工合唱起一首粗鄙的情歌)。按理说她应该可以归类到早熟/荡漾这种虽不常见但依然有市场的萝莉分野以内，只可惜洛丽塔存在一些致命的缺点，让她无法在精神上给人以可爱的感觉，那就是「庸俗」与「麻木」。 除开令人同情的遭遇，多洛蕾丝在许多方面应该说是让人厌恶的。在接触亨得利之前，她就对大部份美好的事物都缺乏兴趣，同时极端的自我中心，仅凭着一时兴起就做出一个个错误的决定——当然这一切并不怪她，而要怪她那更加庸俗和自私的母亲。可惜事实就是事实，在《洛丽塔》这本书的次元里，多洛蕾丝无法激起我们对萝莉的向往，尽管她肤色透明、身材姣好、散发出足量青春期的诱惑气味。但是她的性格恰如其分的让我们联想起三次元里那些自私、无聊、成天在贴吧真爱楼顶棒子偶像的非主流女初中生——那是每个纯正的萝莉控都为之惋惜的，本可能长成带着柔软羽翼的蝴蝶的无名飞蛾。</p>
+<p>这就是十二岁的多洛蕾丝：她是一个性感少女，是一个在迷雾海上用曼妙歌声引诱水手的小赛壬。她是当代一切lolita的发源地。然而她只是一个音符，不是我们心中那些娇小的女神。这个人物正如同洛丽塔这本书一样，都是作者留给世界的，一个优雅而神圣的玩笑。</p>
+<h2>[莎乐美]（Salome）</h2><p><em>《莎乐美》 Salome<br>    ——奥斯卡·王尔德</em></p>
+<p>同样一本以人名为书名的著作。莎乐美的故事来自于《圣经·马太福音》，一开始她是一个作为阴谋道具存在的配角。但是这个人物身上若隐若现的爱欲气息，吸引了大量十九世纪浪漫而颓废的艺术家们。从1841年海涅重写莎乐美的故事开始，无数知名文人画家音乐家，用各种方式诠释出了自己心中的形象。其中最为著名的，就是奥斯卡王尔德的独幕剧《莎乐美》。</p>
+<blockquote>
+<p>希律城的公主莎乐美过着深受宠爱却穷极无聊的宫廷生活。一天她偶遇被继父希律王囚禁的先知施洗者约翰，对后者一见钟情。然而约翰对上帝保持着极致的虔诚，公主的美貌与热忱根本无法打动其分毫。莎乐美发誓要亲吻约翰的双唇。某日希律王承诺，只要女儿愿意为他跳一曲[七重薄纱之舞]（Dance of seven veils）就可以满足她的任何愿望。莎乐美欣然起舞，一曲毕后，旋即要求圣徒约翰的人头——希律王虽然万分后悔并百般劝阻，然而莎乐美心意已决。最后国王只得下令砍下先知的头，盛在银盘里交给莎乐美。皎洁月光下，公主拥着爱人的头颅，献出了深深一吻。</p>
+</blockquote>
+<p>和洛丽塔类似的，莎乐美此剧的重心亦不在人物描写上。王尔德于此，一方面在尝试一种类似Kanon般不断重复又螺旋上升的文字编排方式，另一方面也寄托着他对美感、爱欲以及「刹那间的永恒」这些美学元素的极致向往。故事最后莎乐美的台词「啊，我亲吻了你的双唇，我亲吻了你的双唇。你的唇上有一股苦涩的气息。那是血的气息吗？不…也许这是爱的气息，人们说爱情总是伴着苦涩…(Ah, I have kissed thy mouth, I have kissed thy mouth. There was a bitter taste on thou lips. Was it the taste of blood? Nay, but perchance it is the taste of love. They say that love hath bitter taste…)」这种血腥的爱让希律王又妒又怕，终于下令卫队长将莎乐美处死。而直到最后一刻，小公主仍在痴情的注视着约翰的头颅。 莎乐美在剧中的最主要特征就是这种超越死亡的坚强而又病态的「欲望」——这并非萝莉的典型气质。另外王尔德原作中的莎乐美年龄为13岁，后来理查·斯特劳斯改编版本修正为16岁，之后的演出版本都心照不宣的沿用了16岁的设定。正因为如此，莎乐美的形象一直在萝莉和少女间暧昧的来回摇摆，难以定论。</p>
+<p>之所以在这里把莎乐美放在萝莉当中，是因为她的行为含着常见于萝莉的诱人成分，那就是「叛逆」和「无视现实的执着追求」。这些正是某些情况下小女孩未成熟心智的集中体现。剧中希律王越是劝阻莎乐美，莎乐美的决心就越加坚定。而施洗者约翰的抗拒，让她选择用一种邪气的方式诠释了自己的深情。用ACG术语来说这是典型的病娇/黑化，但是我觉得更加附合这个形象的是沙耶之歌中的女主角沙耶。虽然出于不同的原因，但两者对于感情都有着极端的认知，最后都选择用反人类的手段来满足自己的爱。</p>
+<p>所以说，有些扭曲感情的根源反而正是未经世事者的单纯。纯粹到了极致便是空无一物，道德、禁忌、甚至连人类的身份都可以舍弃。莎乐美凝望着约翰的头颅，这两者俨然构成了一个完美的世界，再也不需要别的东西了。</p>
+<h2>[雷麦黛丝]（Remedios）</h2><p><em>《百年孤独》A Century of Solitude<br>    ——加西亚·马尔克斯</em></p>
+<p>说过这么多让人心悸的故事，让我们回到开头，唤起对萝莉那温软本性的记忆罢。萝莉之所以美好，到底还是因为这些脱离现实的、独一无二的治愈感。</p>
+<blockquote>
+<p>雷麦黛丝是《百年孤独》小说开篇时的一个形象。当时，初来乍到的马孔多镇长想将自己的七个女儿之一嫁与当地望族布恩蒂亚，以图和原住民搞好关系。然而在相亲时，二十四岁的奥雷连诺对年仅九岁的镇长家小女儿雷麦黛丝一见钟情。虽然双方家长颇为震惊，但是他的真情和坚持打动了包括小女孩在内的所有人。在大家的祝福下，一年之后两人终成眷属。婚后的雷麦黛丝表现出了与生俱来的善良本性，用她的温柔抚平了家中无处不在的裂隙，整个布恩蒂亚家族由于她的到来充满了温情。可惜在一场谋杀中，雷麦黛丝误服了为别人准备的毒药，带着腹中的孩子离开了人世。在她死后，理解、包容、爱情这些品质仿佛也随她而去，布恩蒂亚家族开始了长达一百年的彼此孤立彼此伤害的历史。</p>
+</blockquote>
+<p>如文章开头所言，雷麦黛丝在我心目中一直是萝莉中的经典，最大的原因便是她与生俱来的治愈气质。雷麦黛丝在书中的形象一言蔽之就是「善良」——温柔的对待有些迟钝的丈夫、自愿照顾受伤的牲畜、在雨天为呆在室外的痴呆老人盖上芭蕉树叶、甚至欣然接受了丈夫婚前不轨行为带来的私生子。而这种善良发散开去，又引出一种更加让人在意的事实，那便是萝莉「弱小的能力」与「坚定的善意」之间的反差。作者在大书特书雷麦黛丝为家庭所做的努力的同时，也在不停地提起雷麦黛丝的柔弱，甚至不惜用死亡来深化这种印象。这种反差，一方面凸显出了她们动机的纯真，另一方面则强调了她们弱小的现实，让人充满了保护欲。好比身在异乡的汤音，如此努力的适应新生活，希望自己能帮助周围的人，屡遭挫折却又从不放弃。每当那娇小的身躯默默匍匐在地，空气中自有一种淡淡的涟漪，唤起我们无限的怜爱之情。 </p>
+<p>萝莉的萌点数不胜数，然而善良与柔弱却永远是她们脸颊上那似有似无的一对红晕，最为引人入胜。这几年动漫已经不时兴治愈这种略带老气的设定了，这和观众群体的低龄化有关。二次元的追求往往可以看成三次元的逆反，对当下还未成熟的少年少女而言，现代生活的第一印象就是「平凡」，所以他们追求的往往是非常态。而当一个人踏进社会，感受到平静生活下包藏的冷漠、自私、黑暗，他就会开始怀念单纯和善良，这和小孩总想长大而大人却想回到童年是一个套路。萝莉就是承载这种「成年后治愈梦想」的最常见形象，纵使人之初性本善已经证明不太适用，但未经世事多少会和善良有点联系……好吧，纵然这只是一些人的妄想，柔弱这点总不会错的：每个男人都有保护欲，可惜现实总是让我们认清自己不过是个mortal &amp; loser。那么起码，让我们在二次元拥有一个值得被自己守护着的小萝莉吧。</p>
+<p>这就是所谓的治愈——一个对你百分百信任的、温软幼小的躯体；能被你紧紧地抱在怀中；虽然有些迷惑，但依然用她的小手轻轻抚过你的头顶。如此简单的图景，却包含着一些数千年来深深扎根每个男人心中的理想结构——所谓萝莉控，其实不过是一群充满虚无感的，自愿被时代丢下的，老派的绅士。</p>
+<h2>[阿美利加]（America）·[维库尼亚]（Vicuna）</h2><p><em>《霍乱时期的爱情》Love in the Time of Cholera<br>    ——加西亚·马尔克斯</em></p>
+<p>在我心目中，马尔克斯算是经典小说家中描摹女孩的高手，不论长短篇都有许多出众的萝莉形象。他笔下的维库尼亚和雷麦黛丝有些重叠之处，同样单纯，同样被动，同样不善于拒绝男人的爱，也同样的早早离开人世。让我们来听听她的故事吧。</p>
+<blockquote>
+<p>小说的故事主线是男主人公阿里萨与女主人公费尔米娜跨越半世纪的爱情。他们在一开始未能结合，之后的五十年里，阿里萨在对旧日缘分不断的思念中体验着一个又一个爱情的替代品。维库尼亚是他生命里最后一个情人，当阿里萨已经年逾七十，机缘巧合下却成为了一位十三岁少女的监护人。他迷恋上了女孩「如同初恋情人般的骄傲劲儿」，在他无微不至的关怀下，女孩最终被攻陷了。然而他们的关系没持续多久，费尔米娜的丈夫去世，阿里萨忆起往日誓言，开始重新接近旧爱并疏远了维库尼亚。在他心里，那仿佛发生在祖父与孙女间的奇异关系，对于女孩来说应该只是一种迟早会被遗忘的新鲜体验。少女冷眼旁观，像往日一样沉默，然而她的行为却逐渐反常。故事末尾，维库尼亚选择一个人服毒自杀。她把最后一点聪明才智用来误导旁人，好让前爱人不至于被自己的死亡牵连。这就是成人眼中不懂爱的小女孩，用她无言的行动对爱情做出的最终回应。</p>
+</blockquote>
+<p>值得回味的是，在上两篇故事中作为重要人物的雷麦戴斯和维库尼娅，通篇都只有一句对白。这种「无口」其实是萝莉们善良、单纯、涉世未深这些特性综合之后的体现。她们可能有简单而坚强的意志，有自然而敏锐的感官，但却始终乐于倾听，乐于接受，乐于相信别人的承诺——这是某个单一精神维度上的缺陷，根源在于缺少人生的历练，一种最天才的萝莉也无法得到的东西。她们正如一张张白纸，静等外界为她们染上颜色。所以无怪有人称绫波丽是萝莉鼻祖了，虽然不管从身心的哪个角度来说她都不甚合格，但是那空无一物的精神世界却强烈的显示出了某种萝莉专属的气质。</p>
+<p>这种气质对男人也有着致命的吸引力。如果说萝莉肉体的弱小能激起我们的保护欲，那么精神的空白则能激起我们的征服欲。影响他人、影响世界，这是每个男人从基因里带出的无法摆脱的愿望。而如同白纸一般的萝莉，以及她们倾听与依靠的天性，使得她们成为最容易被影响的一群。希腊神话中Echo对Narcissu说出「Give you the power over me.」，萝莉无言，而她们却无时无刻不在提醒着你对她们的极大权力。这种权力也是伴随着责任的。因为在她们的简单世界中，你的一举一动可能会造成远超出预料的结果。正如同《霍》一书中的维库尼娅，看似懵懂，实际上爱之深、情之坚，足以让标榜成熟的大人们无地自容。她们太善良了，种下一粒好意的种子，很快就会在她们的呵护下长成一棵隐形的参天大树。</p>
+<p>最后，还有一个不容忽视的事实，那就是以上作品中的萝莉都没有得到幸福。也许她们过分柔弱让她们无法立足于现实，也许她们娇美的身影让作家无法坐视她们成年，更有可能的是，她们非尘世的善良和单纯根本就不是这个污秽世界的造物，不过是在机缘巧合下于人间短短掠过，留下百味陈杂的怀念和墙上的一张黑白照片。奥雷连诺的子孙在一百年后惊恐的看着享年10岁的曾曾祖母的容貌，那场景充满了优美而又虚幻的幽冥气息。这也是为何许多恐怖片会以萝莉为主角，为何Lo三大派系中有代表死亡的Gothic，也许它们都是在追求这种凄美的悲剧感罢…正如爱伦坡所言：太过美好的事物，毁灭几乎是唯一的结局。 </p>
+<h2>后记</h2><p>关于萝莉的故事还有很多很多，她们正如有一个着多变外貌的精灵，在不同的作品以不同的性格与姿态出现，而隐隐中又总能找到一些不变的东西，让人心驰神往。</p>
+<p>她是卡尔维诺笔下的十岁的薇莪拉，大胆而又智慧的千金大小姐，放肆的坐在秋千上，用话语把邻家男爵耍得团团转，手里还拿着一颗鲜红欲滴的苹果。</p>
+<p>她是川端康成笔下十五岁的驹子，身为底层艺妓而又娴静自爱，就像一只作茧自缚的蚕，明知徒劳却还在强颜欢笑不停努力，燃烧着自己的生命等待悲剧的结局。</p>
+<p>她是杜拉斯笔下的十四岁的「我」，无人关心的贫穷人家小女孩，穿着妈妈的鞋子和太阳帽，和一位来路不明的中国少爷开始了一段混乱而又绝望的爱情故事。</p>
+<p>她们有不同的面貌不同的声音不同的性格不同的属性，但或多或少保留住的，是那一份未经世事的纯真，一片或明或暗的善意，一种不堪一握的柔弱。选择萝莉，绝不是受了动物性的繁衍本能的驱使(在这一点上御姐更有发言权)，相反其实是受到社会性的千百年来男性定位的驱使：传道者，保护者。是的，绅士——没有一个词比它更适合萝莉控了。他们内心强大，在不让萝莉知晓的前提下，独自一人默默的与现实战斗；他们又极端纤细，能从萝莉的一颦一笑体会到快乐和感激，并将之转化为自己的无穷动力。</p>
+<p>在一个社会中，现实的压力越大，个人的自信越少。选择成熟女性的人就会越多。和御姐在一起，意味着可以多一个人共渡生活的难关，甚至运气好一些自己干脆不用承担责任。但是萝莉控们不会退让。他们深知，选择御姐意味着对现实的妥协，选择萝莉才是对现实的抗争。因为萝莉的单纯善良这些于三次元再难寻觅的特质，让她们成为了这个星球上和理想世界最为接近的生物。千百年来，存在无数流着不满现实血液的理想主义者，有艺术家，有革命家，但是他们的共性就是对萝莉那异常的偏爱。这里面，有爱上八岁的贝阿朵莉切的但丁，有娶了十三岁的弗吉尼亚的爱伦坡，还有无人不知的伟大萝莉控国父，甚至本朝太祖也是在二十岁时在老师家爱上了十二岁的老师女儿，也就是他的第一任妻子。</p>
+<p>在前进的路上，我们并不孤单，过去不会，现在不会，将来也不会。因为我们的目标是人类作为万物之长才会有的独特追求：既非性欲，亦非繁衍，而是充满着纯洁、美好与善良的乌托邦；是人活在世界上最高的人文价值：为弱者奉献自己的一切。</p>
+<p><span style="font-size: 1.5em;text-align: center;display: block;"><strong>永恒的萝莉，引我们飞升。</strong></span></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1530006660000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

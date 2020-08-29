@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/code/translate-jianpu-into-piano-music/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            利用Web Audio API将数字简谱转为钢琴曲
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/09/12/IMG_20180912_000303-01.jpg" alt="SUZUKI MR-250"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-22619809"
+      data-id="cplayer-22619809"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[34248552]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-22619809"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-22619809"] = new cplayer({
+            element: document.getElementById("cplayer-22619809"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-22619809"].add163(34248552)
+
+          let player = window.cplayerList["cplayer-22619809"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>前言</h2><p>最近摸出了吃灰了已久的布鲁斯口琴，这把口琴是我还在上高中时，幻想着成为一名安静的美男子而买的。但当时已是高三，毕竟要面对学生时期最大的BOSS——高考，这把口琴在把玩了不久之后，也被我收到了行李箱的最深处。</p>
+<p>岁月是把杀猪刀，时隔五年，我悲伤的发现：我连一曲『Twinkle, Twinkle, Little Star』都不会吹了，更悲伤的是：我也许再也不能成为一个安静的美男子了。</p>
+<p>在大学校园里养了四年，我似乎顺理成章的变肥了，也似乎顺理成章的变宅了，每当我看到「死肥宅」这三个字，我都会觉得我的人生基调已经被奠定了三分之二。</p>
+<p>可是你可能要问了，这一段话跟本文有什么关系呢？其实是有的，你看：</p>
+<pre><code>                                                                  +----------------+
+                                                                  | 半吊子的JS水平  |
+                                                                  +----------------+
+                                                                    |
+                                                                    |
+                                                                    v
++--------------+     +------------+     +-------------------+     +----------------+     +--------------+
+|      宅      | --&gt; |  ACG音乐   | --&gt; | justice_eternal吧  | --&gt; |    数字简谱    | --&gt; | 简谱转钢琴曲  |
++--------------+     +------------+     +-------------------+     +----------------+     +--------------+
+                                          ^                         ^
+                                          |                         |
+                                          |                         |
++--------------+     +------------+       |                       +----------------+
+| 安静的美男子  | --&gt; | 布鲁斯口琴  | ------+                       |   Audio API    |
++--------------+     +------------+                               +----------------+</code></pre><p><em>流程图使用Graph Easy生成</em></p>
+<p>正好最近看了<a href="http://yrq110.me/2016/08/23/20160823-browser-piano-web-audio-api/" target="_blank" rel="noopener">一篇文章</a>（是一系列的文章，可以借此了解一下Audio API），介绍了<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener">Web Audio API</a>的一些内容和应用。于是就用我那半吊子的JS水平，写了这个小工具，来把数字简谱转为钢琴弹奏的声音。</p>
+<p>但数字简谱本身有很大局限。为了方便初学者入门；同时为了方便记录和传播，只记录了音调而舍弃了与频率有关的信息。这使得数字简谱几乎只有听过原曲的人才能演奏，而即使听过的人要准确的演奏出来也不是一件容易的事。这种特点也使得数字简谱更适用于一些比较即兴的、不是太正式的场合和乐器。</p>
+<p>而无旋律+钢琴+合成音，注定得出的结果会差强人意。结果也正是如此，单调的音节和单调的旋律，只能听个响了。不过既然都写出来了，那就发出来吧，说不定哪天能用得上呢🌝</p>
+<h2>小工具</h2><p><input id="jianpu2piano" type="text" placeholder="输入数字简谱" value="1155665 4433221"></input>　<input type="button" onclick="jianpu(document.getElementById('jianpu2piano').value);" value="play"></input><br>　<br> 　<br>  　<br>下面的内容搬运自Github项目页的说明文档<br>!<a href="https://github.com/journey-ad/jianpu" target="_blank" rel="noopener">https://github.com/journey-ad/jianpu</a></p>
+<h2>JIANPU.js</h2><p>利用<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener">Web Audio API</a>将数字简谱转为钢琴曲</p>
+<p><a href="http://journey-ad.github.io/jianpu/" target="_blank" rel="noopener">DEMO</a></p>
+<h3>关于数字简谱</h3><p>数字简谱是简谱记谱法的一种更简化形式，相对于简谱仅保留了音调，而不记录旋律信息</p>
+<p>规定如下：</p>
+<ul>
+<li>音符以数字1、2、3、4、5、6、7表示</li>
+<li>调号为C大调</li>
+<li>若为半音，就在音符前方加一个<code>#</code>号</li>
+<li>若高一个八度，音符就用中括号<code>[]</code>包裹起来，再高一个八度，就用双重中括号<code>[[]]</code>包裹起来</li>
+<li>若低一个八度，音符就用小括号<code>()</code>包裹起来，再高一个八度，就用双重小括号<code>(())</code>包裹起来</li>
+<li>空格、换行和<code>-</code>号表示暂停一个音的时长，出现多个将暂停多次</li>
+</ul>
+<p>由于数字简谱不记录旋律信息，因此不适合记录节奏复杂多变的乐曲，可善加使用暂停符来控制节奏</p>
+<h3>使用</h3><pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token function">jianpu</span><span class="token punctuation">(</span><span class="token string">'1234567[1]'</span><span class="token punctuation">)</span>
+<span class="token function">jianpu</span><span class="token punctuation">(</span><span class="token string">'1155665 4433221 5544332 5544332 1155665 4433221'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3>谱面示例</h3><h4>音调测试</h4><pre><code>((1))((#1))((2))((#2))((3))((4))((#4))((5))((#5))((6))((#6))((7))
+(1)(#1)(2)(#2)(3)(4)(#4)(5)(#5)(6)(#6)(7)
+1#12#234#45#56#67
+[1][#1][2][#2][3][4][#4][5][#5][6][#6][7]
+[[1]][[#1]][[2]][[#2]][[3]][[4]][[#4]][[5]][[#5]][[6]][[#6]][[7]]</code></pre><h4>小星星</h4><pre><code>1155665 4433221 5544332 5544332 1155665 4433221</code></pre><h4>两只老虎</h4><pre><code>1231 1231 345 345 565431 565431 2(5)1 2(5)1</code></pre><h4>上学歌</h4><pre><code>12315 66[1]65 66[1]563 653531231 12315 66[1]65 66[1]563 653531231</code></pre><h4>粉刷将</h4><pre><code>5353531 24325 5353531 24321 2244325 24325 5353531 24321</code></pre><h4>数鸭子</h4><pre><code>[1][1]553653 21231- 3-1-331 33565 6665444 23212 3-1-3-1 33566 [1]-5563 21235 [1]-5563 21231</code></pre><h4>哆啦A梦</h4><pre><code>(6)22#47#46 676#45#43
+(7)335[#1][#1]7655#4(7)#123
+(6)22#47#46 676#45#43
+(7)335[#1][#1]7655#4(7)#132
+7765676 3#4#536 763#4#536
+7653[#1]76765 67#432</code></pre><h4>白金ディスコ</h4><pre><code>35653 23211- (6)12332122--
+35653 23211- (6)12353211--
+1(6)1-1121 1(6)1-1131-(5) (6)(5)(6)1 23211
+1(6)1-1112 1(6)1-11131-(5) (6)123211--
+11(6)1111 111121(6)(5)(6)1 123
+11(6)1111 111121(6) 122-122 12123-5--
+
+56235 (6)123(6)12 (6)123(6)11 (5)-132-123--
+(6)123(6)12 (6)123521 (5)132 11--
+(5)(6)-(5)(6) (5)(6)1232-
+12-12 1231(6)11-
+(5)(6)-(5)(6) (5)(6)1235321
+(6)1-(5)(6) 1121211</code></pre><h4>致爱丽丝</h4><pre><code>[3][#2][3][#2][3]7[2][1]6 1367 3#57[1]3-
+[3][#2][3][#2][3]7[2][1]6 1367 3[1]7
+[3][#2][3][#2][3]7[2][1]6 1367 3#57[1]3-
+[3][#2][3][#2][3]7[2][1]6 1367 3[1]7
+67[1][2][3]5[4][3][2]4[3][2][1]3[2][1]7
+[2][3][2][3][#2][3][#2][3][2][3][#2][3]7[2][1]6
+13673#57[1]3
+[3][#2][3][#2][3]7][2][1]6 1367 2[1]76</code></pre><h4>喀秋莎</h4><pre><code>(6)-(7)-1 (6)-1-(7)(6)(7)-(3) (7)-12-(7) 2221(7)(6)-
+3-6-6 5-654-323-(6) 422-311 (7)(3)(3)1(7)(6)-
+3-6-6 5-654-323-(6) 422-311 (7)(3)(3)1(7)(6)--
+(6)-(7)-1 (6)-1-(7)(6)(7)-(3) (7)-12-(7) 2221(7)(6)-
+3-6-6 5-654-323-(6) 422-311 (7)(3)(3)1(7)(6)-
+3-6-6 5-654-323-(6) 422-311 (7)(3)(3)1(7)(6)</code></pre><h4>打靶归来</h4><pre><code>2525312 25251(7)(5)(6)1(5)
+1(7)(6)(5)1561 56532(5)(6)(5)
+35635 65312 22355535</code></pre><h4>别看我只是一只羊</h4><pre><code>[1][1][1][1]753 5---
+[1][1][1][1]753 5[2]--
+[3][3][3][3][2][1]6 4[2]--
+7777653 35---
+[1][1][1][1]753 5---
+[1][1][1][1]753 5[2]--
+[3][3][3][3][2][1]6 4[2]--
+7777[1][2] [1]--</code></pre><h4>START_DASH</h4><pre><code>5552567656
+#4#4#4#4#4#4 #4#45#4
+552 567 6565 12
+5552 567 656
+#4#4#4#4 #4#45#4
+5552 567 656
+3[1]76 5#45
+33#45 #456 223#4 567
+67[1] 7655
+67[1] 76567 7
+----
+37777 7765#4 26666 66567
+37777 7765#4 223#45 6[1]7
+37777 7765#4 26666 66[1]77
+[3][#4][5]3#45[#4][5][6]#456
+[#4][5][6]656 23#45567
+[1]33 36 5#4#45
+----
+(7)3#465 3#45 #456
+----
+26666 66543 15555 55456
+26666 66543 11234567</code></pre><h4>旅の途中</h4><pre><code>#1#24#44 #1#23#43
+333#2(7)(#5)-
+#1#24#44 #1#23#43
+333#2(7)3-
+
+#5#5#5#5#43#2#2#1#2
+#43#2#1#2(7)(#5)-
+3#4#5#5#5#5#43#2#2#1#2
+3#43#2#136#5-
+
+1#1#2#1 1#1#2#1
+#23#5#4 #13#5#4
+#56[#1]7 3#46#5
+3#4#5#46#5#2-
+
+#1#1#1#23#4
+#1#1#1#23#4#5#46#5-
+
+2#24#2 2#24#2
+4#4#6#5 #2#4#6#5
+#67[#2][#1] 4#57#6
+#4#5#6#57#64-
+
+#2#4#6#57#6#2</code></pre><h4>远い空へ</h4><pre><code>(7)(6)(7) #4#1 
+2#1(6)(7) #123676 
+(7)- #46#1 (6)(7)-
+#4#1(7) #4#1 
+2#1(6)(7) #123676 
+(7)- #46#1 (6)(7)-
+(6)#1(7) #467 676 3#46#12 
+23#4 #43#43 23#456#67[#1]-
+7-676 3#46[#1][2][3][#4] 
+[#4][3][2][#1] 6[#1][2] [#1]7#67[#1] [#4][3][2][#1]6#47</code></pre><h4>成都</h4><pre><code>---(5)1 23533 (5)1 21(6)(5)
+(5)1 23635 32 1252
+35 5356[1]6 32 1233
+35 533211 (5) 21311---
+
+(5)1 23533 (5)1 21(6)(5)
+(5)1 23655 21 1252
+35 535[1]66 32 11233
+35-- 32(6)1- 1-21--
+
+--35 553566311 1253
+35 53566311 (5)231
+(5)(6)1 12233 356 56523
+12 12(6)232 12222365</code></pre><h4>断桥残雪</h4><pre><code>3 33 212223(6) 23(5) 1(7)(7)(5)3---
+3 33 212223(6) 23(5) 1(7)(7)(3)(6)---
+3 33 212223(6) 23(5) 1(7)(7)(5)3---
+3 66 21223(6) 235 5321(6)---
+[1]33[1]77[1] 52653 1(6)(6)123 777663
+[1]33[1]776 652653 1(6)(6)123
+3332(7)(7)(7)(3)(6)</code></pre><h3>第三方内容</h3><table>
+<thead>
+<tr>
+<th>作品名</th>
+<th>音源文件</th>
+<th>原作者</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Berklee samples v.4</td>
+<td><a href="https://archive.org/details/Berklee44v4" target="_blank" rel="noopener">Berklee samples v.4</a></td>
+<td><a href="https://archive.org/details/@metasj" target="_blank" rel="noopener">metasj</a></td>
+</tr>
+</tbody></table>
+<p>　</p>
+<script>
+    async function jianpu(text, duration) {
+    duration |= 220;
+
+    var ctx, xml, data, frequencyRatioTempered, map;
+    var list = [];
+
+    // 初始化AudioContext
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    ctx = new AudioContext();
+
+    // 获取指定音源文件的二进制数据
+    xml = new XMLHttpRequest();
+    xml.responseType = 'arraybuffer';
+    xml.open('GET', '//cdn.imjad.cn/xxx/piano.wav', true);
+    xml.onload = function() {
+        // 获取二进制数据并解码
+        ctx.decodeAudioData(
+            xml.response,
+            function(_data) {
+                data = _data;
+            },
+            function(e) {
+                alert(e.err);
+            }
+        );
+    };
+    xml.send();
+
+    function sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+    }
+
+    // 根据平均律得出的相邻音调之间的频率比(近似値)
+    frequencyRatioTempered = 1.059463;
+
+    map = {
+        '((1))' : '36', '((#1))': '35', '((2))' : '34', '((#2))': '33', '((3))' : '32', '((4))': '31',
+        '((#4))': '30', '((5))' : '29', '((#5))': '28', '((6))' : '27', '((#6))': '26', '((7))': '25',
+        '(1)' : '24', '(#1)': '23', '(2)' : '22', '(#2)': '21', '(3)' : '20', '(4)': '19',
+        '(#4)': '18', '(5)' : '17', '(#5)': '16', '(6)' : '15', '(#6)': '14', '(7)': '13',
+        '1' : '12', '#1': '11', '2' : '10', '#2': '9', '3' : '8', '4': '7',
+        '#4': '6',  '5' : '5',  '#5': '4',  '6' : '3', '#6': '2', '7': '1',
+        '[1]' : '0',  '[#1]': '-1', '[2]' : '-2', '[#2]': '-3', '[3]' : '-4',  '[4]': '-5',
+        '[#4]': '-6', '[5]' : '-7', '[#5]': '-8', '[6]' : '-9', '[#6]': '-10', '[7]': '-11',
+        '[[1]]' : '-12', '[[#1]]': '-13', '[[2]]' : '-14', '[[#2]]': '-15', '[[3]]' : '-16', '[[4]]': '-17',
+        '[[#4]]': '-18', '[[5]]' : '-19', '[[#5]]': '-20', '[[6]]' : '-21', '[[#6]]': '-22', '[[7]]': '-23',
+    }
+
+    function play(k){
+        var i, v, frequencyRatio;
+
+        v = map[k];
+
+        // 根据基准音C求得其他音调相对于它的频率比例
+        frequencyRatio = 1;
+        if(v > 0){
+            for (i = 0; i < v; i++) {
+                frequencyRatio /= frequencyRatioTempered;
+            }
+        }else{
+            for (i = 0; i > v; i--) {
+                frequencyRatio *= frequencyRatioTempered;
+            }
+        }
+
+        var bufferSource = ctx.createBufferSource();
+        bufferSource.buffer = data;
+        // 通过改变音源播放速度的比率，调整音高
+        bufferSource.playbackRate.value = frequencyRatio;
+        bufferSource.connect(ctx.destination);
+        bufferSource.start(0);
+    }    
+
+    list.push(' ');
+    for (var i = 0; i < text.length; i++) {
+        switch(text[i]){
+            case ' ':
+            case '-':
+            case '\n':
+                list.push(' ');
+                break;
+            case '(':
+            case '[':
+                if(text[i+1] === '(' || text[i+1] === '['){
+                    if(text[i+2] === '#'){
+                        list.push(text[i] + text.substr(i+1, 5));
+                        i+=5;
+                    }else{
+                        list.push(text[i] + text.substr(i+1, 4));
+                        i+=4;
+                    }
+                }else if(text[i+1] === '#'){
+                    list.push(text[i] + text.substr(i+1, 3));
+                    i+=3;
+                }else{
+                    list.push(text[i] + text.substr(i+1, 2));
+                    i+=2;
+                }
+                break;
+            case '#':
+                list.push(text[i] + text.substr(i+1, 1));
+                i+=1;
+                break;
+            default:
+                list.push(text[i]);
+        }
+    }
+
+    for (var i = 0; i < list.length; i++) {
+        if(list[i] === ' '){
+            await sleep(duration);
+        }else{
+            // console.log(list[i]);
+            play(list[i]);
+            await sleep(duration);
+        }
+    }
+}
+</script>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1536631320000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

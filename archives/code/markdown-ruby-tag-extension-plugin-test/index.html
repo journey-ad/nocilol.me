@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/code/markdown-ruby-tag-extension-plugin-test/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            Markdown Ruby 标签拓展插件测试
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><a href="https://github.com/journey-ad/MDRuby-Typecho-Plugin" target="_blank" rel="noopener">项目地址</a></p>
+<p>!<a href="https://github.com/journey-ad/MDRuby-Typecho-Plugin" target="_blank" rel="noopener">https://github.com/journey-ad/MDRuby-Typecho-Plugin</a></p>
+<h3>ruby简介</h3><blockquote>
+<p>ruby原指5.5级的字体格式，在美国又称Agate，它的大小正好适合注音。现在在日文中，这词不再表示字体的名称，而是表示名词形式的标音。当它被翻译回英文时，它被称为rubi（由假名译来，日文：ルビ）。但是ruby的拼法还是比较普遍。<br>除了字母以外，一些假名也会用ruby来标注。<br>　　—— <a href="https://zh.wikipedia.org/wiki/%E6%97%81%E8%A8%BB%E6%A8%99%E8%A8%98" target="_blank" rel="noopener">维基百科</a></p>
+</blockquote>
+<h3>语法说明</h3><pre><code>[原文]^(yuán wén)
+[原文]^（yuán wén） 使用全角括号
+[原文]（yuán wén） 使用全角括号</code></pre><h3>这是一句[中]^(zhōng)[文]^(wén)</h3><h3>これは[日]^(に)[本]^(ほん)[語]^(ご)です。</h3><h5>『湖心亭看雪』  张岱</h5><p>　　崇祯五年十二月，余住西湖。大雪三日，湖中人鸟声俱绝。<br>　　是日，更定矣，余[挐]^(ná)一小舟，拥[毳]^(cuì)衣、炉火独往湖心亭看雪。[雾凇沆砀]^(wù sōng hàng dàng)，天与云、与山、与水，上下一白。湖上影子，惟长堤一痕，湖心亭一点，与余舟一[芥]^(jiè)，舟中人两三粒而已。<br>　　到亭上，有两人铺[毡]^(zhān)对坐，一童子烧酒，炉正沸。见余，大喜，曰：“湖中焉得更有此人！”拉余同饮。余强饮三大白而别。问其姓氏，是金陵人客此。<br>　　及下船，舟子喃喃曰：“莫说相公痴，更有痴似相公者。”</p>
+<pre><code>　　崇祯五年十二月，余住西湖。大雪三日，湖中人鸟声俱绝。
+　　是日，更定矣，余[挐]^(ná)一小舟，拥[毳]^(cuì)衣、炉火独往湖心亭看雪。[雾凇沆砀]^(wù sōng hàng dàng)，天与云、与山、与水，上下一白。湖上影子，惟长堤一痕，湖心亭一点，与余舟一[芥]^(jiè)，舟中人两三粒而已。
+　　到亭上，有两人铺[毡]^(zhān)对坐，一童子烧酒，炉正沸。见余，大喜，曰：“湖中焉得更有此人！”拉余同饮。余强饮三大白而别。问其姓氏，是金陵人客此。
+　　及下船，舟子喃喃曰：“莫说相公痴，更有痴似相公者。”</code></pre><h5>『万葉集』  柿本人麻呂</h5><p>[雷神]（なるかみ）の　少し[響]（とよ）みて　さし曇り<br>雨も降らぬか　君を留めむ<br>[雷神]（なるかみ）の　少し[響]（とよ）みて　降らずとも<br>われは留らむ　妹し留めば</p>
+<pre><code>[雷神]（なるかみ）の　少し[響]（とよ）みて　さし曇り
+雨も降らぬか　君を留めむ
+[雷神]（なるかみ）の　少し[響]（とよ）みて　降らずとも
+われは留らむ　妹し留めば</code></pre>
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1512517020000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

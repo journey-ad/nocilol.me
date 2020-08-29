@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/make-a-custom-font-for-the-title-of-the-website/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            使用FontForge为网站标题制作自定义字体
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/08/01/66684180_p0.jpg" alt="CAT @ Mr.Goblin"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-90560909"
+      data-id="cplayer-90560909"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[5042046]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-90560909"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-90560909"] = new cplayer({
+            element: document.getElementById("cplayer-90560909"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-90560909"].add163(5042046)
+
+          let player = window.cplayerList["cplayer-90560909"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>前言</h2><p>近日与往常一样在网上闲逛时，发现<a href="https://yumoe.com" target="_blank" rel="noopener">@Trii Hsia</a>的博客用了一款非常活泼的英文字体Josefin Sans，于是便抄了过来。换上之后整个博客都感觉活跃了起来，唯一不满的是博客标题用的还是一般的黑体，显得过于庄重了，就想着能找一款与其搭配的中文字体，最终选中了もじワク研究的<a href="https://moji-waku.com/makinas/index.html" target="_blank" rel="noopener">マキナス Scrap 5</a></p>
+<p>最终结果也较为理想，你可以在本博客首页的标题和页脚区域上看到效果，或是<br><span class="cat-and-sunflower" style="display: block;margin: 0 auto;text-align: center;font-size:3em">猫 与 向 日 葵</span><em>是可以选中和复制的文字，不是图片哦~</em></p>
+<h2>中文字体的困境</h2><p>此前我曾在「<a href="https://imjad.cn/archives/lab/how-to-introduce-source-han-fonts-into-web-pages-through-typekit">关于如何在网页中引入思源字体：漫谈Typekit</a>」中提到过，中文字体在网页上的应用一直是个难题。首当其冲的就是中文字体的恐怖容量，不同于西文字体只有数十个符号，一套包含简繁体的中文字体大约包含了2<del>3万个符号，设计流程须2</del>4年之久，这不是一般的个人或小公司能够负担的起的，所以一般我们看到的中文字体，多是由大公司制作，成本巨大致使商用代价也是十分高昂。包含的符号众多也导致了中文字体动辄4~5M的大小。桌面应用尚且可行，对于Web来说是无论如何都不能接受的</p>
+<p>本地引用的弊端促使了WebFont的流行，但碍于版权问题，一般只有寥寥几种中文字体可选，对于想用一些比较「偏门」的字体的人，只能选择在本地引入了。而选择本地引用，就又回到了上面说的问题，这也是我们在网页上鲜少看到多彩的中文字体的原因之一</p>
+<p>如果换个思路，一个网页一般情况下只使用了一部分字符，那么我们把所需的这些个字符从原始字体中提取出来，然后组成为一个新字体，不就可以减少大小了吗？Typekit正是这样做的，切片按需加载字体，极大减少了资源浪费。按着同样的思路，经过一番搜索之后，我找到了提取字体的方法</p>
+<blockquote>
+<p>关于中文字体，还有一些其他的压缩工具，比如<a href="http://font-spider.org/" target="_blank" rel="noopener">字蛛</a>，但它是针对静态的html页设计的，还需要node环境，相对来说更适合静态博客<br>我在文中介绍的方法由于是手动操作，效率并不高，只适合制作特定的几个字符，如网站标题或LOGO等</p>
+</blockquote>
+<h2>自己「造」一个吧</h2><p><em>首先声明，这种方法在版权上是有问题的，毕竟没有哪家字体制作者会让你二次修改字体数据，所以本文仅做方法的介绍</em><br>经过搜寻，我找到了提取并制作字体的工具——大名鼎鼎的FontForge</p>
+<h3>下载并安装FontForge</h3><p>在<a href="https://github.com/fontforge/fontforge" target="_blank" rel="noopener">FontForge</a>的发布页下载安装程序，最新版本是<a href="https://github.com/fontforge/fontforge/releases/tag/20170731" target="_blank" rel="noopener">2017.07.31</a>释出的，下载和安装过程不表</p>
+<h2>提取需要的字符</h2><p>启动FontForge，然后找到待提取的字体，选择打开</p>
+<p>初次打开可能会提示缺失Cidmap文件，在<a href="https://fontforge.github.io/cidmaps.tgz" target="_blank" rel="noopener">这里</a>下载并解压，按提示加载即可</p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_134430.png" alt="Cidmaps缺失"></p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_134359.png" alt="打开字体"></p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_134802.png" alt="打开后"></p>
+<h3>修改首选项</h3><p>依次点击<strong>File - Preferences</strong>进入首选项设置，然后点击左侧的<strong>New Font</strong>选项卡，将<strong>NewCharset</strong>更改为<code>ISO 10646-1 (Unicode, Full)</code>，这样在新建字体时就会自动使用完整Unicode字符的代码页</p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_134851.png" alt="更改代码页"></p>
+<h3>新建空白字体</h3><p>依次点击<strong>File - New</strong>新建一个空白字体，并点击<strong>Element - Font Info</strong>配置字体信息</p>
+<p>注意此处的<code>Family Name</code>字段，应与最终在网页上调用的<code>font-family</code>属性值相匹配</p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_141000.png" alt="配置字体信息"></p>
+<h3>复制所需字符</h3><p>回到原始字体窗口，选择所需字符后点击右键，在右键菜单中选择<strong>Copy</strong>或是按<kbd>Ctrl</kbd>+<kbd>C</kbd>以复制，并在新建的字体窗口中点击右键选择粘贴，同样，<kbd>Ctrl</kbd>+<kbd>V</kbd>也是可以的<br><em>注意点击并拖动可快速选中多个字符，另外对于不同的代码页，字符顺序和有无情况是不一致的，需仔细观察确定</em></p>
+<p>排在前边的数字和字母可以直接拖选复制，对于汉字等排在后边的字符，一个个翻肯定是行不通的，这时就要找到字符对应的Unicode编码，然后点击<strong>View - Goto</strong>直接跳转过去</p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_141042.png" alt="跳转"></p>
+<p>Unicode编码转换可以使用网上的在线服务，注意要以开头为<code>u+</code>的形式</p>
+<p>我写了一个方法</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">encodeUnicode</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>str<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        data<span class="token punctuation">[</span>str<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'u+'</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token string">'00'</span> <span class="token operator">+</span> str<span class="token punctuation">.</span><span class="token function">charCodeAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    console<span class="token punctuation">.</span><span class="token function">table</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">encodeUnicode</span><span class="token punctuation">(</span><span class="token string">'猫与向日葵'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在控制台执行即可</p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_144631.png" alt="Unicode编码转换"></p>
+<h3>生成新字体</h3><p>依次点击<strong>File - Generate Fonts</strong>，然后选择所需格式生成，生成时会出现一些警告和错误，可以忽略</p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_140709.png" alt="生成字体"></p>
+<p>可以看到，提取之后的字体大小仅有数KiB，相对于原始字体的大小来说已经十分可观了，而显示指定字符却与原始字体相比没有任何区别</p>
+<p><img src="https://img.imjad.cn/images/2018/08/01/sp180801_140801.png" alt="字体大小对比"></p>
+<h2>应用到网页上</h2><p>CSS中的<code>@font-face</code>规则可以用来引入自定义字体(<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face" target="_blank" rel="noopener">MDN文档</a>)<br>具体语法不再赘述，最终结果为：</p>
+<pre class="line-numbers language-css"><code class="language-css"><span class="token atrule"><span class="token rule">@font-face</span></span> <span class="token punctuation">{</span>
+    <span class="token property">font-family</span><span class="token punctuation">:</span> <span class="token string">'Makinas-Scrap-5-Cat-and-Sunflower'</span><span class="token punctuation">;</span>
+    <span class="token property">src</span><span class="token punctuation">:</span>
+      <span class="token url">url('//cdn.imjad.cn/usr/themes/Moricolor/assets/Makinas-Scrap-5-Cat-and-Sunflower/Makinas-Scrap-5-Cat-and-Sunflower.svg?v1.000')</span> <span class="token function">format</span><span class="token punctuation">(</span><span class="token string">'svg'</span><span class="token punctuation">)</span>,
+      <span class="token url">url('//cdn.imjad.cn/usr/themes/Moricolor/assets/Makinas-Scrap-5-Cat-and-Sunflower/Makinas-Scrap-5-Cat-and-Sunflower.otf?v1.000')</span> <span class="token function">format</span><span class="token punctuation">(</span><span class="token string">'otf'</span><span class="token punctuation">)</span>,
+      <span class="token url">url('//cdn.imjad.cn/usr/themes/Moricolor/assets/Makinas-Scrap-5-Cat-and-Sunflower/Makinas-Scrap-5-Cat-and-Sunflower.ttf?v1.000')</span> <span class="token function">format</span><span class="token punctuation">(</span><span class="token string">'ttf'</span><span class="token punctuation">)</span>,
+      <span class="token url">url('//cdn.imjad.cn/usr/themes/Moricolor/assets/Makinas-Scrap-5-Cat-and-Sunflower/Makinas-Scrap-5-Cat-and-Sunflower.woff?v1.000')</span> <span class="token function">format</span><span class="token punctuation">(</span><span class="token string">'woff'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token property">font-weight</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+    <span class="token property">font-style</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后将所需元素的<code>font-family</code>样式指定为<code>Makinas-Scrap-5-Cat-and-Sunflower</code>即可生效</p>
+<h2>参考</h2><p><a href="https://www.zhangxinxu.com/wordpress/2011/11/fontforge%E8%87%AA%E5%AE%9A%E4%B9%89%E6%89%8B%E6%9C%BA%E5%AD%97%E4%BD%93/" target="_blank" rel="noopener">fontforge制作自定义字体及在手机上应用举例</a></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face" target="_blank" rel="noopener">@font-face - CSS: Cascading Style Sheets</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1533071880000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

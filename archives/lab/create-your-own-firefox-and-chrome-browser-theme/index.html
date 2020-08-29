@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/create-your-own-firefox-and-chrome-browser-theme/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            Firefox&amp;Chrome浏览器主题制作
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/08/18/65854228_p0.png" alt="♥ @ MECHURAGI"></p>
+
+    <div class="cplayer-template"
+      id="cplayer-09206145"
+      data-id="cplayer-09206145"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[534064291]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-09206145"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-09206145"] = new cplayer({
+            element: document.getElementById("cplayer-09206145"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-09206145"].add163(534064291)
+
+          let player = window.cplayerList["cplayer-09206145"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+
+<h2>前言</h2><p>网上冲浪已经是现代人类的一种生活方式，这小小的浏览器窗口建立起了个人与大千世界的联系，但你是否偶尔会觉得浏览器窗口有些太过古板了呢？只需动动手换个主题，感觉就将大不一样。</p>
+<p>这篇文章就将介绍Firefox和Chrome主题的制作方法</p>
+<h2>Firefox</h2><h3>准备</h3><p>Firefox主题的制作方法极其简单，准备一张3000 × 200px，格式为PNG或JPG的图片即可</p>
+<p>值得一提的是，Firefox在显示时主要使用图片的上半部分，下半部分多半时候是看不到的，因此裁剪图片时要记得把主体部分放至上半部，另外Firefox是以右上角为原点定位图片，因此制作时要注意把不变的主体部分放至图片右侧</p>
+<p>文件大小则要求不能超过300 KiB，如果超过的话，就在<a href="https://tinypng.com/" target="_blank" rel="noopener">TinyPNG</a>压缩一下吧</p>
+<h3>制作</h3><p>打开Mozilla的<a href="https://addons.mozilla.org/zh-CN/developers/" target="_blank" rel="noopener">附加组件开发者中心</a>并登录，没有账号就注册一个 <del>这个我想ff的用户应该都有吧</del></p>
+<p>点击网页中间的「<a href="https://addons.mozilla.org/zh-CN/developers/theme/submit" target="_blank" rel="noopener">提交一个新主题</a>」进入主题编辑页面，按提示填写主题相关信息，并在「主题设计」部分上传准备好的图片文件</p>
+<p>勾选TOS，点击「发布主题」，审核通过之后，这个主题就将出现在附加组件商店，供人下载了</p>
+<h3>安装</h3><p>打开主题的发布页，点击「安装主题」即可</p>
+<p>还未审核通过的主题不能公开查看，可以在「<a href="https://addons.mozilla.org/zh-CN/developers/themes" target="_blank" rel="noopener">管理我的提交</a>」中找到此主题，然后点击「查看公开页面」查看并安装</p>
+<h2>Chrome</h2><h3>准备</h3><p>相对来说，Chrome的主题制作起来就很麻烦了，Chrome的主题只能以扩展的形式安装</p>
+<p>我们使用ThemeBeta这个网站进行制作</p>
+<p>至少准备一张图片，不同区域的尺寸参考数据如下：</p>
+<blockquote>
+<ul>
+<li>theme_frame: ∞ x 30px</li>
+<li>theme_toolbar: ∞ x 120px</li>
+<li>theme_tab_background: ∞ x 65px</li>
+<li>theme_ntp_background: Recommended Minimum Size for images 800 x 600px</li>
+<li>theme_frame_overlay: 1100 x 40px</li>
+<li>theme_button_background: 30 x 30px</li>
+</ul>
+</blockquote>
+<p><del>实际上并没有什么卵用，Chrome的尺寸和定位很迷，部分情况下甚至还会镜像处理，建议自己尝试修改</del></p>
+<p><del>最蠢的是以左上角为原点进行定位，高分屏下简直就是噩梦</del></p>
+<h3>制作</h3><p>打开<a href="https://www.themebeta.com/chrome-theme-creator-online.html" target="_blank" rel="noopener">Theme Creator</a>，按提示上传图片或修改颜色即可，右侧有实时预览，不过分辨率并不高，只能作为布局参考</p>
+<p>每完成一部分后就点击「Pack and Install」打包并安装以进行测试，注意下载时会有安全提示，继续即可</p>
+<p>最终完成后点击「Save Online」，即可发布至主题商店供人下载</p>
+<h2>我制作的</h2><p>基于<a href="https://www.pixiv.net/member_illust.php?mode=medium&illust_id=50973239" target="_blank" rel="noopener">無題/PSD</a>制作</p>
+<h3>Firefox</h3><p><a href="https://addons.mozilla.org/zh-CN/firefox/addon/nico-maki/" target="_blank" rel="noopener">Nico &amp; Maki</a></p>
+<p><img src="https://img.imjad.cn/images/2018/08/18/sp180818_201120.png" alt="Firefox"></p>
+<h3>Chrome</h3><p><a href="https://www.themebeta.com/chrome/theme/1035989" target="_blank" rel="noopener">Nico &amp; Maki</a></p>
+<p><img src="https://img.imjad.cn/images/2018/08/18/sp180818_201408.png" alt="Chrome"></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1534560720000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

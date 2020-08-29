@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/dialing-internet--pppoe--and-opening-wireless-hot-spots-under-linux/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            在linux下拨号上网(PPPoE)和开启无线热点
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><a href="http://beta.speedtest.net/result/6827922547" target="_blank" rel="noopener"><img src="https://img.imjad.cn/images/2017/11/30/Screenshot-20171130162258-742x288.png" alt="测速结果" title="测速结果"></a></p>
+<h2>前言</h2><p>权衡再三后，我最终选择了办理校园网，虽然有着种种问题，如绑定网卡MAC地址、限制终端数量(5个)、晚间断网、偶尔丢包严重等。但就目前来看，这依然是最优选择。我校校园网拨号方式与一般的PPPoE拨号方式并无不同，不需客户端，因此配置起来还算方便。<br>此外我的路由器留在了家里，而目前并无资金购置新的路由器。为了解决多个设备需要联网和没有路由器之间的矛盾，暂时使用无线网卡开启热点以供联网所用。<br>Windows下配置十分方便，Linux下则需要一些动手能力，以下是折腾记录：</p>
+<h2>PPPoE拨号</h2><h3>安装</h3><p>安装<code>rp-pppoe</code></p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># pacman -s rp-pppoe</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3>配置</h3><p>执行配置程序，按提示填入用户名、密码、DNS、网络接口名、防火墙规则等。<br>网络接口名可通过执行<code>ifconfig</code>查询到</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># pppoe-setup</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3>拨号</h3><p>配置完成之后即可开始拨号</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># pppoe-start</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3>断开连接</h3><p>使用以下命令断开PPPoE连接</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># pppoe-stop</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3>开机自动拨号</h3><p>添加到系统服务以实现自动拨号</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># systemctl enable adsl</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3>可能遇到的问题</h3><h4>拨号成功后仍无法上网</h4><p>执行<code>route</code>查看路由表，正常情况下返回结果中应有如下内容：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         0.0.0.0         0.0.0.0         U     0      0        0 ppp0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>没有的话手动添加</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># route add default dev ppp0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>一般情况下此时就可正常上网了。<br>使用以下脚本在PPPoE连接成功后自动添加路由表项：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
+<span class="token keyword">if</span> <span class="token function">ifconfig</span> ppp0  <span class="token operator">></span> /dev/null 2<span class="token operator">></span><span class="token operator">&amp;</span>1 <span class="token punctuation">;</span> <span class="token keyword">then</span>
+    route del default
+    route add default dev ppp0
+<span class="token keyword">fi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>保存为<code>01-route.sh</code>，权限<code>root:root 755</code>，放至<code>/etc/ppp/ip-up.d</code>目录即可</p>
+<h2>开启无线热点</h2><p>为了节省时间，简化配置，不重复造轮子，我们选择使用别人写好的工具<a href="https://github.com/oblique/create_ap" target="_blank" rel="noopener">create_ap</a>。为了感谢作者，你可以给他一颗🌟</p>
+<h3>安装脚本</h3><p><a href="https://github.com/oblique/create_ap/blob/master/README.md" target="_blank" rel="noopener">README.md</a>写的很清楚，不再赘述。<br>我的系统是<a href="https://www.archlinux.org/" target="_blank" rel="noopener">Arch Linux</a>，执行以下命令即可安装：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># pacman -S create_ap</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3>开启</h3><p><a href="https://github.com/oblique/create_ap/blob/master/README.md" target="_blank" rel="noopener">README.md</a>中列举了几种经典的使用方法。大部分时间里，我需要的是<a href="https://github.com/oblique/create_ap#wpa--wpa2-passphrase" target="_blank" rel="noopener">WPA + WPA2 passphrase</a><br>执行命令：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># create_ap wlan0 eth0 name password</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><code>wlan0</code>和<code>eth0</code>替换为对应的网络接口名，同上，网络接口名可通过执行<code>ifconfig</code>查询到</p>
+<h3>作为服务启动</h3><p>服务使用的配置文件路径是<code>/etc/create_ad.conf</code>，修改必要的值如<code>SSID</code>和<code>PASSPHRASE</code></p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># systemctl start create_ap</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3>开机自动开启热点</h3><p>添加到系统服务以实现自动开启热点</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># systemctl enable create_ap</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2>参考内容</h2><p><a href="https://vvl.me/2017/09/Linux-PPPoE/" target="_blank" rel="noopener">在Linux上拨号上网(PPPoE)</a><br><a href="http://0x3f.org/post/problem-on-pppoe-connections-on-linux/" target="_blank" rel="noopener">Linux下pppoe连接建立后仍不能上网的问题</a><br><a href="https://github.com/oblique/create_ap" target="_blank" rel="noopener">create_ap的GitHub项目页</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1511996460000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>

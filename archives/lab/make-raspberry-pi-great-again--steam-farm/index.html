@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!--
+             -. .                                        
+       _____   ',' ,                                    
+     ,'     ,'   ', ',                                  
+   ,'     ,'      |  |                                  
+   \       \       |  |                                  
+     \ /^\   \    ,' ,'                                  
+           \   \ ,' ,'      L'Internationale,            
+     / ~-.___\.-'  ,'            Sera le genre humain.   
+   /   .______.- ~ \                                     
+ /   /'          \   \                                   
+ \./               \/'                                   
+                                                         
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>
+        猫与向日葵
+    </title>
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/zpix/zpix.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/theme.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
+</head>
+
+<body id="bodyx" path="archives/lab/make-raspberry-pi-great-again--steam-farm/">
+    <div class="hd posts">
+    <a class="back" href="javascript:void(0);" target="_self"><i class="fa fa-reply replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            让树莓派再次伟大 之 Steam挂卡
+        </p>
+        <hr>
+    </div>
+
+    
+        <div class="outdated-notify">
+            本文发布于 <span class="num">-</span> 天前，文中所描述的信息可能已发生改变或是过时，请注意辨别
+        </div>
+    
+
+    <div class="post-content">
+        <p><img src="https://img.imjad.cn/images/2018/04/07/Screenshot-20180407025923-1920x1080.png" alt="Screenshot-20180407025923-1920x1080.png"></p>
+<h2>前言</h2><p>近日从抽屉里找回了吃灰已久的树莓派，本着物尽其用的原则，将其作为steam挂卡机器是个不错的选择</p>
+<p>steam挂卡工具有许多，如IdleMaster、ASF、SAM等。其中最流行的要属ASF了，更新活跃、强大的功能及跨平台可用，是它得到广泛使用的关键原因。这里我们采用ASF进行挂卡<br>ASF最新版本是3.x，相对于2.x需要依靠mono才能在非windows平台下运行，3.x提供了多个平台的编译程序，仅需安装对应系统的.NET Core即可使用（或者直接下载打包有对应系统.NET运行时的压缩包）</p>
+<h2>安装</h2><p>根据<a href="https://github.com/JustArchi/ArchiSteamFarm/wiki/Setting-up" target="_blank" rel="noopener">Setting-up</a>所述，整个安装配置过程共分四步：</p>
+<ol>
+<li>安装.NTE Core依赖</li>
+<li>下载最新版本的ASF</li>
+<li>解压，并赋予执行权限（Linux/OS X）</li>
+<li>配置ASF</li>
+</ol>
+<h3>安装.NTE Core依赖</h3><p><em>大部分系统已自带依赖，可以选择跳过此步骤观察ASF是否正常运行来判断</em><br>参考<a href="https://github.com/dotnet/core/blob/master/Documentation/prereqs.md" target="_blank" rel="noopener">prereqs.md</a>进行安装</p>
+<p>值得注意的是Archlinux ARM自带的<code>libcurl.so.4</code>无法正常工作，会报错<code>System.DllNotFoundException: Unable to load DLL &#39;System.Net.Http.Native&#39;: The specified module or one of its dependencies could not be found.</code><a href="https://steamcommunity.com/groups/ascfarm/discussions/1/1692659135916297867/" target="_blank" rel="noopener">相关研究</a><br>解决方法是安装包<code>libcurl-compat</code>，并在最后使用<code>LD_PRELOAD=/usr/lib/libcurl.so.3 ./ArchiSteamFarm</code>运行ASF</p>
+<h3>(可选)安装.NET Core</h3><p><em>下一步中若选择下载<code>ASF-generic.zip</code>则进行这一步</em></p>
+<p>所有系统的运行时都可以在<a href="https://github.com/dotnet/core-setup" target="_blank" rel="noopener">这里</a>找到，注意不要下错了<br>对于树莓派来说，我们需要的ARM架构运行时为<a href="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/release/2.0.0/dotnet-runtime-latest-linux-arm.tar.gz" target="_blank" rel="noopener">dotnet-runtime-latest-linux-arm.tar.gz</a><br>执行下列命令以安装：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">wget</span> https://dotnetcli.blob.core.windows.net/dotnet/Runtime/release/2.0.0/dotnet-runtime-latest-linux-arm.tar.gz
+<span class="token function">mkdir</span> -p ~/dotnet <span class="token operator">&amp;&amp;</span> <span class="token function">tar</span> zxf ./dotnet-runtime-latest-linux-arm.tar.gz -C ~/dotnet
+<span class="token function">export</span> PATH<span class="token operator">=</span><span class="token variable">$PATH</span><span class="token keyword">:</span><span class="token variable">$HOME</span>/dotnet<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>该命令会下载.NET运行时并解压至<code>~/dotnet</code>目录，同时在环境变量中添加安装路径<br>若想卸载删除<code>~/dotnet</code>目录并移除环境变量对应更改即可</p>
+<h3>下载ASF</h3><p>下载<a href="https://github.com/JustArchi/ArchiSteamFarm/releases/latest" target="_blank" rel="noopener">最新版本的ASF</a><br>对于树莓派来说，一般选择下载<code>ASF-linux-arm.zip</code>，若下载<code>ASF-generic.zip</code>还需进行上一步提到的「<a href="#anchor-3">安装.NET Core</a>」<br>下载没有什么需要注意的地方，不再赘述</p>
+<h3>解压并赋予执行权限</h3><p>执行下列命令：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">unzip ASF-linux-arm.zip -d asfv3 <span class="token operator">&amp;&amp;</span> <span class="token function">cd</span> asfv3
+<span class="token function">chmod</span> +x ./ArchiSteamFarm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3>运行ASF</h3><p>执行下列命令即可运行ASF：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">./ArchiSteamFarm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>对于Archlinux ARM须执行(「<a href="#anchor-2">安装.NTE Core依赖</a>」步骤中提到):</p>
+<pre class="line-numbers language-bash"><code class="language-bash">LD_PRELOAD<span class="token operator">=</span>/usr/lib/libcurl.so.3 ./ArchiSteamFarm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>未出现报错即说明安装运行正常，进入下一步的配置</p>
+<h3>配置ASF</h3><p>2.x的配置文件可直接覆盖使用<br>参考<a href="https://github.com/JustArchi/ArchiSteamFarm/wiki/Configuration" target="_blank" rel="noopener">Wiki</a>进行配置，或使用<a href="https://justarchi.github.io/ArchiSteamFarm/#/" target="_blank" rel="noopener">在线生成器</a><br>英文苦手可参考<a href="https://steamcn.com/t301016-1-1" target="_blank" rel="noopener">ASF 挂卡教程和命令集 - SteamCN 蒸汽动力</a></p>
+<p>附我的配置文件：</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"journey_ad"</span><span class="token punctuation">,</span>
+    <span class="token property">"SteamLogin"</span><span class="token operator">:</span> <span class="token string">"journey_ad"</span><span class="token punctuation">,</span>
+    <span class="token property">"SteamPassword"</span><span class="token operator">:</span> <span class="token string">"******"</span><span class="token punctuation">,</span>
+    <span class="token property">"Enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token property">"PasswordFormat"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"CustomGamePlayedWhileFarming"</span><span class="token operator">:</span> <span class="token string">"我，博丽灵梦，自动接收龙狙中"</span><span class="token punctuation">,</span>
+    <span class="token property">"CustomGamePlayedWhileIdle"</span><span class="token operator">:</span> <span class="token string">"女朋友"</span><span class="token punctuation">,</span>
+    <span class="token property">"TradingPreference"</span><span class="token operator">:</span> <span class="token string">"AcceptDonations"</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这套配置文件在挂卡时显示正在玩的游戏名为<strong>我，博丽灵梦，自动接收龙狙中</strong>，并可自动接受礼物；<br>挂卡完毕后显示正在玩的游戏名为<strong>女朋友</strong></p>
+<h2>参考</h2><p><a href="https://steamcn.com/t300500-1-1" target="_blank" rel="noopener">ASF V3.0 windows/linux含树莓派部署流程 - SteamCN 蒸汽动力</a><br><a href="https://steamcommunity.com/groups/ascfarm/discussions/1/1692659135916297867/#c1692659135922168729" target="_blank" rel="noopener">ArchLinuxARM-armv7 - Unable to load DLL ‘System.Net.Http.Native’</a><br><a href="https://github.com/JustArchi/ArchiSteamFarm/wiki/Configuration" target="_blank" rel="noopener">Configuration · JustArchi/ArchiSteamFarm Wiki</a></p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+
+    <script>
+        var pub_date = 1523005860000;
+    </script>
+</div>
+    <div class="footer"
+     id="footer">
+    <p>
+        Copyright © 2020 <a class="flink"
+           href="https://imjad.cn">猫与向日葵</a> · Theme by <a class="flink"
+           href="https://github.com/sanjinhub/hexo-theme-geek">Geek</a>.
+        <br>
+        Made with <i class="fa fa-heart throb"
+           style="color:#d43f57"></i> by <span class="author"
+              itemprop="copyrightHolder">journey.ad</span>.
+        <label class="el-switch el-switch-green el-switch-sm"
+               style="vertical-align: sub;">
+            <input type="checkbox"
+                   name="switch"
+                   id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
+        <!--         <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+    </p>
+</div>
+<input type="hidden"
+       id="web_style"
+       value="white">
+<input type="hidden"
+       id="valine_appid"
+       value="CaQKuPQDfnfPFUkTw6MMt8ME-gzGzoHsz">
+<input type="hidden"
+       id="valine_appKey"
+       value="uWuwGS1xiIwh3zHKENc7ubyL">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+    .v * {
+        /* color: #698fca; */
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
+
+    .v .vcards .vcard .vhead .vnick {
+        padding-left: 1px;
+    }
+
+    .v .vcontent .vemoji {
+        max-width: 30px;
+    }
+
+    .v[data-class=v] p {
+        color: inherit;
+    }
+
+</style>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/kesshouban.model.json"},"display":{"position":"right","width":325,"height":300,"hOffset":-75,"vOffset":0},"dialog":{"enable":true},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
+
+</html>
