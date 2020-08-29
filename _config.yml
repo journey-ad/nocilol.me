@@ -92,7 +92,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: typography
+theme: geek
 
 plugin:
   - hexo-generator-category-enhance

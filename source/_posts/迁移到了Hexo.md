@@ -12,3 +12,6 @@ tags:
 
 2020-01-10:
 更新了附件和图片链接
+
+2020-08-29:
+更换主题为[Geek](https://github.com/sanjinhub/hexo-theme-geek)
