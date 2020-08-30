@@ -1350,7 +1350,7 @@ label.el-checkbox {
   right: 6%;
   width: 170px;
   height: 200px;
-  background: url("/img/shinobu@v2.1.png?v=1") no-repeat 0 0;
+  background: url("../img/shinobu@v2.1.png?v=1") no-repeat 0 0;
   background-size: 509px 200px;
 }
 .about-avatar:hover {
