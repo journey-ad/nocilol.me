@@ -38,22 +38,22 @@ type: about
 }
 </style>
 
-### **关于Blog**
+### **关于 Blog**
 
-博客从[**2014.08.11**](https://imjad.cn/archives/none/hello-world)至今已经运行<span id="htmer_time" style="color: #90CAF9; font-weight: bold;"></span>
+博客从 [**2014.08.11**](https://imjad.cn/archives/none/hello-world) 至今已经运行<span id="htmer_time" style="color: #90CAF9; font-weight: bold;"></span>
 
-本站使用开源静态网页生成工具[Hexo](https://hexo.io/)，主题使用[三斤](https://geek.lc/)提供的 Geek
+本站使用开源静态网页生成工具 [Hexo](https://hexo.io/)，主题使用[三斤](https://geek.lc/)提供的 Geek
 
 托管于 [GitHub Pages](https://pages.github.com/)
 
-由[Cloudflare](https://www.cloudflare.com/) 提供 DNS 解析服务，[Google Analytics](http://www.google.com/analytics/ "Google Analytics") 提供网站统计服务
+由 [Cloudflare](https://www.cloudflare.com/) 提供 DNS 解析服务，[Google Analytics](http://www.google.com/analytics/ "Google Analytics") 提供网站统计服务
 
-- 2014.08.11建立，使用开源博客程序WordPress，托管于OpenShift
-- 2015.07.22，更换为开源博客程序Typecho 1.0，托管于OpenShift
-- 2015.12.12，迁移至腾讯云
-- 2017.11.03，迁移至Azure新加坡
-- 2019.12.01，迁移至Hexo，托管于GitHub Pages
-- 2020.08.29，更换主题为 [Geek](https://github.com/journey-ad/hexo-theme-geek)
+- 2014.08.11 建立，使用开源博客程序 WordPress，托管于 OpenShift，博客名定为「AD's Blog」，域名使用 lovead.ml
+- 2015.07.22，更换为开源博客程序 Typecho 1.0，托管于 OpenShift
+- 2015.12.12，迁移至腾讯云，域名更换为 imjad.cn
+- 2017.11.03，博客改名为「猫与向日葵」，迁移至 Azure 新加坡
+- 2019.12.01，迁移至 Hexo，托管于 GitHub Pages
+- 2020.08.29，博客改名为「恶魔萝莉控」，域名更换为 nocilol.me
 
 
 ### **关于我**
