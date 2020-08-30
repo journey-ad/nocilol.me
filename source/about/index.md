@@ -15,6 +15,24 @@ type: about
 > 　　　　黑夜的献诗
 
 
+{% cplayer %}
+- 405079779
+- 1352292327
+- 437250681
+- 751472
+- 425828206
+- 1477670
+- 478127
+- 520459951
+- 26220167
+- 27548281
+{% endcplayer %}
+<style>
+    .cplayer-template {
+    margin-top: 50px;
+    }
+</style>
+
 ### **关于Blog**
 
 博客从[**2014.08.11**](https://imjad.cn/archives/none/hello-world)至今已经运行<span id="htmer_time" style="color: #90CAF9; font-weight: bold;"></span>
