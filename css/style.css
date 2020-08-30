@@ -1394,7 +1394,7 @@ label.el-checkbox {
   }
   .about-avatar {
     right: -20px;
-    top: 40px;
+    top: -20px;
     transform: scale(0.6);
   }
   footer {

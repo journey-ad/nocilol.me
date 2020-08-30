@@ -24,11 +24,11 @@
         猫与向日葵
     </title>
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@d052f959/libs/highlight/styles/monokai-sublime.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@d052f959/libs/font-awesome/css/font-awesome.min.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@d052f959/libs/zpix/zpix.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@d052f959/css/style.css">
-      <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@d052f959/js/theme.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b3658455/libs/highlight/styles/monokai-sublime.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b3658455/libs/font-awesome/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b3658455/libs/zpix/zpix.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b3658455/css/style.css">
+      <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b3658455/js/theme.js"></script>
     
 <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="猫与向日葵" type="application/atom+xml">
 </head>
@@ -56,6 +56,163 @@
 <p>黑夜一无所有<br>为何给我安慰<br>走在路上，放声歌唱<br>大风刮过山岗<br>上面是无边的天空</p>
 <p>　　　　黑夜的献诗</p>
 </blockquote>
+
+    <div class="cplayer-template"
+      id="cplayer-15308800"
+      data-id="cplayer-15308800"
+      data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
+      data-ids=[405079779,1352292327,437250681,751472,425828206,1477670,478127,520459951,26220167,27548281]
+      data-autoplay="false"
+      style="position: relative"
+    ></div>
+    <script>
+      (function(){
+
+        let getLyric = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              // console.log(data)
+              if(!data.lrc){
+                data = Object.assign(data, {
+                  lrc: {lyric: '[00:00.00]找不到歌词的说…(⊙﹏⊙)[99:00.00]'},
+                  tlyric: {lyric: '[00:00.00]翻译不存在的说…╮(╯▽╰)╭[99:00.00]'}
+                })
+              }
+              let obj = {
+                lyric: data.lrc.lyric,
+                tlyric: data.tlyric.lyric
+              }
+              resolve(obj);
+            })
+          })
+        }
+
+        function loadcplayer() {
+          if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
+          if (typeof window.cplayerList["cplayer-15308800"] !== 'undefined') return;
+          if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+            if (!id) throw new Error("Unable Property.");
+            let lyric = await getLyric(id);
+            // console.log(lyric)
+
+            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+              let obj = {
+                name: data.songs[0].name,
+                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
+                poster: data.songs[0].al.picUrl,
+                lyric: lyric.lyric,
+                sublyric: lyric.tlyric,
+                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+              }
+              this.add(obj);
+              return obj;
+            }.bind(this))
+          }
+
+          window.cplayerList["cplayer-15308800"] = new cplayer({
+            element: document.getElementById("cplayer-15308800"),
+            playlist: [{"name":"loading...","artist":"loading..."}],
+            generateBeforeElement: false,
+            deleteElementAfterGenerate: false,
+            autoplay: false,
+            zoomOutKana: true,
+            style: `c-player {
+                      font-size: 16px !important;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      width: auto;
+                      max-width: 550px;
+                      margin: 30px auto;
+                    }
+                    c-player .cp-controls{
+                      user-select: none;
+                    }
+                    c-player .cp-lyric{
+                      width: 100%;
+                      margin: 0.41667em 0;
+                    }
+                    c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                      margin-left: 0.8em;
+                    }
+                    @media (max-width: 768px) {
+                      c-player{
+                        font-size: 12px !important;
+                        left: auto;
+                        transform: none;
+                        width: 100%;
+                        margin: 10px auto;
+                      }
+                      c-player .cp-mainbody{
+                        min-height: 5.16667em;
+                      }
+                      c-player .cp-poster{
+                        width: 5.16667em;
+                        height: 5.16667em;
+                      }
+                      c-player .cp-center-container{
+                        height: 5.16667em;
+                      }
+                      c-player .cp-play-button, c-player .cp-volume-button, c-player .cp-prev-button, c-player .cp-list-button, c-player .cp-mode-button, c-player .cp-next-button{
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-icon, c-player .cp-prev-icon, c-player .cp-next-icon, c-player .cp-volume-icon, c-player .cp-random-icon, c-player .cp-single-icon, c-player .cp-loop-icon, c-player .cp-list-icon{
+                        height: 1.54167em;
+                        width: 1.54167em;
+                      }
+                      c-player .cp-play-button{
+                        height: 2.8em;
+                        width: 2.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon{
+                        margin: 0.8em;
+                      }
+                      c-player .cp-play-button .cp-play-icon.cp-play-icon-paused {
+                        margin: 0.7875em;
+                        margin-left: 1em;
+                      }
+                      c-player .cp-volume-icon {
+                        width: 1.76667em;
+                      }
+                      c-player .cp-list-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                      c-player .cp-mode-button {
+                        width: 1.54167em;
+                        height: 1.54167em;
+                      }
+                    }
+                    `
+          });
+
+          window.cplayerList["cplayer-15308800"].add163(405079779),window.cplayerList["cplayer-15308800"].add163(1352292327),window.cplayerList["cplayer-15308800"].add163(437250681),window.cplayerList["cplayer-15308800"].add163(751472),window.cplayerList["cplayer-15308800"].add163(425828206),window.cplayerList["cplayer-15308800"].add163(1477670),window.cplayerList["cplayer-15308800"].add163(478127),window.cplayerList["cplayer-15308800"].add163(520459951),window.cplayerList["cplayer-15308800"].add163(26220167),window.cplayerList["cplayer-15308800"].add163(27548281)
+
+          let player = window.cplayerList["cplayer-15308800"]
+          player.to(1)
+          player.remove(player.playlist[0])
+        }
+        
+        if (typeof window.cplayer === 'undefined' && !document.getElementById("cplayer-script")) {
+          var js = document.createElement("script");
+          js.src = 'https://cdn.jsdelivr.net/gh/MoePlayer/cPlayer/dist/cplayer.js';
+          js.id = "cplayer-script";
+          js.addEventListener("load", loadcplayer);
+          document.body.appendChild(js);
+        } else {
+          window.addEventListener("load", loadcplayer);
+        }
+      })()
+    </script>
+<style>
+    .cplayer-template {
+    margin-top: 50px;
+    }
+</style>
+
 <h3><strong>关于Blog</strong></h3><p>博客从<a href="https://imjad.cn/archives/none/hello-world" target="_blank" rel="noopener"><strong>2014.08.11</strong></a>至今已经运行<span id="htmer_time" style="color: #90CAF9; font-weight: bold;"></span></p>
 <p>本站使用开源静态网页生成工具<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>，主题使用<a href="https://geek.lc/" target="_blank" rel="noopener">三斤</a>提供的 Geek</p>
 <p>托管于 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
@@ -176,9 +333,9 @@ var timer = setInterval(setTime, 1000);
        value="uWuwGS1xiIwh3zHKENc7ubyL">
 <script src='//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js'></script>
 
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@d052f959/libs/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@d052f959/libs/highlight/highlight.pack.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@d052f959/js/js.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b3658455/libs/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b3658455/libs/highlight/highlight.pack.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/journey-ad/nocilol.me@b3658455/js/js.js"></script>
 
 <style type="text/css">
     .v * {
