@@ -185,7 +185,11 @@ if (/^\/archives\/.+/.test(location.pathname) && pub_date && Date.now() - pub_da
 
 // 文章页后退按钮
 $('a.back').click(function () {
-  history.go(-1);
+  if (history.length > 1) {
+    history.go(-1);
+  } else {
+    location.replace('/')
+  }
 });
 
 // 返回顶部按钮
