@@ -8,11 +8,11 @@
     return data
   }
 
-  function addStyle(styles) {
+  function addStyle(styles, id) {
 
     /* Create style element */
     var css = document.createElement('style');
-    css.id = 'theme'
+    css.id = id || 'theme'
     css.type = 'text/css';
 
     if (css.styleSheet)
@@ -59,6 +59,6 @@
   }\
   '
   if(/windows|win32/i.test(navigator.userAgent)){
-    addStyle(win)
+    addStyle(win, 'pixel-font-fix')
   }
 })();
