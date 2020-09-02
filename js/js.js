@@ -8,7 +8,7 @@ new Valine({
   appKey: valine_appKey,
   placeholder: '请输入内容...',
   avatar: 'retro',
-  requiredFields: ['nick'],
+  // requiredFields: ['nick'],
   emojiCDN: "https://cdn.jsdelivr.net/gh/journey-ad/blog-img/emotion/",
   emojiMaps: {
     "alu_高兴": "alu/01.png",
