@@ -104,7 +104,7 @@ a:hover {
 .logot {
   font-weight: bold;
   font-size: 24px;
-  margin-top: -10px;
+  margin-top: -8px;
   margin-bottom: -20px;
 }
 .logot a {
@@ -1418,6 +1418,10 @@ label.el-checkbox {
   z-index: 999;
   background: rgba(125,137,95,0.1);
   pointer-events: none;
+}
+.site-name ruby rt,
+.site-name ruby rp {
+  font-size: 10px;
 }
 @media screen and (max-width: 800px) {
   .hd {
