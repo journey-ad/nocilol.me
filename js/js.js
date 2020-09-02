@@ -1,5 +1,3 @@
-const { has } = require("utility");
-
 var web_style = $("#web_style").val();
 var valine_appid = $("#valine_appid").val();
 var valine_appKey = $("#valine_appKey").val();
