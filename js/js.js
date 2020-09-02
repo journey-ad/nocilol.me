@@ -1,3 +1,5 @@
+const { has } = require("utility");
+
 var web_style = $("#web_style").val();
 var valine_appid = $("#valine_appid").val();
 var valine_appKey = $("#valine_appKey").val();
@@ -7,7 +9,8 @@ new Valine({
   appId: valine_appid,
   appKey: valine_appKey,
   placeholder: '请输入内容...',
-  avatar: "retro",
+  avatar: 'retro',
+  requiredFields: ['nick'],
   emojiCDN: "https://cdn.jsdelivr.net/gh/journey-ad/blog-img/emotion/",
   emojiMaps: {
     "alu_高兴": "alu/01.png",
@@ -239,4 +242,27 @@ $('a.back').click(function () {
       $btn.removeClass('leaved ending')
     }, 2000);
   })
+})();
+
+// 点击锚链接平滑滚动到视图
+$(document).on('click', 'a[href^="#"]', function (e) {
+  e.preventDefault();
+  var id = $(this).attr('href');
+  var $el = $(id);
+  if ($el.length > 0) $el[0].scrollIntoView({
+    behavior: 'smooth'
+  })
+});
+
+// 简单粗暴跳转指定评论
+(function () {
+  var hash = location.hash
+  if (hash && hash.startsWith('#')) {
+    setTimeout(function () {
+      var $el = $(hash);
+      if ($el.length > 0) $el[0].scrollIntoView({
+        behavior: 'smooth'
+      })
+    }, 1500);
+  }
 })();
