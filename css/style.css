@@ -6,7 +6,7 @@ body {
   color: #51525d;
   font-weight: 400;
   font-size: 14px;
-  font-family: 'Zpix', 'Menlo', 'Meslo LG', monospace;
+  font-family: 'Zpix', serif;
   line-height: 1.725;
   text-rendering: geometricPrecision;
   transition: background-color 0.6s;
@@ -102,8 +102,9 @@ a:hover {
   color: #6d9ee7;
 }
 .logot {
+  font-family: 'Zpix', serif;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 25px;
   margin-top: -8px;
   margin-bottom: -20px;
 }
@@ -156,7 +157,8 @@ hr {
 }
 .posts .post-title {
   text-align: center;
-  font-size: 22px;
+  font-family: 'Zpix', serif;
+  font-size: 24px;
   line-height: 1.2;
   margin-bottom: 10px;
 }
@@ -166,7 +168,8 @@ hr {
   margin: 20px 0;
   color: #333;
   background: #ffec6f;
-  font-size: 18px;
+  font-family: 'Zpix', serif;
+  font-size: 12px;
 }
 .posts .post-content a {
   color: #699be9;
@@ -813,7 +816,6 @@ hr {
 .post-content code {
   background-color: #28559c;
   border-radius: 3px;
-  font-size: 85%;
   margin: 0;
   padding: 0.2em 0.4em;
   color: #fff;

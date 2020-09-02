@@ -51,4 +51,14 @@
   } else if (getCookie("style") === "black") {
     addStyle(black)
   }
+
+
+  var win = '\
+  body, .post-content {\
+    font-family: serif\
+  }\
+  '
+  if(/windows|win32/i.test(navigator.userAgent)){
+    addStyle(win)
+  }
 })();
