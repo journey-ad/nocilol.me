@@ -27,7 +27,7 @@ type: links
 [Project Aurora](https://mikukonai.com)
 [柠檬酸](https://www.himiku.com)
 [Ailoli](https://www.ailoli.org/)
-[泽泽社长](https://qqdie.com)
+[泽泽社长](https://zezeshe.com/)
 [夏和帆的博客](https://dayday.plus/)
 [梦回少年](http://rann.cc/)
 [冻葱Tewi](https://dctewi.com)
