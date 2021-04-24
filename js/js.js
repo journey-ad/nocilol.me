@@ -250,6 +250,11 @@ $("#update_style").change(function () {
   }
 });
 
+function toggleNightMode(){
+  document.getElementById("update_style").checked ^= 1
+  $("#update_style").trigger('change')
+}
+
 // 文章过时提示
 if (/^\/archives\/.+/.test(location.pathname) && pub_date && Date.now() - pub_date >= 90 * 24 * 60 * 60 * 1000) {
   $('.outdated-notify .num').text(Math.floor((Date.now() - pub_date) / (24 * 60 * 60 * 1000)))
