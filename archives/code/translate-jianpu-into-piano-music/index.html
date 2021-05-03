@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2018/09/12/IMG_20180912_000303-01.jpg" alt="SUZUKI MR-250"></p>
 
     <div class="cplayer-template"
-      id="cplayer-14755756"
-      data-id="cplayer-14755756"
+      id="cplayer-20196116"
+      data-id="cplayer-20196116"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[34248552]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-14755756"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-20196116"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-14755756"] = new cplayer({
-            element: document.getElementById("cplayer-14755756"),
+          window.cplayerList["cplayer-20196116"] = new cplayer({
+            element: document.getElementById("cplayer-20196116"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-14755756"].add163(34248552)
+          window.cplayerList["cplayer-20196116"].add163(34248552)
 
-          let player = window.cplayerList["cplayer-14755756"]
+          let player = window.cplayerList["cplayer-20196116"]
           player.to(1)
           player.remove(player.playlist[0])
         }
@@ -602,7 +602,7 @@
 <link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio.css" rel="stylesheet" type="text/css"/>
 <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio_sdk4.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@f9f8041/live2d/lib/load.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@2a7b3d5/live2d/lib/load.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71903189-1"></script>
