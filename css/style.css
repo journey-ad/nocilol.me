@@ -1430,9 +1430,13 @@ label.el-checkbox {
   bottom: -0.3rem;
   z-index: 1;
   transition: transform 0.3s;
+  cursor: grab;
 }
 #pio-container:hover {
   transform: translateY(-0.3rem);
+}
+#pio-container:active {
+  cursor: grabbing;
 }
 #pio {
   height: 15rem;

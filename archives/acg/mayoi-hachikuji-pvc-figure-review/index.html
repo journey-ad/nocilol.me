@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2018/06/20/894.gif" alt="小学生真的是太棒了"></p>
 
     <div class="cplayer-template"
-      id="cplayer-81472732"
-      data-id="cplayer-81472732"
+      id="cplayer-56235409"
+      data-id="cplayer-56235409"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[461007]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-81472732"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-56235409"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-81472732"] = new cplayer({
-            element: document.getElementById("cplayer-81472732"),
+          window.cplayerList["cplayer-56235409"] = new cplayer({
+            element: document.getElementById("cplayer-56235409"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-81472732"].add163(461007)
+          window.cplayerList["cplayer-56235409"].add163(461007)
 
-          let player = window.cplayerList["cplayer-81472732"]
+          let player = window.cplayerList["cplayer-56235409"]
           player.to(1)
           player.remove(player.playlist[0])
         }

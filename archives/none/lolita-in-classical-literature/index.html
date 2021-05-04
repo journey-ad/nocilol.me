@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2018/06/30/Memoirs.of.a.Geisha.2005.BluRay.1080p.DD5.1.x265.10bit-CHD.mkv_003903.217.jpg" alt="千代子, 艺伎回忆录"></p>
 
     <div class="cplayer-template"
-      id="cplayer-48774776"
-      data-id="cplayer-48774776"
+      id="cplayer-70474601"
+      data-id="cplayer-70474601"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[26092806]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-48774776"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-70474601"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-48774776"] = new cplayer({
-            element: document.getElementById("cplayer-48774776"),
+          window.cplayerList["cplayer-70474601"] = new cplayer({
+            element: document.getElementById("cplayer-70474601"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-48774776"].add163(26092806)
+          window.cplayerList["cplayer-70474601"].add163(26092806)
 
-          let player = window.cplayerList["cplayer-48774776"]
+          let player = window.cplayerList["cplayer-70474601"]
           player.to(1)
           player.remove(player.playlist[0])
         }

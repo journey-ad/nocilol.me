@@ -58,8 +58,8 @@
 <p>你可以点击文章标题下方和左下角看板娘菜单的眼睛按钮来切换夜间模式，或者点击这里<a href="javascript:switchNightMode()" target="_self">查看效果</a></p>
 
     <div class="cplayer-template"
-      id="cplayer-64342686"
-      data-id="cplayer-64342686"
+      id="cplayer-37073764"
+      data-id="cplayer-37073764"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[27594402]
       data-autoplay="false"
@@ -91,7 +91,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-64342686"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-37073764"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -111,8 +111,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-64342686"] = new cplayer({
-            element: document.getElementById("cplayer-64342686"),
+          window.cplayerList["cplayer-37073764"] = new cplayer({
+            element: document.getElementById("cplayer-37073764"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -192,9 +192,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-64342686"].add163(27594402)
+          window.cplayerList["cplayer-37073764"].add163(27594402)
 
-          let player = window.cplayerList["cplayer-64342686"]
+          let player = window.cplayerList["cplayer-37073764"]
           player.to(1)
           player.remove(player.playlist[0])
         }

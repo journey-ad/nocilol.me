@@ -59,8 +59,8 @@
 <p>附上最近一直循环的一首歌，萝莉音与少女音自然转换，歌词也很棒</p>
 
     <div class="cplayer-template"
-      id="cplayer-03074528"
-      data-id="cplayer-03074528"
+      id="cplayer-91804951"
+      data-id="cplayer-91804951"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[444706077]
       data-autoplay="false"
@@ -92,7 +92,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-03074528"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-91804951"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -112,8 +112,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-03074528"] = new cplayer({
-            element: document.getElementById("cplayer-03074528"),
+          window.cplayerList["cplayer-91804951"] = new cplayer({
+            element: document.getElementById("cplayer-91804951"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -193,9 +193,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-03074528"].add163(444706077)
+          window.cplayerList["cplayer-91804951"].add163(444706077)
 
-          let player = window.cplayerList["cplayer-03074528"]
+          let player = window.cplayerList["cplayer-91804951"]
           player.to(1)
           player.remove(player.playlist[0])
         }

@@ -57,8 +57,8 @@
         <p><a href="https://www.pixiv.net/member_illust.php?mode=medium&illust_id=67814952" target="_blank" rel="noopener"><img src="https://img.imjad.cn/images/2018/12/27/67814952_p0.jpg" alt="しきにゃんと秘密基地 @ 杏仁豆腐"></a></p>
 
     <div class="cplayer-template"
-      id="cplayer-86289418"
-      data-id="cplayer-86289418"
+      id="cplayer-93810269"
+      data-id="cplayer-93810269"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[503119252]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-86289418"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-93810269"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-86289418"] = new cplayer({
-            element: document.getElementById("cplayer-86289418"),
+          window.cplayerList["cplayer-93810269"] = new cplayer({
+            element: document.getElementById("cplayer-93810269"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-86289418"].add163(503119252)
+          window.cplayerList["cplayer-93810269"].add163(503119252)
 
-          let player = window.cplayerList["cplayer-86289418"]
+          let player = window.cplayerList["cplayer-93810269"]
           player.to(1)
           player.remove(player.playlist[0])
         }
