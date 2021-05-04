@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2017/07/30/Screenshot-20170730004921-824x478.png" alt="RPi3b_neofetch" title="RPi3b_neofetch"><br>老早就在关注树莓派这个小东西了，但是没有想到合适的用途所以就一直在观望<span style="font-size:10px">其实是因为没有钱</span>刚好前几天Diy的群里一位小伙伴要出一台3b，就借着这个机会入手了</p>
 
     <div class="cplayer-template"
-      id="cplayer-40022160"
-      data-id="cplayer-40022160"
+      id="cplayer-50161972"
+      data-id="cplayer-50161972"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[28283602]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-40022160"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-50161972"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-40022160"] = new cplayer({
-            element: document.getElementById("cplayer-40022160"),
+          window.cplayerList["cplayer-50161972"] = new cplayer({
+            element: document.getElementById("cplayer-50161972"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-40022160"].add163(28283602)
+          window.cplayerList["cplayer-50161972"].add163(28283602)
 
-          let player = window.cplayerList["cplayer-40022160"]
+          let player = window.cplayerList["cplayer-50161972"]
           player.to(1)
           player.remove(player.playlist[0])
         }
@@ -360,6 +360,9 @@ $ makepkg -si<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 
 </style>
 
+<!-- Load TweenLite -->
+<script src="https://cdn.jsdelivr.net/npm/greensock@1.20.2/dist/TweenLite.js"></script>
+
 <!-- Copyrighted cubism SDK -->
 <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
 <!-- Load Pixi (dependency for cubism 2/4 integrated loader) -->
@@ -371,7 +374,7 @@ $ makepkg -si<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 <link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio.css" rel="stylesheet" type="text/css"/>
 <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio_sdk4.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@2a7b3d5/live2d/lib/load.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/load.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71903189-1"></script>

@@ -59,8 +59,8 @@
 <p>附上最近一直循环的一首歌，萝莉音与少女音自然转换，歌词也很棒</p>
 
     <div class="cplayer-template"
-      id="cplayer-47865040"
-      data-id="cplayer-47865040"
+      id="cplayer-16864620"
+      data-id="cplayer-16864620"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[444706077]
       data-autoplay="false"
@@ -92,7 +92,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-47865040"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-16864620"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -112,8 +112,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-47865040"] = new cplayer({
-            element: document.getElementById("cplayer-47865040"),
+          window.cplayerList["cplayer-16864620"] = new cplayer({
+            element: document.getElementById("cplayer-16864620"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -193,9 +193,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-47865040"].add163(444706077)
+          window.cplayerList["cplayer-16864620"].add163(444706077)
 
-          let player = window.cplayerList["cplayer-47865040"]
+          let player = window.cplayerList["cplayer-16864620"]
           player.to(1)
           player.remove(player.playlist[0])
         }
@@ -375,6 +375,9 @@ eruda<span class="token punctuation">.</span><span class="token function">init</
 
 </style>
 
+<!-- Load TweenLite -->
+<script src="https://cdn.jsdelivr.net/npm/greensock@1.20.2/dist/TweenLite.js"></script>
+
 <!-- Copyrighted cubism SDK -->
 <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
 <!-- Load Pixi (dependency for cubism 2/4 integrated loader) -->
@@ -386,7 +389,7 @@ eruda<span class="token punctuation">.</span><span class="token function">init</
 <link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio.css" rel="stylesheet" type="text/css"/>
 <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio_sdk4.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@2a7b3d5/live2d/lib/load.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/load.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71903189-1"></script>
