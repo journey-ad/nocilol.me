@@ -61,8 +61,8 @@
 </blockquote>
 
     <div class="cplayer-template"
-      id="cplayer-25309959"
-      data-id="cplayer-25309959"
+      id="cplayer-79020940"
+      data-id="cplayer-79020940"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[28138547]
       data-autoplay="false"
@@ -94,7 +94,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-25309959"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-79020940"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -114,8 +114,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-25309959"] = new cplayer({
-            element: document.getElementById("cplayer-25309959"),
+          window.cplayerList["cplayer-79020940"] = new cplayer({
+            element: document.getElementById("cplayer-79020940"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -195,9 +195,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-25309959"].add163(28138547)
+          window.cplayerList["cplayer-79020940"].add163(28138547)
 
-          let player = window.cplayerList["cplayer-25309959"]
+          let player = window.cplayerList["cplayer-79020940"]
           player.to(1)
           player.remove(player.playlist[0])
         }
@@ -909,9 +909,9 @@ window<span class="token punctuation">.</span><span class="token function">setIn
 <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.1/dist/cubism4.min.js"></script>
 
 <!-- Load pio and alternative loader -->
-<link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio.css" rel="stylesheet" type="text/css"/>
-<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img/live2d/lib/pio_sdk4.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/pio.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/pio.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/pio_sdk4.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/load.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
