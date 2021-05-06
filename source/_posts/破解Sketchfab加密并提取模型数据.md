@@ -76,7 +76,8 @@ HEADERS = {
 }
 
 def main():
-    url = input('input url:')
+    modelId = input('input model ID (e.g., 9120703a4aee4c2cb0313a9ca3e1e1a3): ')
+    url = 'https://sketchfab.com/models/{id}/embed'.format(id=modelId)
     parse(url)
 
 def parse(url):
