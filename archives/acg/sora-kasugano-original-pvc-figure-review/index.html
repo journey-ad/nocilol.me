@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2019/01/05/0.jpg" alt="《和风穹语》系列 苍白PALE @ Animate-妹盟"></p>
 
     <div class="cplayer-template"
-      id="cplayer-98789161"
-      data-id="cplayer-98789161"
+      id="cplayer-75412135"
+      data-id="cplayer-75412135"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[478127]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-98789161"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-75412135"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-98789161"] = new cplayer({
-            element: document.getElementById("cplayer-98789161"),
+          window.cplayerList["cplayer-75412135"] = new cplayer({
+            element: document.getElementById("cplayer-75412135"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-98789161"].add163(478127)
+          window.cplayerList["cplayer-75412135"].add163(478127)
 
-          let player = window.cplayerList["cplayer-98789161"]
+          let player = window.cplayerList["cplayer-75412135"]
           player.to(1)
           player.remove(player.playlist[0])
         }

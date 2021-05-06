@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2018/11/20/record.gif" alt="魔法少女智乃"></p>
 
     <div class="cplayer-template"
-      id="cplayer-35776290"
-      data-id="cplayer-35776290"
+      id="cplayer-86591136"
+      data-id="cplayer-86591136"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[33955999]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-35776290"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-86591136"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-35776290"] = new cplayer({
-            element: document.getElementById("cplayer-35776290"),
+          window.cplayerList["cplayer-86591136"] = new cplayer({
+            element: document.getElementById("cplayer-86591136"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-35776290"].add163(33955999)
+          window.cplayerList["cplayer-86591136"].add163(33955999)
 
-          let player = window.cplayerList["cplayer-35776290"]
+          let player = window.cplayerList["cplayer-86591136"]
           player.to(1)
           player.remove(player.playlist[0])
         }
@@ -264,7 +264,8 @@ HEADERS <span class="token operator">=</span> <span class="token punctuation">{<
 <span class="token punctuation">}</span>
 
 <span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    url <span class="token operator">=</span> input<span class="token punctuation">(</span><span class="token string">'input url:'</span><span class="token punctuation">)</span>
+    modelId <span class="token operator">=</span> input<span class="token punctuation">(</span><span class="token string">'input model ID (e.g., 9120703a4aee4c2cb0313a9ca3e1e1a3): '</span><span class="token punctuation">)</span>
+    url <span class="token operator">=</span> <span class="token string">'https://sketchfab.com/models/{id}/embed'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>id<span class="token operator">=</span>modelId<span class="token punctuation">)</span>
     parse<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
 
 <span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -333,7 +334,7 @@ HEADERS <span class="token operator">=</span> <span class="token punctuation">{<
         <span class="token keyword">pass</span>
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3>提取过程</h3><ol>
 <li>启动Blender，将随之启动一个CMD窗口，可观察有无报错</li>
 <li>点击<strong>File</strong> - <strong>Open</strong>，打开<code>Blender249.blend</code>，然后按<kbd>Ctrl</kbd> + <kbd>U</kbd>，这样以后就不用重复此步了</li>
