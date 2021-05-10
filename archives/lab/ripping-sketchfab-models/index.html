@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2018/11/20/record.gif" alt="魔法少女智乃"></p>
 
     <div class="cplayer-template"
-      id="cplayer-86591136"
-      data-id="cplayer-86591136"
+      id="cplayer-27408001"
+      data-id="cplayer-27408001"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[33955999]
       data-autoplay="false"
@@ -90,7 +90,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-86591136"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-27408001"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -110,8 +110,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-86591136"] = new cplayer({
-            element: document.getElementById("cplayer-86591136"),
+          window.cplayerList["cplayer-27408001"] = new cplayer({
+            element: document.getElementById("cplayer-27408001"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +191,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-86591136"].add163(33955999)
+          window.cplayerList["cplayer-27408001"].add163(33955999)
 
-          let player = window.cplayerList["cplayer-86591136"]
+          let player = window.cplayerList["cplayer-27408001"]
           player.to(1)
           player.remove(player.playlist[0])
         }
@@ -461,10 +461,10 @@ IndexError: list index out of range<span aria-hidden="true" class="line-numbers-
 <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.1/dist/cubism4.min.js"></script>
 
 <!-- Load pio and alternative loader -->
-<link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/pio.css" rel="stylesheet" type="text/css"/>
-<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/pio.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/pio_sdk4.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@94eb7e2/live2d/lib/load.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio_sdk4.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/load.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71903189-1"></script>
