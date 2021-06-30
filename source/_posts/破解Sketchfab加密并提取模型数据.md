@@ -27,6 +27,58 @@ urlname: ripping-sketchfab-models
 那么就利用空余时间，简单记下折腾过程
 
 
+## 2021-6-30 更新
+注意sketchfab目前对所有模型文件做了二次加密，格式为`binz`，解密后的格式仍为`.bin.gz`   
+解密关键逻辑在请求模型文件完成后立即执行，懂一点前端调试知识的可以打断点dump出来，暂无自动化处理方法
+
+#### 附上手动操作步骤：
+
+找到类似下图的代码，在附近断点   
+刷新可以看到在断点处停下来了，此时的局部变量`i`可以看到是一个JSON字符串
+![sketchfab_dump](https://cdn.jsdelivr.net/gh/journey-ad/blog-img@master/imgs/sketchfab_dump.5x0e4ve2o5g0.png)
+
+控制台执行`copy(i)`可以复制出来，内容类似下面，这个就是之前的`file.osgjs`文件
+![sketchfab_dump](https://cdn.jsdelivr.net/gh/journey-ad/blog-img@master/imgs/sketchfab_dump.2r2rxt7r5yo0.png)
+
+继续代码执行，可以看到又断下来了，此时的`i`是一个`ArrayBuffer`类型的数据   
+执行下图代码保存为文件
+![sketchfab_dump](https://cdn.jsdelivr.net/gh/journey-ad/blog-img@master/imgs/sketchfab_dump.2heperel4os0.png)
+
+对比下看看，这个就是之前的`model_file.bin.gz`
+![sketchfab_dump](https://cdn.jsdelivr.net/gh/journey-ad/blog-img@master/imgs/sketchfab_dump.2s2bksbjqpy0.png)
+
+之后就和以前的步骤一样了
+
+#### 保存`ArrayBuffer`到文件
+```js
+var downloadBlob, downloadURL;
+
+downloadBlob = function(data, fileName, mimeType) {
+  var blob, url;
+  blob = new Blob([data], {
+    type: mimeType
+  });
+  url = window.URL.createObjectURL(blob);
+  downloadURL(url, fileName);
+  setTimeout(function() {
+    return window.URL.revokeObjectURL(url);
+  }, 1000);
+};
+
+downloadURL = function(data, fileName) {
+  var a;
+  a = document.createElement('a');
+  a.href = data;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.style = 'display: none';
+  a.click();
+  a.remove();
+};
+
+downloadBlob(i, 'dump.bin', 'application/octet-stream');
+```
+
 ## 提取
 
 ### 所需工具
