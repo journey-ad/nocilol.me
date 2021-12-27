@@ -32,10 +32,12 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: 0.03;
+  opacity: 0.05;
   position: fixed;
-  background: center/cover no-repeat;
-  background-image: url("https://cdn.jsdelivr.net/gh/journey-ad/blog-img/bg/bg_1.jpg");
+  background-image: url("https://cdn.jsdelivr.net/gh/journey-ad/blog-img/bg/diana_1.png");
+  background-position: right 50px bottom 30px;
+  background-size: auto 30vw;
+  background-repeat: no-repeat;
   z-index: -1;
   pointer-events: none;
 }

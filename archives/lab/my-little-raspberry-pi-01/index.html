@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2017/07/30/Screenshot-20170730004921-824x478.png" alt="RPi3b_neofetch" title="RPi3b_neofetch"><br>老早就在关注树莓派这个小东西了，但是没有想到合适的用途所以就一直在观望<span style="font-size:10px">其实是因为没有钱</span>刚好前几天Diy的群里一位小伙伴要出一台3b，就借着这个机会入手了</p>
 
     <div class="cplayer-template"
-      id="cplayer-22272210"
-      data-id="cplayer-22272210"
+      id="cplayer-66210982"
+      data-id="cplayer-66210982"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[28283602]
       data-autoplay="false"
@@ -69,7 +69,7 @@
 
         let getLyric = id => {
           return new Promise((resolve, reject) => {
-            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+            fetch("https://hibiapi.getloli.com/api/netease/?type=lyric&id=" + id).then(res => {
               return res.json()
             }).then(data => {
               // console.log(data)
@@ -88,30 +88,41 @@
           })
         }
 
+        let getSrc = id => {
+          return new Promise((resolve, reject) => {
+            fetch("https://hibiapi.getloli.com/api/netease/?type=song&id=" + id).then(res => {
+              return res.json()
+            }).then(data => {
+              resolve(data.data[0].url);
+            })
+          })
+        }
+
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-22272210"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-66210982"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
+            let src = await getSrc(id);
             // console.log(lyric)
 
-            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
+            return fetch("https://hibiapi.getloli.com/api/netease/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
               let obj = {
                 name: data.songs[0].name,
                 artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
                 poster: data.songs[0].al.picUrl,
                 lyric: lyric.lyric,
                 sublyric: lyric.tlyric,
-                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
+                src: src
               }
               this.add(obj);
               return obj;
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-22272210"] = new cplayer({
-            element: document.getElementById("cplayer-22272210"),
+          window.cplayerList["cplayer-66210982"] = new cplayer({
+            element: document.getElementById("cplayer-66210982"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -191,9 +202,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-22272210"].add163(28283602)
+          window.cplayerList["cplayer-66210982"].add163(28283602)
 
-          let player = window.cplayerList["cplayer-22272210"]
+          let player = window.cplayerList["cplayer-66210982"]
           player.to(1)
           player.remove(player.playlist[0])
         }
