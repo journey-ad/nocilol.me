@@ -58,8 +58,8 @@
 <h2>前言</h2><p>在两年前差不多这个时候，我写了<a href="https://imjad.cn/archives/code/add-a-floating-villain-to-the-blog" target="_blank" rel="noopener">一篇文章</a>，记载了关于在博客里添加浮动小人的过程。后来因为换了新主题，之前的浮动小人与新主题风格不搭，就去掉了。<br>而两年后，我注意到<a href="http://www.live2d.com/en/" target="_blank" rel="noopener">Live2D</a>这个技术，很适合用来展示看板娘（或者叫做浮动小人、网页宠物、网页挂件之类的），折腾两天后，终于达到了一个基本可用的状态，而具体效果，在看这篇文章的你肯定已经发现了。话不多说，下面讲一下我的折腾过程：</p>
 
     <div class="cplayer-template"
-      id="cplayer-10356576"
-      data-id="cplayer-10356576"
+      id="cplayer-44237086"
+      data-id="cplayer-44237086"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[29764417]
       data-autoplay="false"
@@ -101,7 +101,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-10356576"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-44237086"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -122,8 +122,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-10356576"] = new cplayer({
-            element: document.getElementById("cplayer-10356576"),
+          window.cplayerList["cplayer-44237086"] = new cplayer({
+            element: document.getElementById("cplayer-44237086"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -203,9 +203,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-10356576"].add163(29764417)
+          window.cplayerList["cplayer-44237086"].add163(29764417)
 
-          let player = window.cplayerList["cplayer-10356576"]
+          let player = window.cplayerList["cplayer-44237086"]
           player.to(1)
           player.remove(player.playlist[0])
         }

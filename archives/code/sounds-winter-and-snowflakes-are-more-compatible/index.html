@@ -57,8 +57,8 @@
         <p><img src="https://img.imjad.cn/images/2017/12/20/4276013_p0.jpg" alt="4276013_p0.jpg" title="作品名：春花 画师：えむかみ"><br>首先，一首届不到的恋送给大家：</p>
 
     <div class="cplayer-template"
-      id="cplayer-57772482"
-      data-id="cplayer-57772482"
+      id="cplayer-51155761"
+      data-id="cplayer-51155761"
       data-playlist=%5B%7B%22name%22%3A%22loading...%22%2C%22artist%22%3A%22loading...%22%7D%5D
       data-ids=[449818930]
       data-autoplay="false"
@@ -100,7 +100,7 @@
 
         function loadcplayer() {
           if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
-          if (typeof window.cplayerList["cplayer-57772482"] !== 'undefined') return;
+          if (typeof window.cplayerList["cplayer-51155761"] !== 'undefined') return;
           if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
             if (!id) throw new Error("Unable Property.");
             let lyric = await getLyric(id);
@@ -121,8 +121,8 @@
             }.bind(this))
           }
 
-          window.cplayerList["cplayer-57772482"] = new cplayer({
-            element: document.getElementById("cplayer-57772482"),
+          window.cplayerList["cplayer-51155761"] = new cplayer({
+            element: document.getElementById("cplayer-51155761"),
             playlist: [{"name":"loading...","artist":"loading..."}],
             generateBeforeElement: false,
             deleteElementAfterGenerate: false,
@@ -202,9 +202,9 @@
                     `
           });
 
-          window.cplayerList["cplayer-57772482"].add163(449818930)
+          window.cplayerList["cplayer-51155761"].add163(449818930)
 
-          let player = window.cplayerList["cplayer-57772482"]
+          let player = window.cplayerList["cplayer-51155761"]
           player.to(1)
           player.remove(player.playlist[0])
         }
